@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PickTrace Timecards Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1a1a2e;--navy-mid:#16213e;--navy-deep:#0f3460;
+  --blue:#2ea3f2;--blue-hover:#1b8fd8;
+  --text:#444;--text-dark:#1a1a2e;--text-muted:#888;
+  --bg:#fff;--bg-alt:#f8f9fb;
+  --border:#eee;--border-med:#e0e0e0;
+  --tip-bg:#e8f4fd;--tip-border:#2ea3f2;--tip-text:#1a1a2e;
+  --warn-bg:#fff3e0;--warn-border:#f57c00;--warn-text:#4e342e;
+  --crit-bg:#fce4ec;--crit-border:#c62828;--crit-text:#4a1010;
+  --good-bg:#e8f5e9;--good-border:#2e7d32;--good-text:#1b5e20;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.7;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}a:hover{color:var(--blue-hover)}
+img{max-width:100%;display:block}
+
+/* ---- Header ---- */
+.hdr{position:sticky;top:0;z-index:100;background:#1a1a2e;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
+.hdr-sub{font-size:12px;color:rgba(255,255,255,.5);font-weight:400;letter-spacing:.3px}
+.hdr-nav{display:flex;gap:6px}
+.hdr-nav button{padding:8px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,.6);background:none;border:1px solid transparent;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.hdr-nav button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.hdr-nav button.active{color:#fff;background:rgba(46,163,242,.15);border-color:rgba(46,163,242,.3)}
+.mob-btn{display:none;background:0 0;border:0;color:#fff;font-size:20px;cursor:pointer}
+
+/* ---- Hero ---- */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 50%,var(--navy-deep) 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-140px;right:-100px;width:420px;height:420px;border-radius:50%;background:rgba(46,163,242,.03)}
+.hero::after{content:'';position:absolute;bottom:-120px;left:-80px;width:320px;height:320px;border-radius:50%;background:rgba(46,163,242,.02)}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
+.hero h1{font-size:36px;font-weight:700;color:#fff;max-width:680px;margin:0 auto 14px;line-height:1.2}
+.hero p{font-size:15px;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto;line-height:1.7}
+
+/* ---- Container ---- */
+.wrap{max-width:1100px;margin:0 auto;padding:0 40px}
+
+/* ---- Sections ---- */
+.tab-panel{display:none}.tab-panel.active{display:block}
+.sect{padding:70px 0;border-bottom:1px solid var(--border)}
+.sect:last-child{border-bottom:0}
+.sect.alt{background:var(--bg-alt)}
+.label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.title{font-size:26px;font-weight:700;color:var(--text-dark);margin-bottom:14px;line-height:1.25}
+.desc{font-size:14px;color:var(--text);max-width:600px;line-height:1.7;margin-bottom:32px}
+
+/* ---- Feature Row ---- */
+.fr{display:flex;align-items:flex-start;gap:80px;padding:44px 0;border-bottom:1px solid var(--border)}
+.fr:last-child{border-bottom:0}
+.fr.rev{flex-direction:row-reverse}
+.fr-text{flex:1;min-width:0}
+.fr-media{flex:1;min-width:0}
+.fr-text h3{font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.3}
+.fr-text p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px}
+.fr-text ul,.fr-text ol{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding-left:18px}
+.fr-text li{margin-bottom:4px}
+
+/* ---- Browser Frame ---- */
+.bf{background:#fff;border-radius:12px;border:1px solid var(--border-med);box-shadow:0 6px 24px rgba(0,0,0,.08);overflow:hidden}
+.bf-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#f6f6f6;border-bottom:1px solid var(--border-med)}
+.bf-dot{width:10px;height:10px;border-radius:50%}.bf-dot.r{background:#ff5f57}.bf-dot.y{background:#febc2e}.bf-dot.g{background:#28c840}
+.bf-url{flex:1;margin-left:8px;background:#e8e8e8;border-radius:4px;height:22px;max-width:240px}
+.bf-body{min-height:140px;background:#fafafa}
+.bf-body img{width:100%;display:block}
+
+/* ---- Panel Frame (vertical/sidebar screenshots) ---- */
+.pf{background:#fff;border-radius:12px;border:1px solid var(--border-med);box-shadow:0 4px 16px rgba(0,0,0,.06);overflow:hidden;max-width:240px;margin:0 auto}
+.pf img{width:100%;display:block}
+.pf .ph{min-height:180px;border:0;border-radius:0}
+
+/* ---- View Comparison ---- */
+.view-compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
+.view-compare .vc-frame{border-radius:10px;border:1px solid var(--border-med);overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);background:#fafafa}
+.view-compare .vc-frame .vc-img{width:100%;overflow:hidden;background:#f4f5f7}
+.view-compare .vc-frame .vc-img .ph{min-height:180px;border:0;border-radius:0}
+.view-compare .vc-frame .vc-img img{width:100%;display:block}
+.view-compare h3{font-size:15px;margin:14px 0 4px}
+.view-compare p{font-size:13px;color:var(--text);line-height:1.7}
+
+/* ---- Screenshot Placeholder ---- */
+.ph{border:2px dashed #d1d5db;background:#f9fafb;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.ph-file{font-size:11px;font-weight:600;color:var(--text-muted);font-family:'Courier New',monospace;background:#eee;padding:2px 8px;border-radius:3px;margin-bottom:5px}
+.ph-desc{font-size:11px;color:#aaa;max-width:280px}
+
+/* ---- Callouts (trainpt style) ---- */
+.tip,.warn,.crit,.good{padding:12px 16px;border-left:3px solid;border-radius:0 8px 8px 0;font-size:12px;line-height:1.7;margin:16px 0}
+.tip{background:var(--tip-bg);border-color:var(--tip-border);color:var(--tip-text)}
+.warn{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text)}
+.crit{background:var(--crit-bg);border-color:var(--crit-border);color:var(--crit-text)}
+.good{background:var(--good-bg);border-color:var(--good-border);color:var(--good-text)}
+.tip strong,.warn strong,.crit strong,.good strong{color:inherit;font-weight:700}
+
+/* ---- Steps (compact, inline) ---- */
+.steps{margin:12px 0}
+.step{display:flex;gap:12px;padding:8px 0}
+.sn{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-text{font-size:13px;color:var(--text);line-height:1.7}
+.step-text strong{color:var(--text-dark)}
+.step-sub{font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.6}
+
+/* ---- Vertical Stepper (auditing) ---- */
+.vstepper .vs-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);position:relative}
+.vstepper .vs-item:last-child{border-bottom:0}
+.vs-body{flex:1;min-width:0}
+.vs-body h4{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
+.vs-body p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:6px}
+.vs-body ul,.vs-body ol{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:8px;padding-left:18px}
+.vs-media{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.vs-media .bf{flex:1;min-width:200px;max-width:400px}
+
+/* ---- Comparison Table ---- */
+.ctbl{width:100%;border-collapse:collapse;border:1px solid var(--border-med);border-radius:10px;overflow:hidden;margin:16px 0}
+.ctbl th{text-align:left;padding:10px 14px;background:var(--navy);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.ctbl td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);vertical-align:top}
+.ctbl td:first-child{font-weight:600;color:var(--text-dark);width:130px}
+.ctbl tr:last-child td{border-bottom:0}
+
+/* ---- Error Cards ---- */
+.ec{background:#fff;border:1px solid var(--border-med);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.ec-hd{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none}
+.ec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ec-titles{flex:1}
+.ec-t{font-size:13px;font-weight:600;color:var(--text-dark)}
+.ec-tag{display:inline-block;padding:2px 7px;border-radius:100px;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle}
+.ec-s{font-size:12px;color:var(--text-muted);margin-top:1px}
+.ec-chev{font-size:10px;color:var(--text-muted);transition:transform .2s;flex-shrink:0}
+.ec.open .ec-chev{transform:rotate(90deg)}
+.ec-bd{display:none;padding:2px 18px 18px 38px;font-size:13px;color:var(--text);line-height:1.7}
+.ec.open .ec-bd{display:block}
+.ec-bd h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin:14px 0 6px}
+.ec-bd ul,.ec-bd ol{padding-left:18px;margin-bottom:8px}
+.ec-bd li{margin-bottom:2px}
+
+/* ---- Dark Box ---- */
+.darkbox{background:var(--navy);border-radius:10px;padding:22px 26px;color:rgba(255,255,255,.8);font-size:13px;line-height:1.7;margin:24px 0}
+.darkbox strong{color:#fff}
+.darkbox .label{margin-bottom:6px}
+
+/* ---- Sub-tabs ---- */
+.stabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:22px}
+.stab{background:0 0;border:0;font-family:inherit;font-size:12px;font-weight:600;color:var(--text-muted);padding:8px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.stab:hover{color:var(--text)}.stab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.sp{display:none}.sp.active{display:block}
+
+/* ---- Two-col layout ---- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+
+/* ---- Payroll grid ---- */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.pgrid-item{background:#fff;border:1px solid var(--border-med);border-radius:8px;padding:14px 16px}
+.pgrid-item .num{font-size:18px;font-weight:700;color:var(--blue);margin-bottom:4px}
+.pgrid-item p{font-size:12px;color:var(--text);line-height:1.6}
+
+/* ---- Banner ---- */
+.banner{background:var(--tip-bg);border-bottom:1px solid rgba(46,163,242,.15);padding:10px 40px;font-size:12px;color:var(--tip-text);display:flex;align-items:center;gap:10px;margin-top:52px}
+.banner strong{font-weight:700}
+.banner code{background:rgba(46,163,242,.1);padding:1px 5px;border-radius:3px;font-size:11px}
+.banner-x{margin-left:auto;background:0 0;border:0;font-size:16px;cursor:pointer;color:var(--text-muted);padding:0 2px}.banner-x:hover{color:var(--text)}
+.banner.hidden{display:none}
+
+/* ---- Footer ---- */
+.ftr{background:var(--navy);padding:24px 40px;font-size:11px;color:rgba(255,255,255,.4)}
+.ftr-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr a{color:var(--blue);font-weight:600}.ftr a:hover{color:#fff}
+
+/* ---- Responsive ---- */
+@media(max-width:900px){
+  .fr,.fr.rev{flex-direction:column;gap:30px}
+  .two,.pgrid,.view-compare{grid-template-columns:1fr}
+  .hero h1{font-size:28px}.hero{padding:60px 24px}
+  .wrap{padding:0 24px}.hdr{padding:0 20px}
+  .sect{padding:50px 0}
+}
+@media(max-width:600px){
+  .hdr-nav{display:none}
+  .hdr-nav.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:var(--navy);padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.08);z-index:999}
+  .hdr-nav.open button{text-align:left;padding:9px 12px;width:100%}
+  .mob-btn{display:block}
+  .hero{padding:44px 16px}.hero h1{font-size:22px}
+  .fr{gap:20px}.sect{padding:40px 0}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .ec-bd{padding-left:18px}
+  .banner{padding:10px 16px}
+  .ftr{padding:20px 16px}
+}
+@media print{
+  .hdr,.banner,.hero{display:none}
+  .tab-panel{display:block!important;page-break-before:always}
+  .tab-panel:first-of-type{page-break-before:avoid}
+  .ec-bd{display:block!important}
+  .ph{display:none}
+  body{font-size:11px;color:#000}
+  .sect{padding:20px 0;border-bottom:1px solid #ccc}
+  .fr{break-inside:avoid}
+  .ftr{background:#fff;color:#333;border-top:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="./screenshots/logo.png" alt="PickTrace" style="height:28px">
+    <span class="hdr-sub">Timecards Guide</span>
+  </div>
+  <button class="mob-btn" onclick="document.querySelector('.hdr-nav').classList.toggle('open')">&#9776;</button>
+  <div class="hdr-nav" id="hn">
+    <button class="active" onclick="go('overview')">Overview</button>
+    <button onclick="go('create')">Creating &amp; Duplicating</button>
+    <button onclick="go('edit')">Editing</button>
+    <button onclick="go('breaks')">Breaks &amp; Lunches</button>
+    <button onclick="go('audit')">Daily Auditing</button>
+    <button onclick="go('errors')">Errors &amp; Fixes</button>
+    <button onclick="go('archive')">Archiving &amp; Reviewing</button>
+  </div>
+</div>
+
+<div class="hero" id="heroEl">
+  <div class="hero-label">User Guide</div>
+  <h1>Timecards</h1>
+  <p>View, create, edit, audit, and manage timecards in PickTrace Office. Select a section above to get started.</p>
+</div>
+
+<!-- ============================================================ -->
+<!--  OVERVIEW                                                     -->
+<!-- ============================================================ -->
+<div class="tab-panel active" id="tab-overview">
+
+  <div class="sect">
+    <div class="wrap">
+      <div style="display:flex;align-items:center;gap:40px">
+        <div style="flex:1;min-width:0">
+          <div class="label">Overview</div>
+          <div class="title">What Are Timecards?</div>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:24px;max-width:460px">Timecards are records that capture every activity an employee performs &mdash; start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically in PickTrace Office.</p>
+          <h3 style="font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:8px">Where to Find Them</h3>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px;max-width:460px">Navigate to <strong>Timecards</strong> from the left-hand sidebar under Dashboard. The page defaults to today's date and displays the List View.</p>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px;max-width:460px">Use the <strong>date drop-down</strong> to select a different day, a date range, or a preset like "Last 7 days". The arrow buttons step forward or back one day.</p>
+          <p style="font-size:14px;color:var(--text);line-height:1.7;max-width:460px">Records created on handheld devices appear here once the device syncs. The number of timecards per employee depends on how many activities and locations they worked.</p>
+        </div>
+        <div style="flex:1;display:flex;justify-content:center">
+          <div class="pf"><div class="ss" data-file="overview-sidebar-nav.png" data-desc="Left sidebar showing the Timecards link under Dashboard"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Two Views</div>
+      <div class="title">Timeline View vs List View</div>
+      <p class="desc">Toggle between both views using the buttons in the top-right corner of the page. Both let you review and audit timecards, but display information differently.</p>
+
+      <table class="ctbl">
+        <thead><tr><th></th><th>List View</th><th>Timeline View</th></tr></thead>
+        <tbody>
+          <tr><td>Best for</td><td>Complex edits, bulk changes, investigation, CSV export</td><td>Visual confirmation, quick drag-to-adjust edits</td></tr>
+          <tr><td>Editing</td><td>Single and bulk via flyout panel</td><td>Individual only &mdash; drag check-in/check-out edges</td></tr>
+          <tr><td>Unique features</td><td>Sortable columns, extra columns (device, geolocation, reviewed), CSV export</td><td>Colored time blocks, hover detail popup, visual gaps/overlaps</td></tr>
+        </tbody>
+      </table>
+
+      <div class="view-compare">
+        <div>
+          <div class="vc-frame">
+            <div class="vc-img"><div class="ss" data-file="overview-list-view.png" data-desc="List View showing the table layout with sortable columns"></div></div>
+          </div>
+          <h3>List View</h3>
+          <p>The default view. Sortable table with all attributes as columns. Click any header to sort, drag to rearrange. Open <strong>Settings &gt; Column Visibility</strong> to add or remove columns.</p>
+          <div class="tip"><strong>Add "Reviewed", "Device", and "Geolocation" columns</strong> for a complete audit view. Hidden by default.</div>
+        </div>
+        <div>
+          <div class="vc-frame">
+            <div class="vc-img"><div class="ss" data-file="overview-timeline-view.png" data-desc="Timeline View showing colored time blocks for a full crew's day"></div></div>
+          </div>
+          <h3>Timeline View</h3>
+          <p>Visual representation of the crew's day. <strong>Blue</strong> blocks are productive work, <strong>yellow</strong> are breaks. Drag edges to adjust times, hover for details, right-click for the full menu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Search &amp; Filter</div>
+      <div class="title">Finding Timecards</div>
+      <div class="fr">
+        <div class="fr-text">
+          <p>Click <strong>Search</strong> in the top header next to the date to open the filter panel. Combine multiple criteria and click Apply. Available filters:</p>
+          <div class="two" style="font-size:12px;color:var(--text);margin:10px 0 14px">
+            <div>Name &bull; Site/Location &bull; Crop &bull; Employer &bull; Crew &bull; Job &bull; Device</div>
+            <div>Hourly Rate &bull; Production Records &bull; Work Hours &bull; Audited by &bull; Has no Prod. Records &bull; Edited Record</div>
+          </div>
+          <div class="tip"><strong>Check "Edited Record"</strong> to show only timecards modified after creation &mdash; useful for seeing what's already been touched.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="overview-search-panel.png" data-desc="Search panel showing all available filter criteria"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Quick Actions</div>
+      <div class="title">Right-Click Context Menu</div>
+      <p class="desc">The options change depending on how many timecards you have selected.</p>
+      <div class="two">
+        <div>
+          <h3 style="font-size:15px;margin-bottom:6px">One Timecard Selected</h3>
+          <ul style="font-size:13px;line-height:1.9">
+            <li>Navigate to Employee Profile</li>
+            <li>Edit Timecard</li>
+            <li>Duplicate Timecard</li>
+            <li>Transfer Timecard</li>
+            <li>Archive Timecard</li>
+            <li>Add New Timecard</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-size:15px;margin-bottom:6px">Multiple Timecards Selected</h3>
+          <ul style="font-size:13px;line-height:1.9">
+            <li>Edit Timecards</li>
+            <li>Switch Crew</li>
+            <li>Archive Timecards</li>
+          </ul>
+          <div class="tip" style="margin-top:12px"><strong>Duplicate and Transfer are single-selection only.</strong> To move multiple records, use Duplicate + Archive as a workaround.</div>
+        </div>
+      </div>
+      <div class="darkbox">
+        <div class="label">Selection Methods</div>
+        <strong>Shift+Click</strong> &mdash; select a consecutive range (click first, hold Shift, click last).<br>
+        <strong>Ctrl+Click</strong> &mdash; pick individual timecards that aren't next to each other.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  CREATING & DUPLICATING                                       -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-create">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Creating</div>
+      <div class="title">How to Create a Timecard</div>
+      <p class="desc">Create timecards when an employee is missing a record &mdash; the device user forgot the device, didn't clock someone in, or the employee wasn't scanned. Works from either view.</p>
+
+      <div class="fr">
+        <div class="fr-text">
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Click the <strong>+</strong> icon to the right of the search bar. Select <strong>Add timecards</strong>.</div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Add employees by name, or switch to <strong>Crew</strong> to add an entire crew at once.</div></div>
+            <div class="step"><div class="sn">3</div><div class="step-text">Click <strong>+ Add Timecard</strong>. Set the start time, crew, site, location, work bundle, and job.</div></div>
+            <div class="step"><div class="sn">4</div><div class="step-text">Need multiple entries (different jobs, breaks)? Click <strong>+ Add another timecard</strong> for each.</div></div>
+            <div class="step"><div class="sn">5</div><div class="step-text">Click <strong>Checkout</strong> to set the end time, then <strong>Save</strong>.</div></div>
+          </div>
+          <div class="tip"><strong>Adding by crew is faster</strong> when everyone is missing &mdash; type the crew name and all members are added in one step.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="create-add-button.png" data-desc="The + icon next to the search bar and the 'Add timecards' option"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="fr">
+        <div class="fr-text">
+          <div class="label">Duplicating</div>
+          <h3>Duplicate a Timecard</h3>
+          <p>Copies all attributes from an existing timecard and lets you assign it to a different employee. Right-click the timecard &rarr; <strong>Duplicate Timecard</strong>. A flyout shows the original attributes &mdash; change the employee name and any other details, then Save.</p>
+          <div class="tip"><strong>You can assign the duplicate to multiple employees at once</strong> &mdash; add several names before saving.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="create-duplicate-flyout.png" data-desc="Duplicate Timecard flyout with employee name field"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="fr rev">
+        <div class="fr-text">
+          <div class="label">Transferring</div>
+          <h3>Transfer a Timecard</h3>
+          <p>Reassigns a timecard from one employee to another. The original employee loses the record entirely. Select one timecard &rarr; right-click &rarr; <strong>Transfer Timecard</strong> &rarr; update the employee name.</p>
+          <div class="warn"><strong>Transfer only works for a single timecard.</strong> To move multiple records, use Duplicate + Archive instead.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="create-transfer-menu.png" data-desc="Right-click menu with Transfer Timecard highlighted"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  EDITING                                                      -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-edit">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Editing</div>
+      <div class="title">Single vs Bulk Editing</div>
+
+      <div class="fr">
+        <div class="fr-text">
+          <h3>Editing One Timecard</h3>
+          <p>Select one timecard &rarr; right-click &rarr; <strong>Edit Timecard</strong>. The flyout shows all timecards for that employee on the selected day. Edit any attribute: start time, end time, crew, site, location, work bundle, job, pay style, rate.</p>
+          <p>At the bottom of the flyout: <strong>Archive Timecard</strong> and <strong>Add New Timecard</strong>.</p>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="edit-single-flyout.png" data-desc="Edit flyout for a single employee showing all timecards for the day"></div></div></div>
+        </div>
+      </div>
+
+      <div class="fr rev">
+        <div class="fr-text">
+          <h3>Editing Multiple Timecards</h3>
+          <p>Select multiple timecards (Shift+Click or Ctrl+Click) &rarr; right-click &rarr; <strong>Edit Timecards</strong>. The flyout shows selected employees and checkbox fields for bulk changes:</p>
+          <ul>
+            <li>Start Time</li>
+            <li>Checkout Time</li>
+            <li>Site &amp; Location</li>
+            <li>Job</li>
+            <li>Pay Style &amp; Rate</li>
+            <li>Duration</li>
+          </ul>
+          <div class="warn"><strong>Changes apply to all selected timecards.</strong> If times were changed, a confirmation screen shows before/after in timeline view. Review carefully before saving.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="edit-bulk-flyout.png" data-desc="Bulk Edit flyout showing selected employees and checkbox fields"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Specific Changes</div>
+      <div class="title">Common Edit Types</div>
+
+      <div class="stabs">
+        <button class="stab active" onclick="stab(this,'sp-loc')">Site / Location</button>
+        <button class="stab" onclick="stab(this,'sp-job')">Job / Work Bundle</button>
+        <button class="stab" onclick="stab(this,'sp-pay')">Pay Style / Rate</button>
+        <button class="stab" onclick="stab(this,'sp-crew')">Crew</button>
+      </div>
+
+      <div class="sp active" id="sp-loc">
+        <div class="two">
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Select the <strong>Site/Location</strong> field</div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new location &rarr; Save</div></div>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set site and location"</strong></div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new location &rarr; Save</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sp" id="sp-job">
+        <div class="two">
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Select the <strong>Work Bundle/Job</strong> field</div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new work bundle, then job &rarr; Save</div></div>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set Job"</strong></div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new work bundle, then job &rarr; Save</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If the job you need isn't in the drop-down, change the Work Bundle first.</div>
+        <div class="crit"><strong>When bulk-changing jobs, exclude breaks and lunches first.</strong> Use the Search bar &rarr; Job: Break, Lunch &rarr; Exclude &rarr; Apply. See the Breaks &amp; Lunches section for details.</div>
+        <div class="tip"><strong>Switching hourly to piecework?</strong> Check both "Set Job" and "Set Pay Style" checkboxes in the bulk edit panel.</div>
+      </div>
+
+      <div class="sp" id="sp-pay">
+        <div class="two">
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Select <strong>Pay Style</strong> &rarr; choose Hourly, Piece, or Hourly+Piece</div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Enter the rate &rarr; Save</div></div>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
+            <div class="steps">
+              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
+              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set pay style"</strong></div></div>
+              <div class="step"><div class="sn">3</div><div class="step-text">Choose the pay style, enter the rate &rarr; Save</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="darkbox">
+          <div class="label">Pay Rate Rule</div>
+          <strong>The higher rate always wins.</strong> An employee's unique compensation on their profile overrides the job's default rate. If no rate is set on the profile, the job's minimum wage applies. Right-click any employee &rarr; navigate to their Employee Profile to view or update compensation.
+        </div>
+      </div>
+
+      <div class="sp" id="sp-crew">
+        <div class="steps" style="max-width:500px">
+          <div class="step"><div class="sn">1</div><div class="step-text">Select one or multiple timecards</div></div>
+          <div class="step"><div class="sn">2</div><div class="step-text">Right-click &rarr; <strong>Switch Crew</strong></div></div>
+          <div class="step"><div class="sn">3</div><div class="step-text">Choose the correct crew from the drop-down &rarr; Save</div></div>
+        </div>
+        <div class="tip"><strong>Switch Crew works for both single and multiple selections</strong> &mdash; one of the few actions that behaves the same way for both.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  BREAKS & LUNCHES                                             -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-breaks">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Breaks &amp; Lunches</div>
+      <div class="title">Adding Breaks in Bulk</div>
+      <p class="desc">Breaks and lunches appear as yellow blocks in the Timeline view. When an entire crew is missing breaks &mdash; often because the field user skipped the prompt &mdash; add them for everyone at once.</p>
+
+      <div class="fr">
+        <div class="fr-text">
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Filter to the crew. Select all employees missing breaks.</div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Click the <strong>+</strong> icon next to the search bar &rarr; <strong>Add static duration jobs</strong>.</div></div>
+            <div class="step"><div class="sn">3</div><div class="step-text">Check <strong>"Dynamic start time after first checkin"</strong>.</div></div>
+            <div class="step"><div class="sn">4</div><div class="step-text">Set the timing per your state's regulations (e.g., lunch 5 hours after checkin).</div></div>
+            <div class="step"><div class="sn">5</div><div class="step-text">Select Break or Lunch. If both are missing, click <strong>"+ add another job"</strong>.</div></div>
+            <div class="step"><div class="sn">6</div><div class="step-text">Save.</div></div>
+          </div>
+          <div class="tip"><strong>"Dynamic start time" means relative timing</strong> &mdash; "give everyone a break X hours after their individual start time." No manual calculation needed even if employees started at different times.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="breaks-static-duration.png" data-desc="Add static duration dialog with Dynamic start time and job selection"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="fr rev">
+        <div class="fr-text">
+          <div class="label">Inserting</div>
+          <h3>Adding a Break Mid-Day</h3>
+          <p>When adding a break into the middle of an existing day, you must also add back the <strong>continuation timecard</strong> after the break. Otherwise the employee appears to stop working after their break.</p>
+          <div class="warn"><strong>Don't forget the continuation.</strong> Add the break, then create a new timecard that picks up immediately after the break ends, in the same job and location.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="breaks-insert-middle.png" data-desc="Timeline showing a break inserted mid-day with continuation after"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="fr">
+        <div class="fr-text">
+          <div class="label">Common Fix</div>
+          <h3>Double Break / Double Lunch</h3>
+          <p>Happens when the crew leader taps the break prompt twice due to slow reception. Two consecutive break timecards appear with no work continuation after them.</p>
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Select the duplicate break &rarr; right-click &rarr; <strong>Archive check in</strong></div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Select the timecard before the break &rarr; <strong>Duplicate check in</strong></div></div>
+            <div class="step"><div class="sn">3</div><div class="step-text">Edit the start time to begin immediately after the break &rarr; Save</div></div>
+          </div>
+          <div class="good"><strong>Prevention:</strong> Tell field teams to tap the break prompt once only, even if the screen is slow.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="breaks-double-lunch.png" data-desc="Timeline showing two consecutive yellow lunch blocks"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Critical Technique</div>
+      <div class="title">The Exclude Filter</div>
+      <p class="desc">When bulk-changing jobs, you must exclude breaks and lunches from your selection first. Otherwise the bulk edit overwrites break data.</p>
+      <div class="fr">
+        <div class="fr-text">
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Open the Search / Filter bar</div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Under Job, select Break and Lunch</div></div>
+            <div class="step"><div class="sn">3</div><div class="step-text">Click <strong>"Exclude"</strong> instead of "Include" &rarr; Apply</div></div>
+            <div class="step"><div class="sn">4</div><div class="step-text">Breaks are now hidden. Select remaining timecards and edit safely.</div></div>
+          </div>
+          <div class="crit"><strong>Changing jobs? Exclude breaks. Changing ranch/block? Include breaks</strong> so they match the correct location. This is the most important rule for safe bulk editing.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="breaks-exclude-filter.png" data-desc="Search bar with Job: Break/Lunch and the Exclude toggle"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="fr rev">
+        <div class="fr-text">
+          <div class="label">Configuration</div>
+          <h3>Break &amp; Lunch Prompts</h3>
+          <p>Break/lunch prompts are configured per crew. If prompts fire at the wrong time, update them: <strong>Crews</strong> (left sidebar) &rarr; select the crew &rarr; <strong>Edit</strong> &rarr; under "Break and Lunch Prompt", toggle on/off, set the timing, and add additional prompts as needed. Save.</p>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="breaks-prompt-config.png" data-desc="Crew edit screen showing Break and Lunch Prompt settings"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  DAILY AUDITING                                               -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-audit">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Daily Workflow</div>
+      <div class="title">Daily Timecard Auditing</div>
+      <p class="desc">Each morning, audit yesterday's timecards for errors and correct them. Repeat for each crew.</p>
+
+      <div class="vstepper">
+        <div class="vs-item"><div class="sn">1</div><div class="vs-body">
+          <h4>Set date and filter to one crew</h4>
+          <p>Select yesterday's date. Open Search &rarr; Crew &rarr; select the crew &rarr; Apply.</p>
+          <div class="crit"><strong>Never audit without filtering to a crew first.</strong> You risk editing another crew's data.</div>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">2</div><div class="vs-body">
+          <h4>Sort by Name, then Start Time</h4>
+          <p>Click the Name column header, then the Start Time header. This groups each employee's timecards chronologically.</p>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">3</div><div class="vs-body">
+          <h4>Correct flagged errors</h4>
+          <p>Red icons appear automatically next to employee names. Look for:</p>
+          <ul>
+            <li>Missing check-ins &mdash; checkout without a preceding checkin</li>
+            <li>Multiple check-outs &mdash; two checkouts in a row</li>
+            <li>Missing piece records &mdash; "Missing" in the Piece column</li>
+            <li>Overlapping timecards</li>
+            <li>24+ hour timecards (running from midnight)</li>
+          </ul>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">4</div><div class="vs-body">
+          <h4>Verify start times, end times, and total hours</h4>
+          <p>Check for 12:00 AM starts (running timecards), checkout times past midnight, and totals that don't match expected shift length.</p>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">5</div><div class="vs-body">
+          <h4>Verify breaks and lunches</h4>
+          <p>In the Timeline view, look for yellow blocks. Their absence means breaks are missing. Use Add Static Duration to add them in bulk.</p>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">6</div><div class="vs-body">
+          <h4>Verify jobs, sites, and locations</h4>
+          <p>Compare PickTrace timecard details to the crew timesheets for accuracy.</p>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">7</div><div class="vs-body">
+          <h4>Visual check with Timeline</h4>
+          <p>Switch to the Timeline View for a final scan. No gaps, no 24-hour blocks, yellow breaks visible for every employee.</p>
+        </div></div>
+
+        <div class="vs-item"><div class="sn">8</div><div class="vs-body">
+          <h4>Review and approve</h4>
+          <p>Select all timecards &rarr; right-click &rarr; <strong>Review Timecards</strong>. Run the Unreviewed filter as your final check.</p>
+        </div></div>
+      </div>
+
+      <div class="good" style="margin-top:20px"><strong>By auditing daily, weekly payroll becomes a quick review</strong> rather than a scramble.</div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Weekly Workflow</div>
+      <div class="title">Payroll Auditing Cycle</div>
+      <p class="desc">Follow this cycle each time you process payroll.</p>
+      <div class="pgrid">
+        <div class="pgrid-item"><div class="num">1</div><p>Crew leaders complete crew sheets throughout the day &mdash; hours, location, pieces, jobs.</p></div>
+        <div class="pgrid-item"><div class="num">2</div><p>Crew leaders submit sheets after shift or the next morning.</p></div>
+        <div class="pgrid-item"><div class="num">3</div><p>Payroll admin edits timecards in PickTrace against crew sheets.</p></div>
+        <div class="pgrid-item"><div class="num">4</div><p>Payroll admin calls crew leaders with questions from the audit.</p></div>
+        <div class="pgrid-item"><div class="num">5</div><p>End of week: payroll admin sends crew leaders a weekly summary.</p></div>
+        <div class="pgrid-item"><div class="num">6</div><p>Crew leaders validate totals, sign, and return.</p></div>
+        <div class="pgrid-item"><div class="num">7</div><p>Payroll admin makes final edits based on feedback.</p></div>
+        <div class="pgrid-item"><div class="num">8</div><p>Payroll is submitted.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  ERRORS & FIXES                                               -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-errors">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Troubleshooting</div>
+      <div class="title">Common Errors</div>
+      <p class="desc">PickTrace flags errors with a red icon next to the employee name. Click any error below for symptoms, fixes, and prevention.</p>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#c62828"></div><div class="ec-titles"><div class="ec-t">Missing Checkout / Running Timecard <span class="ec-tag" style="background:#fce4ec;color:#c62828">Most Common</span></div><div class="ec-s">Employee never clocked out. System gives checkout at 11:59 PM.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Symptoms</h5>
+          <ul><li>12:00 AM start time on the next day's card</li><li>~24 hours shown</li><li>Timeline runs the entire day through 11:59 PM</li><li>Bulk checkout changes skip this employee</li></ul>
+          <h5>Fix</h5>
+          <ol><li>Verify actual checkout with your field team</li><li>Select the timecard &rarr; right-click &rarr; Edit</li><li>If multiple timecards: check "Set Checkout Time", update, Save</li><li>If one timecard: edit the "End Time" directly, Save</li></ol>
+          <div class="tip"><strong>Bulk shortcut:</strong> Right-click &rarr; "Select all 12am start times" &rarr; Archive. Then set correct start time in bulk.</div>
+          <h5>Prevention</h5><p>Train device users on checkout. Consider long-press checkout (without a badge) when the team is scattered.</p>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Wrong Date on Checkout <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Bulk checkout saves to tomorrow because a running timecard pushed past midnight.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Symptoms</h5><ul><li>Timecard spans two calendar days</li><li>Total hours inflated</li><li>Date field shows tomorrow</li></ul>
+          <h5>Fix</h5><ol><li>Before saving: check the date field</li><li>If it shows tomorrow, change to today</li><li>Root fix: always clear running timecards first</li></ol>
+          <div class="warn"><strong>This is the #1 bulk-edit trap.</strong> Always check the date before saving.</div>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Missing Check-In <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Checkout exists without a preceding check-in.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Add a check-in point to complete start and end times</li><li>Save</li></ol></div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Multiple Check-Outs <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Two checkouts in a row without a check-in between them.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Remove one of the checkouts, or add a check-in between them</li><li>Save</li></ol></div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#7e3bd0"></div><div class="ec-titles"><div class="ec-t">Wrong Job <span class="ec-tag" style="background:#f3e8ff;color:#7e3bd0">Common</span></div><div class="ec-s">Device user forgot to switch jobs before scanning.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Fix (Bulk)</h5>
+          <ol><li>If breaks exist: use the Exclude filter first (Search &rarr; Job: Break/Lunch &rarr; Exclude &rarr; Apply)</li><li>Select timecards &rarr; right-click &rarr; Edit &rarr; check "Set Job"</li><li>Select correct Work Bundle and Job &rarr; Save</li></ol>
+          <h5>Fix (Single)</h5><ol><li>Right-click &rarr; Edit &rarr; update Job in the flyout &rarr; Save</li></ol>
+          <div class="crit"><strong>Set the correct pay style too</strong> when changing jobs. If switching hourly to piecework, check both "Set Job" and "Set Pay Style".</div>
+          <h5>Prevention</h5><p>Train device users to verify the job before scanning. Ensure jobs are scheduled via the Crew Scheduler.</p>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#7e3bd0"></div><div class="ec-titles"><div class="ec-t">Wrong Location <span class="ec-tag" style="background:#f3e8ff;color:#7e3bd0">Common</span></div><div class="ec-s">Device user forgot to switch location before scanning.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Fix</h5><ol><li>Select timecard(s) &rarr; right-click &rarr; Edit</li><li>Check "Set Site and Location"</li><li>Choose correct location &rarr; Save</li></ol>
+          <div class="tip"><strong>Include breaks in your selection</strong> when changing location so they match the correct ranch/block.</div>
+          <h5>Prevention</h5><p>Train device users to verify Site and Location before scanning.</p>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#888"></div><div class="ec-titles"><div class="ec-t">Overlapping Timecards <span class="ec-tag" style="background:#f3f4f6;color:#555">Tricky</span></div><div class="ec-s">Two timecards overlap in time.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Review start/end times of each overlapping timecard</li><li>Adjust so they don't overlap, or archive the incorrect one</li></ol></div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#2e7d32"></div><div class="ec-titles"><div class="ec-t">Double Break / Double Lunch <span class="ec-tag" style="background:#e8f5e9;color:#2e7d32">Preventable</span></div><div class="ec-s">Break prompt tapped twice. Two consecutive breaks, no continuation.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Fix</h5><ol><li>Archive the duplicate break</li><li>Select the timecard before the break &rarr; Duplicate check in</li><li>Set start time to immediately after the break &rarr; Save</li></ol>
+          <div class="good"><strong>Prevention:</strong> Tell field teams to tap the prompt once only.</div>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#2ea3f2"></div><div class="ec-titles"><div class="ec-t">Employee Missing from Crew <span class="ec-tag" style="background:#e8f4fd;color:#1565c0">Common</span></div><div class="ec-s">Employee worked but was never clocked in.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Symptoms</h5><ul><li>Head count is off</li><li>No timecard exists for the employee</li></ul>
+          <h5>Fix</h5><ol><li>Find a coworker who did the same work</li><li>Right-click their timecard &rarr; Duplicate</li><li>Assign to the missing employee, adjust details &rarr; Save</li></ol>
+          <div class="tip"><strong>You can also create a timecard from scratch</strong> &mdash; see the Creating tab. Duplicating is just faster when a coworker did the same work.</div>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#888"></div><div class="ec-titles"><div class="ec-t">Same Employee in Two Crews <span class="ec-tag" style="background:#f3f4f6;color:#555">Rare</span></div><div class="ec-s">Badge scanned into two crews on the same day.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Symptoms</h5><ul><li>Employee under two crew names on the same day</li><li>Same moment: system throws overlapping error</li><li>Different times: system allows it (crew change)</li></ul>
+          <h5>Fix</h5><ol><li>Review both crews to find where the employee actually worked</li><li>Archive the incorrect timecard</li></ol>
+        </div>
+      </div>
+
+      <div class="ec" onclick="this.classList.toggle('open')">
+        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Missing Piece Record <span class="ec-tag" style="background:#fff3e0;color:#e65100">Warning</span></div><div class="ec-s">Piece/hourly+piece timecard with no production records. Shows "Missing" in the Piece column.</div></div><div class="ec-chev">&#9654;</div></div>
+        <div class="ec-bd">
+          <h5>Fix</h5><ol><li>Open Production Records in a new tab</li><li>Check if the employee should have a record</li><li>If yes: add a production record</li><li>If no pieces were logged: the warning can be ignored</li></ol>
+          <div class="tip"><strong>This is a warning, not a hard error.</strong> It shows as text in the Piece column, not a red icon.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  ARCHIVING & REVIEWING                                        -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab-archive">
+
+  <div class="sect">
+    <div class="wrap">
+      <div class="label">Archiving</div>
+      <div class="title">Archive &amp; Unarchive</div>
+      <p class="desc">Archiving removes a timecard from reporting but does not delete it. It can be restored at any time. Works from either view.</p>
+
+      <div class="two">
+        <div>
+          <h3 style="font-size:15px;margin-bottom:8px">Archive</h3>
+          <p style="font-size:13px;color:var(--text)">Select one or multiple timecards &rarr; right-click &rarr; <strong>Archive Timecard(s)</strong>.</p>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:6px">Or: open the Edit flyout and click "Archive Timecard" at the bottom of each card.</p>
+        </div>
+        <div>
+          <h3 style="font-size:15px;margin-bottom:8px">Unarchive</h3>
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Click the <strong>settings gear</strong> (top-right) &rarr; toggle on <strong>"Show archived"</strong></div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Select the archived timecard(s)</div></div>
+            <div class="step"><div class="sn">3</div><div class="step-text">Right-click &rarr; <strong>Unarchive Timecard(s)</strong></div></div>
+          </div>
+          <div class="tip"><strong>You only need "Show archived" when unarchiving.</strong> For archiving, the timecard is already visible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect alt">
+    <div class="wrap">
+      <div class="label">Reviewing</div>
+      <div class="title">Review &amp; Approve Timecards</div>
+      <p class="desc">Reviewing marks timecards as audited and approved, clearing the "unreviewed" error. This signals the data is ready for payroll.</p>
+
+      <div class="fr">
+        <div class="fr-text">
+          <div class="steps">
+            <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard(s) to review</div></div>
+            <div class="step"><div class="sn">2</div><div class="step-text">Right-click &rarr; <strong>Review Timecards</strong></div></div>
+          </div>
+          <div class="good"><strong>Use the Unreviewed filter as your final check.</strong> Search &rarr; check "Unreviewed" to find anything still needing attention before payroll export.</div>
+        </div>
+        <div class="fr-media">
+          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
+          <div class="bf-body"><div class="ss" data-file="archive-review-menu.png" data-desc="Right-click menu showing Review Timecards"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="ftr">
+  <div class="ftr-inner">
+    <div>
+      <a href="https://picktrace-help.helpscoutdocs.com/article/351-what-are-timecards" target="_blank">What are Timecards?</a> &middot;
+      <a href="https://picktrace-help.helpscoutdocs.com/article/440-daily-timecard-auditing-process" target="_blank">Daily Auditing</a> &middot;
+      <a href="https://picktrace-help.helpscoutdocs.com/article/399-how-do-i-edit-a-timecard" target="_blank">Editing</a> &middot;
+      <a href="https://picktrace-help.helpscoutdocs.com/article/474-how-to-archive" target="_blank">Archiving</a>
+    </div>
+    <div>Last updated: March 2026</div>
+  </div>
+</div>
+
+<script>
+var tabs=['overview','create','edit','breaks','audit','errors','archive'];
+function go(id){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.hdr-nav button').forEach(function(b){b.classList.remove('active')});
+  var i=tabs.indexOf(id),bs=document.querySelectorAll('.hdr-nav button');
+  if(i>=0&&bs[i])bs[i].classList.add('active');
+  document.getElementById('heroEl').style.display=id==='overview'?'':'none';
+  document.querySelector('.hdr-nav').classList.remove('open');
+  window.scrollTo(0,0);
+}
+function stab(btn,pid){
+  var p=btn.closest('.sect');
+  p.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  p.querySelectorAll('.sp').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(pid).classList.add('active');
+}
+function xBanner(){document.getElementById('banner').classList.add('hidden');try{localStorage.setItem('pt-b','1')}catch(e){}}
+(function(){try{if(localStorage.getItem('pt-b')==='1')document.getElementById('banner').classList.add('hidden')}catch(e){}})();
+function renderSS(){
+  document.querySelectorAll('.ss').forEach(function(s){
+    var f=s.getAttribute('data-file'),d=s.getAttribute('data-desc'),img=new Image();
+    img.onload=function(){s.innerHTML='<img src="./screenshots/'+f+'" alt="'+d+'" style="width:100%;display:block"/>'};
+    img.onerror=function(){s.innerHTML='<div class="ph"><div class="ph-file">'+f+'</div><div class="ph-desc">'+d+'</div></div>'};
+    img.src='./screenshots/'+f;
+  });
+}
+renderSS();
+</script>
+</body>
+</html>
