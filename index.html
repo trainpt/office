@@ -2,946 +2,829 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PickTrace Timecards Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PickTrace Office Suite</title>
 <style>
 :root{
-  --navy:#1a1a2e;--navy-mid:#16213e;--navy-deep:#0f3460;
-  --blue:#2ea3f2;--blue-hover:#1b8fd8;
-  --text:#444;--text-dark:#1a1a2e;--text-muted:#888;
-  --bg:#fff;--bg-alt:#f8f9fb;
-  --border:#eee;--border-med:#e0e0e0;
-  --tip-bg:#e8f4fd;--tip-border:#2ea3f2;--tip-text:#1a1a2e;
-  --warn-bg:#fff3e0;--warn-border:#f57c00;--warn-text:#4e342e;
-  --crit-bg:#fce4ec;--crit-border:#c62828;--crit-text:#4a1010;
-  --good-bg:#e8f5e9;--good-border:#2e7d32;--good-text:#1b5e20;
+  --navy:#0e2a47;--navy2:#0b2240;--blue:#1a6fba;--blue-light:#2887d4;
+  --accent:#f0a500;--green:#27ae60;--red:#e74c3c;--yellow:#f1c40f;
+  --bg:#f4f6f9;--white:#fff;--text:#3a3a3a;--text-light:#666;
+  --border:#dde3ec;--sidebar-w:240px;--sidebar-collapsed:50px;--hdr-h:52px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.7;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
-a{color:var(--blue);text-decoration:none}a:hover{color:var(--blue-hover)}
-img{max-width:100%;display:block}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 
-/* ---- Header ---- */
-.hdr{position:sticky;top:0;z-index:100;background:#1a1a2e;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
-.hdr-sub{font-size:12px;color:rgba(255,255,255,.5);font-weight:400;letter-spacing:.3px}
-.hdr-nav{display:flex;gap:6px}
-.hdr-nav button{padding:8px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,.6);background:none;border:1px solid transparent;border-radius:6px;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
-.hdr-nav button:hover{color:#fff;background:rgba(255,255,255,.08)}
-.hdr-nav button.active{color:#fff;background:rgba(46,163,242,.15);border-color:rgba(46,163,242,.3)}
-.mob-btn{display:none;background:0 0;border:0;color:#fff;font-size:20px;cursor:pointer}
-
-/* ---- Hero ---- */
-.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 50%,var(--navy-deep) 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-140px;right:-100px;width:420px;height:420px;border-radius:50%;background:rgba(46,163,242,.03)}
-.hero::after{content:'';position:absolute;bottom:-120px;left:-80px;width:320px;height:320px;border-radius:50%;background:rgba(46,163,242,.02)}
-.hero-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px}
-.hero h1{font-size:36px;font-weight:700;color:#fff;max-width:680px;margin:0 auto 14px;line-height:1.2}
-.hero p{font-size:15px;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto;line-height:1.7}
-
-/* ---- Container ---- */
-.wrap{max-width:1100px;margin:0 auto;padding:0 40px}
-
-/* ---- Sections ---- */
-.tab-panel{display:none}.tab-panel.active{display:block}
-.sect{padding:70px 0;border-bottom:1px solid var(--border)}
-.sect:last-child{border-bottom:0}
-.sect.alt{background:var(--bg-alt)}
-.label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
-.title{font-size:26px;font-weight:700;color:var(--text-dark);margin-bottom:14px;line-height:1.25}
-.desc{font-size:14px;color:var(--text);max-width:600px;line-height:1.7;margin-bottom:32px}
-
-/* ---- Feature Row ---- */
-.fr{display:flex;align-items:flex-start;gap:80px;padding:44px 0;border-bottom:1px solid var(--border)}
-.fr:last-child{border-bottom:0}
-.fr.rev{flex-direction:row-reverse}
-.fr-text{flex:1;min-width:0}
-.fr-media{flex:1;min-width:0}
-.fr-text h3{font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.3}
-.fr-text p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px}
-.fr-text ul,.fr-text ol{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding-left:18px}
-.fr-text li{margin-bottom:4px}
-
-/* ---- Browser Frame ---- */
-.bf{background:#fff;border-radius:12px;border:1px solid var(--border-med);box-shadow:0 6px 24px rgba(0,0,0,.08);overflow:hidden}
-.bf-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#f6f6f6;border-bottom:1px solid var(--border-med)}
-.bf-dot{width:10px;height:10px;border-radius:50%}.bf-dot.r{background:#ff5f57}.bf-dot.y{background:#febc2e}.bf-dot.g{background:#28c840}
-.bf-url{flex:1;margin-left:8px;background:#e8e8e8;border-radius:4px;height:22px;max-width:240px}
-.bf-body{min-height:140px;background:#fafafa}
-.bf-body img{width:100%;display:block}
-
-/* ---- Panel Frame (vertical/sidebar screenshots) ---- */
-.pf{background:#fff;border-radius:12px;border:1px solid var(--border-med);box-shadow:0 4px 16px rgba(0,0,0,.06);overflow:hidden;max-width:240px;margin:0 auto}
-.pf img{width:100%;display:block}
-.pf .ph{min-height:180px;border:0;border-radius:0}
-
-/* ---- View Comparison ---- */
-.view-compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:24px}
-.view-compare .vc-frame{border-radius:10px;border:1px solid var(--border-med);overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);background:#fafafa}
-.view-compare .vc-frame .vc-img{width:100%;overflow:hidden;background:#f4f5f7}
-.view-compare .vc-frame .vc-img .ph{min-height:180px;border:0;border-radius:0}
-.view-compare .vc-frame .vc-img img{width:100%;display:block}
-.view-compare h3{font-size:15px;margin:14px 0 4px}
-.view-compare p{font-size:13px;color:var(--text);line-height:1.7}
-
-/* ---- Screenshot Placeholder ---- */
-.ph{border:2px dashed #d1d5db;background:#f9fafb;border-radius:6px;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
-.ph-file{font-size:11px;font-weight:600;color:var(--text-muted);font-family:'Courier New',monospace;background:#eee;padding:2px 8px;border-radius:3px;margin-bottom:5px}
-.ph-desc{font-size:11px;color:#aaa;max-width:280px}
-
-/* ---- Callouts (trainpt style) ---- */
-.tip,.warn,.crit,.good{padding:12px 16px;border-left:3px solid;border-radius:0 8px 8px 0;font-size:12px;line-height:1.7;margin:16px 0}
-.tip{background:var(--tip-bg);border-color:var(--tip-border);color:var(--tip-text)}
-.warn{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text)}
-.crit{background:var(--crit-bg);border-color:var(--crit-border);color:var(--crit-text)}
-.good{background:var(--good-bg);border-color:var(--good-border);color:var(--good-text)}
-.tip strong,.warn strong,.crit strong,.good strong{color:inherit;font-weight:700}
-
-/* ---- Steps (compact, inline) ---- */
-.steps{margin:12px 0}
-.step{display:flex;gap:12px;padding:8px 0}
-.sn{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.step-text{font-size:13px;color:var(--text);line-height:1.7}
-.step-text strong{color:var(--text-dark)}
-.step-sub{font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.6}
-
-/* ---- Vertical Stepper (auditing) ---- */
-.vstepper .vs-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);position:relative}
-.vstepper .vs-item:last-child{border-bottom:0}
-.vs-body{flex:1;min-width:0}
-.vs-body h4{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
-.vs-body p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:6px}
-.vs-body ul,.vs-body ol{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:8px;padding-left:18px}
-.vs-media{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.vs-media .bf{flex:1;min-width:200px;max-width:400px}
-
-/* ---- Comparison Table ---- */
-.ctbl{width:100%;border-collapse:collapse;border:1px solid var(--border-med);border-radius:10px;overflow:hidden;margin:16px 0}
-.ctbl th{text-align:left;padding:10px 14px;background:var(--navy);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
-.ctbl td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);vertical-align:top}
-.ctbl td:first-child{font-weight:600;color:var(--text-dark);width:130px}
-.ctbl tr:last-child td{border-bottom:0}
-
-/* ---- Error Cards ---- */
-.ec{background:#fff;border:1px solid var(--border-med);border-radius:10px;margin-bottom:10px;overflow:hidden}
-.ec-hd{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;user-select:none}
-.ec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.ec-titles{flex:1}
-.ec-t{font-size:13px;font-weight:600;color:var(--text-dark)}
-.ec-tag{display:inline-block;padding:2px 7px;border-radius:100px;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle}
-.ec-s{font-size:12px;color:var(--text-muted);margin-top:1px}
-.ec-chev{font-size:10px;color:var(--text-muted);transition:transform .2s;flex-shrink:0}
-.ec.open .ec-chev{transform:rotate(90deg)}
-.ec-bd{display:none;padding:2px 18px 18px 38px;font-size:13px;color:var(--text);line-height:1.7}
-.ec.open .ec-bd{display:block}
-.ec-bd h5{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin:14px 0 6px}
-.ec-bd ul,.ec-bd ol{padding-left:18px;margin-bottom:8px}
-.ec-bd li{margin-bottom:2px}
-
-/* ---- Dark Box ---- */
-.darkbox{background:var(--navy);border-radius:10px;padding:22px 26px;color:rgba(255,255,255,.8);font-size:13px;line-height:1.7;margin:24px 0}
-.darkbox strong{color:#fff}
-.darkbox .label{margin-bottom:6px}
-
-/* ---- Sub-tabs ---- */
-.stabs{display:flex;gap:4px;border-bottom:2px solid var(--border);margin-bottom:22px}
-.stab{background:0 0;border:0;font-family:inherit;font-size:12px;font-weight:600;color:var(--text-muted);padding:8px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.stab:hover{color:var(--text)}.stab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.sp{display:none}.sp.active{display:block}
-
-/* ---- Two-col layout ---- */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
-
-/* ---- Payroll grid ---- */
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.pgrid-item{background:#fff;border:1px solid var(--border-med);border-radius:8px;padding:14px 16px}
-.pgrid-item .num{font-size:18px;font-weight:700;color:var(--blue);margin-bottom:4px}
-.pgrid-item p{font-size:12px;color:var(--text);line-height:1.6}
-
-/* ---- Banner ---- */
-.banner{background:var(--tip-bg);border-bottom:1px solid rgba(46,163,242,.15);padding:10px 40px;font-size:12px;color:var(--tip-text);display:flex;align-items:center;gap:10px;margin-top:52px}
-.banner strong{font-weight:700}
-.banner code{background:rgba(46,163,242,.1);padding:1px 5px;border-radius:3px;font-size:11px}
-.banner-x{margin-left:auto;background:0 0;border:0;font-size:16px;cursor:pointer;color:var(--text-muted);padding:0 2px}.banner-x:hover{color:var(--text)}
-.banner.hidden{display:none}
-
-/* ---- Footer ---- */
-.ftr{background:var(--navy);padding:24px 40px;font-size:11px;color:rgba(255,255,255,.4)}
-.ftr-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.ftr a{color:var(--blue);font-weight:600}.ftr a:hover{color:#fff}
-
-/* ---- Responsive ---- */
-@media(max-width:900px){
-  .fr,.fr.rev{flex-direction:column;gap:30px}
-  .two,.pgrid,.view-compare{grid-template-columns:1fr}
-  .hero h1{font-size:28px}.hero{padding:60px 24px}
-  .wrap{padding:0 24px}.hdr{padding:0 20px}
-  .sect{padding:50px 0}
+/* ── SIDEBAR ── */
+#sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-collapsed);height:100vh;
+  background:var(--navy);overflow-y:auto;overflow-x:hidden;
+  z-index:200;transition:width .2s ease;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent;
 }
-@media(max-width:600px){
-  .hdr-nav{display:none}
-  .hdr-nav.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:var(--navy);padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.08);z-index:999}
-  .hdr-nav.open button{text-align:left;padding:9px 12px;width:100%}
-  .mob-btn{display:block}
-  .hero{padding:44px 16px}.hero h1{font-size:22px}
-  .fr{gap:20px}.sect{padding:40px 0}
-  .pgrid{grid-template-columns:1fr 1fr}
-  .ec-bd{padding-left:18px}
-  .banner{padding:10px 16px}
-  .ftr{padding:20px 16px}
+#sidebar:hover{width:var(--sidebar-w)}
+#sidebar::-webkit-scrollbar{width:4px}
+#sidebar::-webkit-scrollbar-track{background:transparent}
+#sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+#sidebar-trigger{display:none}
+
+.sb-logo{padding:12px 11px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;height:var(--hdr-h);overflow:hidden}
+.sb-logo img{height:28px;flex-shrink:0}
+.sb-logo-text{color:#fff;font-size:12px;font-weight:600;letter-spacing:.4px;opacity:0;white-space:nowrap;transition:opacity .2s}
+#sidebar:hover .sb-logo-text{opacity:.85}
+
+.sb-section{padding:14px 0 4px;border-top:1px solid rgba(255,255,255,.07)}
+.sb-section:first-of-type{border-top:none;padding-top:6px}
+.sb-section-label{padding:4px 18px 6px;font-size:10px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,255,255,.38);white-space:nowrap;opacity:0;transition:opacity .2s}
+#sidebar:hover .sb-section-label{opacity:1}
+
+.sb-item{
+  display:flex;align-items:center;gap:10px;padding:10px 0 10px 14px;
+  color:rgba(255,255,255,.75);font-size:13px;font-weight:500;
+  cursor:pointer;position:relative;
+  transition:background .15s,color .15s;white-space:nowrap;
 }
-@media print{
-  .hdr,.banner,.hero{display:none}
-  .tab-panel{display:block!important;page-break-before:always}
-  .tab-panel:first-of-type{page-break-before:avoid}
-  .ec-bd{display:block!important}
-  .ph{display:none}
-  body{font-size:11px;color:#000}
-  .sect{padding:20px 0;border-bottom:1px solid #ccc}
-  .fr{break-inside:avoid}
-  .ftr{background:#fff;color:#333;border-top:1px solid #ccc}
+.sb-item span{opacity:0;transition:opacity .2s}
+#sidebar:hover .sb-item span{opacity:1}
+.sb-item svg{width:22px;height:22px;flex-shrink:0;opacity:.7;fill:currentColor}
+.sb-item svg.live-icon{opacity:1}
+.sb-item:hover svg.live-icon,.sb-item.active svg.live-icon{filter:drop-shadow(0 0 4px #27ae60);animation:live-glow 2s ease-in-out infinite}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#fff}
+.sb-item:hover svg{opacity:1}
+.sb-item.active{background:rgba(255,255,255,.09);color:#fff}
+.sb-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+.sb-item.active svg{opacity:1}
+
+.sb-sub{display:none;padding-left:0}
+.sb-sub.open{display:none}
+#sidebar:hover .sb-sub.open{display:block}
+.sb-subitem{
+  display:block;padding:7px 18px 7px 47px;font-size:12px;
+  color:rgba(255,255,255,.6);cursor:pointer;white-space:nowrap;
+  transition:all .12s;
+}
+.sb-subitem:hover{color:#fff;background:rgba(255,255,255,.05)}
+.sb-subitem.active{color:var(--accent);font-weight:600}
+
+/* ── TOPBAR ── */
+#topbar{
+  position:fixed;top:0;left:var(--sidebar-collapsed);right:0;height:var(--hdr-h);
+  background:var(--white);display:flex;align-items:center;
+  padding:0 20px;z-index:150;border-bottom:1px solid var(--border);
+  justify-content:space-between;transition:left .2s ease;
+}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-title{color:var(--text);font-size:16px;font-weight:600;letter-spacing:.2px}
+.tb-right{display:flex;align-items:center;gap:14px}
+.tb-badge{background:var(--blue);color:#fff;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+
+/* ── MAIN CONTENT ── */
+#main-wrapper{margin-top:var(--hdr-h);margin-left:var(--sidebar-collapsed)}
+#main{max-width:1140px;margin:0 auto;padding:32px 40px}
+
+.module-panel{display:none}
+.module-panel.active{display:block}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:12px;padding:36px 40px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+.hero h1{font-size:26px;font-weight:700;margin-bottom:8px}
+.hero p{font-size:14px;opacity:.8;max-width:560px;line-height:1.65}
+
+/* Card */
+.card{background:var(--white);border-radius:10px;border:1px solid var(--border);margin-bottom:20px;overflow:hidden}
+.card-hdr{display:flex;align-items:center;gap:12px;padding:18px 22px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:background .12s}
+.card-hdr:hover{background:#fafbfd}
+.card-hdr.open{border-bottom-color:var(--border)}
+.card-icon{width:32px;height:32px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:16px;height:16px;color:#fff}
+.card-title{font-size:15px;font-weight:700;color:#1a1a2e;flex:1}
+.card-desc{font-size:12px;color:var(--text-light);margin-top:2px}
+.card-chevron{transition:transform .2s;color:var(--text-light)}
+.card-hdr.open .card-chevron{transform:rotate(180deg)}
+.card-body{display:none;padding:24px 22px 22px}
+.card-hdr.open+.card-body{display:block}
+
+/* Video placeholder */
+.video-placeholder{background:#0e1e33;border-radius:8px;padding:32px 20px;text-align:center;margin-bottom:20px;border:2px dashed rgba(255,255,255,.1)}
+.video-placeholder svg{width:40px;height:40px;color:rgba(255,255,255,.25);margin:0 auto 10px;display:block}
+.video-placeholder p{color:rgba(255,255,255,.35);font-size:12px}
+.video-placeholder code{background:rgba(255,255,255,.08);padding:2px 8px;border-radius:4px;font-size:11px;color:rgba(255,255,255,.5)}
+
+/* Steps */
+.steps{counter-reset:step;margin:0 0 16px}
+.step{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+.step-num{counter-increment:step;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-text{font-size:13px;color:var(--text);line-height:1.6;padding-top:3px}
+
+/* Callouts */
+.tip{background:#f0f7ff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#1a4a7a;line-height:1.6}
+.tip strong{color:var(--blue)}
+.warn{background:#fff8ed;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#7a4a00;line-height:1.6}
+.warn strong{color:var(--accent)}
+.danger{background:#fff0f0;border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#7a0000;line-height:1.6}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+.tbl th{background:#f0f4fa;color:#1a1a2e;font-weight:700;padding:9px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#fafbfd}
+
+/* Tags */
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.tag-blue{background:#deeaf8;color:#1a4a7a}
+.tag-yellow{background:#fff0c2;color:#7a5000}
+.tag-red{background:#ffe0e0;color:#7a0000}
+.tag-green{background:#e0f5ec;color:#0a5a30}
+
+/* Prose */
+.prose p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px}
+.prose h3{font-size:15px;font-weight:700;color:#1a1a2e;margin:18px 0 8px}
+.prose h4{font-size:13px;font-weight:700;color:#1a1a2e;margin:14px 0 6px}
+.prose ul{margin:0 0 12px 18px}
+.prose li{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:4px}
+.prose strong{color:#1a1a2e}
+
+/* Error accordion */
+.err-item{border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}
+.err-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;background:#fff}
+.err-hdr:hover{background:#fafbfd}
+.err-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.err-dot.red{background:var(--red)}
+.err-dot.orange{background:#e67e22}
+.err-dot.yellow{background:var(--yellow)}
+.err-name{font-size:13px;font-weight:700;color:#1a1a2e;flex:1}
+.err-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.err-body{display:none;padding:14px 16px;border-top:1px solid var(--border);background:#fafbfd}
+.err-item.open .err-body{display:block}
+.err-item.open .card-chevron{transform:rotate(180deg)}
+
+/* Footer */
+.ftr{margin-top:40px;padding:20px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.ftr-links a{color:var(--blue);font-size:12px;margin-right:14px;text-decoration:none}
+.ftr-links a:hover{text-decoration:underline}
+.ftr-date{font-size:12px;color:var(--text-light)}
+
+@keyframes live-glow{0%,100%{filter:drop-shadow(0 0 3px #27ae60)}50%{filter:drop-shadow(0 0 8px #27ae60) drop-shadow(0 0 12px #27ae60)}}
+
+@media(min-width:1400px){
+  #sidebar{width:var(--sidebar-w)}
+  .sb-logo-text{opacity:.85}
+  .sb-section-label{opacity:1}
+  .sb-item span{opacity:1}
+  .sb-sub.open{display:block}
+  #topbar{left:var(--sidebar-w)}
+  #main-wrapper{margin-left:var(--sidebar-w)}
+}
+@media(max-width:720px){
+  #main{padding:20px 16px}
+  .hero{padding:24px 20px}
+  .hero h1{font-size:20px}
 }
 </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div style="display:flex;align-items:center;gap:12px">
-    <img src="./screenshots/logo.png" alt="PickTrace" style="height:28px">
-    <span class="hdr-sub">Timecards Guide</span>
+<div id="sidebar-trigger"></div>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="tb-left">
+    <div class="tb-title" id="tb-page-title">Dashboard</div>
   </div>
-  <button class="mob-btn" onclick="document.querySelector('.hdr-nav').classList.toggle('open')">&#9776;</button>
-  <div class="hdr-nav" id="hn">
-    <button class="active" onclick="go('overview')">Overview</button>
-    <button onclick="go('create')">Creating &amp; Duplicating</button>
-    <button onclick="go('edit')">Editing</button>
-    <button onclick="go('breaks')">Breaks &amp; Lunches</button>
-    <button onclick="go('audit')">Daily Auditing</button>
-    <button onclick="go('errors')">Errors &amp; Fixes</button>
-    <button onclick="go('archive')">Archiving &amp; Reviewing</button>
+  <div class="tb-right">
+    <span class="tb-badge">Training Guide</span>
   </div>
 </div>
 
-<div class="hero" id="heroEl">
-  <div class="hero-label">User Guide</div>
-  <h1>Timecards</h1>
-  <p>View, create, edit, audit, and manage timecards in PickTrace Office. Select a section above to get started.</p>
-</div>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-logo">
+    <img src="https://picktrace.com/wp-content/uploads/2022/03/Web22-PicktraceLogo80.png" alt="PickTrace">
+  </div>
 
-<!-- ============================================================ -->
-<!--  OVERVIEW                                                     -->
-<!-- ============================================================ -->
-<div class="tab-panel active" id="tab-overview">
-
-  <div class="sect">
-    <div class="wrap">
-      <div style="display:flex;align-items:center;gap:40px">
-        <div style="flex:1;min-width:0">
-          <div class="label">Overview</div>
-          <div class="title">What Are Timecards?</div>
-          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:24px;max-width:460px">Timecards are records that capture every activity an employee performs &mdash; start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically in PickTrace Office.</p>
-          <h3 style="font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:8px">Where to Find Them</h3>
-          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px;max-width:460px">Navigate to <strong>Timecards</strong> from the left-hand sidebar under Dashboard. The page defaults to today's date and displays the List View.</p>
-          <p style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px;max-width:460px">Use the <strong>date drop-down</strong> to select a different day, a date range, or a preset like "Last 7 days". The arrow buttons step forward or back one day.</p>
-          <p style="font-size:14px;color:var(--text);line-height:1.7;max-width:460px">Records created on handheld devices appear here once the device syncs. The number of timecards per employee depends on how many activities and locations they worked.</p>
-        </div>
-        <div style="flex:1;display:flex;justify-content:center">
-          <div class="pf"><div class="ss" data-file="overview-sidebar-nav.png" data-desc="Left sidebar showing the Timecards link under Dashboard"></div></div>
-        </div>
-      </div>
+  <div class="sb-section">
+    <div class="sb-item active" data-module="dashboard" onclick="showModule('dashboard',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+      <span>Dashboard</span>
+    </div>
+    <div class="sb-item" data-module="timecards" onclick="toggleSub('sub-tc',this)">
+      <svg viewBox="0 0 24 24"><path d="M11 17c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1zm0-14v4h2V5.08c3.39.49 6 3.39 6 6.92 0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L12 13l1.41-1.41-6.8-6.8v.02C4.42 6.45 3 9.05 3 12c0 4.97 4.02 9 9 9 4.97 0 9-4.03 9-9s-4.03-9-9-9h-1zm7 9c0-.55-.45-1-1-1s-1 .45-1 1 .45 1 1 1 1-.45 1-1zM6 12c0 .55.45 1 1 1s1-.45 1-1-.45-1-1-1-1 .45-1 1z"/></svg>
+      <span>Timecards</span>
+    </div>
+    <div class="sb-sub" id="sub-tc">
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-overview',this)">Overview</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-create',this)">Creating & Duplicating</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-edit',this)">Editing</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-breaks',this)">Breaks & Lunches</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-audit',this)">Daily Auditing</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-errors',this)">Errors & Fixes</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-archive',this)">Archiving & Reviewing</div>
+    </div>
+    <div class="sb-item" data-module="production" onclick="toggleSub('sub-pr',this)">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6h-3.14c-.47 0-.84.33-.97.78C14.53 11.04 13.35 12 12 12s-2.53-.96-2.89-2.22c-.13-.45-.5-.78-.97-.78H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v3zm-3.13 7H20c.55 0 1 .45 1 1v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-2c0-.55.45-1 1-1h4.13c.47 0 .85.34.98.8.35 1.27 1.51 2.2 2.89 2.2s2.54-.93 2.89-2.2c.13-.46.51-.8.98-.8z"/></svg>
+      <span>Production Records</span>
+    </div>
+    <div class="sb-sub" id="sub-pr">
+      <div class="sb-subitem" onclick="showModuleSub('production','pr-overview',this)">Overview</div>
+      <div class="sb-subitem" onclick="showModuleSub('production','pr-add',this)">Adding Records</div>
+      <div class="sb-subitem" onclick="showModuleSub('production','pr-edit',this)">Editing Records</div>
+      <div class="sb-subitem" onclick="showModuleSub('production','pr-errors',this)">Errors & Fixes</div>
+    </div>
+    <div class="sb-item" data-module="scheduler" onclick="toggleSub('sub-cs',this)">
+      <svg viewBox="0 0 24 24"><path d="M19 4h-1V3c0-.55-.45-1-1-1s-1 .45-1 1v1H8V3c0-.55-.45-1-1-1s-1 .45-1 1v1H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 15c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1V9h14v10zM7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+      <span>Crew Scheduler</span>
+    </div>
+    <div class="sb-sub" id="sub-cs">
+      <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-overview',this)">Overview</div>
+      <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-create',this)">Creating a Schedule</div>
+      <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-rates',this)">Locations & Piece Rates</div>
+      <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-breaks',this)">Break & Lunch Prompts</div>
+    </div>
+    <div class="sb-item" data-module="reports" onclick="toggleSub('sub-rpt',this)">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+      <span>Reports</span>
+    </div>
+    <div class="sb-sub" id="sub-rpt">
+      <div class="sb-subitem" onclick="showModuleSub('reports','rpt-format',this)">Choose a Format</div>
+      <div class="sb-subitem" onclick="showModuleSub('reports','rpt-columns',this)">Select & Customize Columns</div>
+      <div class="sb-subitem" onclick="showModuleSub('reports','rpt-filters',this)">Filter Your Data</div>
+      <div class="sb-subitem" onclick="showModuleSub('reports','rpt-save',this)">Save, Schedule & Export</div>
+    </div>
+    <div class="sb-item" data-module="payroll" onclick="toggleSub('sub-pay',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+      <span>Payroll</span>
+    </div>
+    <div class="sb-sub" id="sub-pay">
+      <div class="sb-subitem" onclick="showModuleSub('payroll','pay-overview',this)">Overview</div>
+      <div class="sb-subitem" onclick="showModuleSub('payroll','pay-codes',this)">Payroll Code Mapping</div>
+      <div class="sb-subitem" onclick="showModuleSub('payroll','pay-export',this)">Exporting Payroll</div>
+      <div class="sb-subitem" onclick="showModuleSub('payroll','pay-calc',this)">Pay Calculations</div>
     </div>
   </div>
 
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Two Views</div>
-      <div class="title">Timeline View vs List View</div>
-      <p class="desc">Toggle between both views using the buttons in the top-right corner of the page. Both let you review and audit timecards, but display information differently.</p>
-
-      <table class="ctbl">
-        <thead><tr><th></th><th>List View</th><th>Timeline View</th></tr></thead>
-        <tbody>
-          <tr><td>Best for</td><td>Complex edits, bulk changes, investigation, CSV export</td><td>Visual confirmation, quick drag-to-adjust edits</td></tr>
-          <tr><td>Editing</td><td>Single and bulk via flyout panel</td><td>Individual only &mdash; drag check-in/check-out edges</td></tr>
-          <tr><td>Unique features</td><td>Sortable columns, extra columns (device, geolocation, reviewed), CSV export</td><td>Colored time blocks, hover detail popup, visual gaps/overlaps</td></tr>
-        </tbody>
-      </table>
-
-      <div class="view-compare">
-        <div>
-          <div class="vc-frame">
-            <div class="vc-img"><div class="ss" data-file="overview-list-view.png" data-desc="List View showing the table layout with sortable columns"></div></div>
-          </div>
-          <h3>List View</h3>
-          <p>The default view. Sortable table with all attributes as columns. Click any header to sort, drag to rearrange. Open <strong>Settings &gt; Column Visibility</strong> to add or remove columns.</p>
-          <div class="tip"><strong>Add "Reviewed", "Device", and "Geolocation" columns</strong> for a complete audit view. Hidden by default.</div>
-        </div>
-        <div>
-          <div class="vc-frame">
-            <div class="vc-img"><div class="ss" data-file="overview-timeline-view.png" data-desc="Timeline View showing colored time blocks for a full crew's day"></div></div>
-          </div>
-          <h3>Timeline View</h3>
-          <p>Visual representation of the crew's day. <strong>Blue</strong> blocks are productive work, <strong>yellow</strong> are breaks. Drag edges to adjust times, hover for details, right-click for the full menu.</p>
-        </div>
-      </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Workforce Center</div>
+    <div class="sb-item" data-module="employees" onclick="showModule('employees',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+      <span>Employees</span>
+    </div>
+    <div class="sb-item" data-module="employers" onclick="showModule('employers',this)">
+      <svg viewBox="0 0 24 24"><path d="M20 3h-8c-.55 0-1 .45-1 1v1.61l.01.01 5 4.5c.63.56.99 1.38.99 2.23V13h2v2h-2v2h2v2h-2v2h3c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-5 4h-2V5h2v2zm4 4h-2V9h2v2zm0-4h-2V5h2v2z"/><path d="M15 20v-7.65c0-.28-.12-.55-.33-.74l-5-4.5c-.19-.18-.43-.26-.67-.26-.24 0-.48.09-.67.26l-5 4.5c-.21.18-.33.45-.33.74V20c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-4h4v4c0 .55.45 1 1 1h2c.55 0 1-.45 1-1z"/></svg>
+      <span>Employers</span>
+    </div>
+    <div class="sb-item" data-module="crews" onclick="showModule('crews',this)">
+      <svg viewBox="0 0 24 24"><path d="M11.99 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm3.61 6.34c1.07 0 1.93.86 1.93 1.93 0 1.07-.86 1.93-1.93 1.93-1.07 0-1.93-.86-1.93-1.93-.01-1.07.86-1.93 1.93-1.93zm-6-1.58c1.3 0 2.36 1.06 2.36 2.36 0 1.3-1.06 2.36-2.36 2.36s-2.36-1.06-2.36-2.36c0-1.31 1.05-2.36 2.36-2.36zm0 9.13v3.75c-2.4-.75-4.3-2.6-5.14-4.96 1.05-1.12 3.67-1.69 5.14-1.69.53 0 1.2.08 1.9.22-1.64.87-1.9 2.02-1.9 2.68zM11.99 20c-.27 0-.53-.01-.79-.04v-4.07c0-1.42 2.94-2.13 4.4-2.13 1.07 0 2.92.39 3.84 1.15-1.17 2.97-4.06 5.09-7.45 5.09z"/></svg>
+      <span>Crews</span>
+    </div>
+    <div class="sb-item" data-module="devices" onclick="showModule('devices',this)">
+      <svg viewBox="0 0 24 24"><path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"/></svg>
+      <span>Devices</span>
     </div>
   </div>
 
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Search &amp; Filter</div>
-      <div class="title">Finding Timecards</div>
-      <div class="fr">
-        <div class="fr-text">
-          <p>Click <strong>Search</strong> in the top header next to the date to open the filter panel. Combine multiple criteria and click Apply. Available filters:</p>
-          <div class="two" style="font-size:12px;color:var(--text);margin:10px 0 14px">
-            <div>Name &bull; Site/Location &bull; Crop &bull; Employer &bull; Crew &bull; Job &bull; Device</div>
-            <div>Hourly Rate &bull; Production Records &bull; Work Hours &bull; Audited by &bull; Has no Prod. Records &bull; Edited Record</div>
-          </div>
-          <div class="tip"><strong>Check "Edited Record"</strong> to show only timecards modified after creation &mdash; useful for seeing what's already been touched.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="overview-search-panel.png" data-desc="Search panel showing all available filter criteria"></div></div></div>
-        </div>
-      </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Admin Center</div>
+    <div class="sb-item" data-module="crops" onclick="showModule('crops',this)">
+      <svg viewBox="0 0 24 24"><path d="M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z"/></svg>
+      <span>Crops & Varieties</span>
+    </div>
+    <div class="sb-item" data-module="workbundles" onclick="showModule('workbundles',this)">
+      <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+      <span>Work Bundles</span>
+    </div>
+    <div class="sb-item" data-module="jobs" onclick="showModule('jobs',this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
+      <span>Jobs</span>
+    </div>
+    <div class="sb-item" data-module="sites" onclick="showModule('sites',this)">
+      <svg viewBox="0 0 24 24"><path d="M12,2c-4.2,0-8,3.22-8,8.2c0,3.32,2.67,7.25,8,11.8c5.33-4.55,8-8.48,8-11.8C20,5.22,16.2,2,12,2z M12,12c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2c1.1,0,2,0.9,2,2C14,11.1,13.1,12,12,12z"/></svg>
+      <span>Sites</span>
+    </div>
+    <div class="sb-item" data-module="packstyles" onclick="showModule('packstyles',this)">
+      <svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/></svg>
+      <span>Pack Styles</span>
+    </div>
+    <div class="sb-item" data-module="users" onclick="showModule('users',this)">
+      <svg viewBox="0 0 24 24"><path d="M10.67,13.02C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V19c0,0.55,0.45,1,1,1h8.26C10.47,18.87,10,17.49,10,16C10,14.93,10.25,13.93,10.67,13.02z"/><circle cx="10" cy="8" r="4"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l0.84-0.73c0.18-0.16,0.22-0.42,0.1-0.63l-0.59-1.02c-0.12-0.21-0.37-0.3-0.59-0.22l-1.06,0.36c-0.32-0.27-0.68-0.48-1.08-0.63l-0.22-1.09c-0.05-0.23-0.25-0.4-0.49-0.4h-1.18c-0.24,0-0.44,0.17-0.49,0.4l-0.22,1.09c-0.4,0.15-0.76,0.36-1.08,0.63l-1.06-0.36c-0.23-0.08-0.47,0.02-0.59,0.22l-0.59,1.02c-0.12,0.21-0.08,0.47,0.1,0.63l0.84,0.73c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-0.84,0.73c-0.18,0.16-0.22,0.42-0.1,0.63l0.59,1.02c0.12,0.21,0.37,0.3,0.59,0.22l1.06-0.36c0.32,0.27,0.68,0.48,1.08,0.63l0.22,1.09c0.05,0.23,0.25,0.4,0.49,0.4h1.18c0.24,0,0.44-0.17,0.49-0.4l0.22-1.09c0.4-0.15,0.76-0.36,1.08-0.63l1.06,0.36c0.23,0.08,0.47-0.02,0.59-0.22l0.59-1.02c0.12-0.21,0.08-0.47-0.1-0.63l-0.84-0.73C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></svg>
+      <span>Users</span>
+    </div>
+    <div class="sb-item" data-module="roles" onclick="showModule('roles',this)">
+      <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <span>Roles</span>
     </div>
   </div>
 
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Quick Actions</div>
-      <div class="title">Right-Click Context Menu</div>
-      <p class="desc">The options change depending on how many timecards you have selected.</p>
-      <div class="two">
-        <div>
-          <h3 style="font-size:15px;margin-bottom:6px">One Timecard Selected</h3>
-          <ul style="font-size:13px;line-height:1.9">
-            <li>Navigate to Employee Profile</li>
-            <li>Edit Timecard</li>
-            <li>Duplicate Timecard</li>
-            <li>Transfer Timecard</li>
-            <li>Archive Timecard</li>
-            <li>Add New Timecard</li>
-          </ul>
-        </div>
-        <div>
-          <h3 style="font-size:15px;margin-bottom:6px">Multiple Timecards Selected</h3>
-          <ul style="font-size:13px;line-height:1.9">
-            <li>Edit Timecards</li>
-            <li>Switch Crew</li>
-            <li>Archive Timecards</li>
-          </ul>
-          <div class="tip" style="margin-top:12px"><strong>Duplicate and Transfer are single-selection only.</strong> To move multiple records, use Duplicate + Archive as a workaround.</div>
-        </div>
-      </div>
-      <div class="darkbox">
-        <div class="label">Selection Methods</div>
-        <strong>Shift+Click</strong> &mdash; select a consecutive range (click first, hold Shift, click last).<br>
-        <strong>Ctrl+Click</strong> &mdash; pick individual timecards that aren't next to each other.
-      </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Pulse</div>
+    <div class="sb-item" data-module="pulse-live" onclick="showModule('pulse-live',this)">
+      <svg class="live-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#27ae60"/></svg>
+      <span>Live</span>
+    </div>
+    <div class="sb-item" data-module="pulse-costing" onclick="showModule('pulse-costing',this)">
+      <svg viewBox="0 0 24 24"><path d="M11 5.08V2c-5 .5-9 4.81-9 10s4 9.5 9 10v-3.08c-3-.48-6-3.4-6-6.92s3-6.44 6-6.92zM18.97 11H22c-.47-5-4-8.53-9-9v3.08C16 5.51 18.54 8 18.97 11zM13 18.92V22c5-.47 8.53-4 9-9h-3.03c-.43 3-2.97 5.49-5.97 5.92z"/></svg>
+      <span>Costing</span>
+    </div>
+    <div class="sb-item" data-module="pulse-production" onclick="showModule('pulse-production',this)">
+      <svg viewBox="0 0 24 24"><circle cx="7.2" cy="14.4" r="3.2"/><circle cx="14.8" cy="18" r="2"/><circle cx="15.2" cy="8.8" r="4.8"/></svg>
+      <span>Production</span>
+    </div>
+    <div class="sb-item" data-module="pulse-performance" onclick="showModule('pulse-performance',this)">
+      <svg viewBox="0 0 24 24"><path d="M16.85 6.85l1.44 1.44-4.88 4.88-3.29-3.29a.9959.9959 0 00-1.41 0l-6 6.01c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L9.41 12l3.29 3.29c.39.39 1.02.39 1.41 0l5.59-5.58 1.44 1.44c.31.31.85.09.85-.35V6.5c.01-.28-.21-.5-.49-.5h-4.29c-.45 0-.67.54-.36.85z"/></svg>
+      <span>Performance</span>
+    </div>
+    <div class="sb-item" data-module="pulse-compliance" onclick="showModule('pulse-compliance',this)">
+      <svg viewBox="0 -960 960 960"><path d="M110-120q-13 0-21.5-8.5T80-150q0-13 8.5-21.5T110-180h340v-484q-26-9-46.5-29.5T374-740H215l116 280q5 11 6.5 24.5T337-414q-10 36-45.5 60T210-330q-46 0-81.5-24T83-414q-2-8-.5-21.5T89-460l116-280h-55q-13 0-21.5-8.5T120-770q0-13 8.5-21.5T150-800h224q12-35 41-57.5t65-22.5q36 0 65 22.5t41 57.5h224q13 0 21.5 8.5T840-770q0 13-8.5 21.5T810-740h-55l116 280q5 11 6.5 24.5T877-414q-10 36-45.5 60T750-330q-46 0-81.5-24T623-414q-2-8-.5-21.5T629-460l116-280H586q-9 26-29.5 46.5T510-664v484h340q13 0 21.5 8.5T880-150q0 13-8.5 21.5T850-120H110Zm565-320h150l-75-184-75 184Zm-540 0h150l-75-184-75 184Zm345-280q21 0 35.5-15t14.5-35q0-21-14.5-35.5T480-820q-20 0-35 14.5T430-770q0 20 15 35t35 15Z"/></svg>
+      <span>Compliance</span>
     </div>
   </div>
-</div>
+</nav>
 
-<!-- ============================================================ -->
-<!--  CREATING & DUPLICATING                                       -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-create">
+<!-- MAIN -->
+<div id="main-wrapper"><main id="main">
 
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Creating</div>
-      <div class="title">How to Create a Timecard</div>
-      <p class="desc">Create timecards when an employee is missing a record &mdash; the device user forgot the device, didn't clock someone in, or the employee wasn't scanned. Works from either view.</p>
-
-      <div class="fr">
-        <div class="fr-text">
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Click the <strong>+</strong> icon to the right of the search bar. Select <strong>Add timecards</strong>.</div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Add employees by name, or switch to <strong>Crew</strong> to add an entire crew at once.</div></div>
-            <div class="step"><div class="sn">3</div><div class="step-text">Click <strong>+ Add Timecard</strong>. Set the start time, crew, site, location, work bundle, and job.</div></div>
-            <div class="step"><div class="sn">4</div><div class="step-text">Need multiple entries (different jobs, breaks)? Click <strong>+ Add another timecard</strong> for each.</div></div>
-            <div class="step"><div class="sn">5</div><div class="step-text">Click <strong>Checkout</strong> to set the end time, then <strong>Save</strong>.</div></div>
-          </div>
-          <div class="tip"><strong>Adding by crew is faster</strong> when everyone is missing &mdash; type the crew name and all members are added in one step.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="create-add-button.png" data-desc="The + icon next to the search bar and the 'Add timecards' option"></div></div></div>
-        </div>
-      </div>
-    </div>
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="module-dashboard" class="module-panel active">
+  <div class="hero">
+    <div class="hero-label">PickTrace Office Suite</div>
+    <h1>Welcome to Your Training Hub</h1>
+    <p>This guide covers every section of PickTrace Office. Use the sidebar to navigate to any module. Each topic includes step-by-step instructions and a short video walkthrough so you can follow along directly in the app.</p>
   </div>
-
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="fr">
-        <div class="fr-text">
-          <div class="label">Duplicating</div>
-          <h3>Duplicate a Timecard</h3>
-          <p>Copies all attributes from an existing timecard and lets you assign it to a different employee. Right-click the timecard &rarr; <strong>Duplicate Timecard</strong>. A flyout shows the original attributes &mdash; change the employee name and any other details, then Save.</p>
-          <div class="tip"><strong>You can assign the duplicate to multiple employees at once</strong> &mdash; add several names before saving.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="create-duplicate-flyout.png" data-desc="Duplicate Timecard flyout with employee name field"></div></div></div>
-        </div>
-      </div>
+  <div class="card">
+    <div class="card-hdr open" onclick="toggleCard(this)">
+      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+      <div><div class="card-title">What is PickTrace Office?</div><div class="card-desc">Overview of the platform and what each section does</div></div>
+      <svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-  </div>
-
-  <div class="sect">
-    <div class="wrap">
-      <div class="fr rev">
-        <div class="fr-text">
-          <div class="label">Transferring</div>
-          <h3>Transfer a Timecard</h3>
-          <p>Reassigns a timecard from one employee to another. The original employee loses the record entirely. Select one timecard &rarr; right-click &rarr; <strong>Transfer Timecard</strong> &rarr; update the employee name.</p>
-          <div class="warn"><strong>Transfer only works for a single timecard.</strong> To move multiple records, use Duplicate + Archive instead.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="create-transfer-menu.png" data-desc="Right-click menu with Transfer Timecard highlighted"></div></div></div>
-        </div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Add your walkthrough video here</p><code>/videos/dashboard/overview.mp4</code></div>
+      <div class="prose">
+        <p>PickTrace Office is the web-based back office for your agricultural operation. It receives data from handheld devices in the field in real time and gives your office team the tools to audit, correct, and process that data for payroll.</p>
+        <h3>Sidebar Navigation at a Glance</h3>
+        <table class="tbl">
+          <tr><th>Section</th><th>What you do here</th></tr>
+          <tr><td><strong>Dashboard</strong></td><td>Production &amp; cost summary, Work Bundle totals</td></tr>
+          <tr><td><strong>Timecards</strong></td><td>View, edit, audit, and approve employee time records</td></tr>
+          <tr><td><strong>Production Records</strong></td><td>View and correct piece-pay records (bins, trays, trees, etc.)</td></tr>
+          <tr><td><strong>Crew Scheduler</strong></td><td>Schedule crews to jobs, sites, locations, and set piece rates</td></tr>
+          <tr><td><strong>Reports</strong></td><td>Build, save, and export custom data reports</td></tr>
+          <tr><td><strong>Payroll</strong></td><td>Map pay codes, export payroll files to your payroll system</td></tr>
+          <tr><td><strong>Employees / Employers / Crews</strong></td><td>Manage workforce profiles and crew assignments</td></tr>
+          <tr><td><strong>Devices</strong></td><td>Monitor and manage handheld devices in the field</td></tr>
+          <tr><td><strong>Admin Center</strong></td><td>Configure crops, work bundles, jobs, sites, and user roles</td></tr>
+          <tr><td><strong>Pulse</strong></td><td>Real-time analytics: Live, Costing, Production, Performance, Compliance</td></tr>
+        </table>
+        <div class="tip"><strong>Tip:</strong> Hover over the sidebar to expand it at any time. Click any module to jump directly to that section.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!--  EDITING                                                      -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-edit">
+<!-- ══════════ TIMECARDS ══════════ -->
+<div id="module-timecards" class="module-panel">
+  <div class="hero"><div class="hero-label">Module</div><h1>Timecards</h1><p>View, create, edit, audit, and manage every time record generated by your field devices. This is where daily auditing and payroll prep happens.</p></div>
 
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Editing</div>
-      <div class="title">Single vs Bulk Editing</div>
-
-      <div class="fr">
-        <div class="fr-text">
-          <h3>Editing One Timecard</h3>
-          <p>Select one timecard &rarr; right-click &rarr; <strong>Edit Timecard</strong>. The flyout shows all timecards for that employee on the selected day. Edit any attribute: start time, end time, crew, site, location, work bundle, job, pay style, rate.</p>
-          <p>At the bottom of the flyout: <strong>Archive Timecard</strong> and <strong>Add New Timecard</strong>.</p>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="edit-single-flyout.png" data-desc="Edit flyout for a single employee showing all timecards for the day"></div></div></div>
-        </div>
+  <div id="tc-overview" class="card">
+    <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#1a6fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="card-title">Overview — What Are Timecards?</div><div class="card-desc">How timecards are created, where to find them, and the two views</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Timecard Overview Walkthrough</p><code>/videos/timecards/overview.mp4</code></div>
+      <div class="prose">
+        <p>Timecards are records that capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
+        <h3>Where to Find Them</h3>
+        <p>Navigate to <strong>Timecards</strong> from the left sidebar. The page defaults to today's date in List View. Use the date drop-down to select a different day, a range, or a preset like "Last 7 days." The arrow buttons step forward or back one day.</p>
+        <h3>Two Views</h3>
+        <table class="tbl">
+          <tr><th></th><th>List View</th><th>Timeline View</th></tr>
+          <tr><td><strong>Best for</strong></td><td>Complex edits, bulk changes, CSV export</td><td>Visual confirmation, quick drag-to-adjust edits</td></tr>
+          <tr><td><strong>Editing</strong></td><td>Single and bulk via flyout panel</td><td>Individual only — drag check-in/check-out edges</td></tr>
+          <tr><td><strong>Unique features</strong></td><td>Sortable columns, CSV export, extra hidden columns</td><td>Color-coded blocks <span class="tag tag-blue">Blue = Work</span> <span class="tag tag-yellow">Yellow = Break</span></td></tr>
+        </table>
+        <div class="tip"><strong>Tip:</strong> Add the <strong>Reviewed</strong>, <strong>Device</strong>, and <strong>Geolocation</strong> columns in Settings → Column Visibility for a complete audit view.</div>
+        <h3>Search & Filter</h3>
+        <p>Click <strong>Search</strong> in the top header. Combine criteria and click Apply. Available filters: Name, Site/Location, Crop, Employer, Crew, Job, Device, Hourly Rate, Production Records, Work Hours, Audited by, Has no Prod. Records, Edited Record.</p>
+        <div class="tip"><strong>Check "Edited Record"</strong> to see only timecards modified after creation — useful for spotting what's already been touched.</div>
+        <h3>Right-Click Context Menu</h3>
+        <p><strong>One selected:</strong> Navigate to Employee Profile · Edit · Duplicate · Transfer · Archive · Add New</p>
+        <p><strong>Multiple selected:</strong> Edit Timecards · Switch Crew · Archive Timecards</p>
+        <p><strong>Shift+Click</strong> selects a consecutive range. <strong>Ctrl+Click</strong> picks non-adjacent timecards.</p>
       </div>
+    </div>
+  </div>
 
-      <div class="fr rev">
-        <div class="fr-text">
-          <h3>Editing Multiple Timecards</h3>
-          <p>Select multiple timecards (Shift+Click or Ctrl+Click) &rarr; right-click &rarr; <strong>Edit Timecards</strong>. The flyout shows selected employees and checkbox fields for bulk changes:</p>
-          <ul>
-            <li>Start Time</li>
-            <li>Checkout Time</li>
-            <li>Site &amp; Location</li>
-            <li>Job</li>
-            <li>Pay Style &amp; Rate</li>
-            <li>Duration</li>
-          </ul>
-          <div class="warn"><strong>Changes apply to all selected timecards.</strong> If times were changed, a confirmation screen shows before/after in timeline view. Review carefully before saving.</div>
+  <div id="tc-create" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="card-title">Creating & Duplicating Timecards</div><div class="card-desc">Add missing records manually or copy from an existing employee</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Creating a Timecard from Scratch</p><code>/videos/timecards/creating.mp4</code></div>
+      <div class="prose">
+        <h3>How to Create a Timecard</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Click the <strong>+</strong> icon to the right of the search bar → Select <strong>Add timecards</strong></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Add employees by name, or switch to <strong>Crew</strong> to add an entire crew at once</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>+ Add Timecard</strong>. Set start time, crew, site, location, work bundle, and job</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Need multiple entries? Click <strong>+ Add another timecard</strong> for each (different jobs, breaks)</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Click <strong>Checkout</strong> to set end time → <strong>Save</strong></div></div>
         </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="edit-bulk-flyout.png" data-desc="Bulk Edit flyout showing selected employees and checkbox fields"></div></div></div>
+        <div class="tip"><strong>Adding by crew is faster</strong> when everyone is missing — type the crew name and all members are added in one step.</div>
+        <h3>Duplicate a Timecard</h3>
+        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Duplicating a Timecard</p><code>/videos/timecards/duplicating.mp4</code></div>
+        <p>Copies all attributes from an existing timecard and assigns it to a different employee. Right-click → <strong>Duplicate Timecard</strong>. Change the employee name and any other details → Save.</p>
+        <div class="tip"><strong>You can assign the duplicate to multiple employees at once</strong> — add several names before saving.</div>
+        <h3>Transfer a Timecard</h3>
+        <p>Reassigns a timecard from one employee to another. The original employee loses the record entirely. Select one timecard → right-click → <strong>Transfer Timecard</strong> → update the employee name.</p>
+        <div class="warn"><strong>Transfer only works for a single timecard.</strong> To move multiple records, use Duplicate + Archive instead.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tc-edit" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><div class="card-title">Editing Timecards</div><div class="card-desc">Single and bulk editing — times, jobs, sites, pay styles, crew</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Editing a Single Timecard</p><code>/videos/timecards/edit-single.mp4</code></div>
+      <div class="prose">
+        <h3>Editing One Timecard</h3>
+        <p>Select one timecard → right-click → <strong>Edit Timecard</strong>. The flyout shows all timecards for that employee on the selected day. Edit any attribute: start time, end time, crew, site, location, work bundle, job, pay style, rate.</p>
+        <h3>Editing Multiple Timecards</h3>
+        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Bulk Editing Timecards</p><code>/videos/timecards/edit-bulk.mp4</code></div>
+        <p>Select multiple timecards (Shift+Click or Ctrl+Click) → right-click → <strong>Edit Timecards</strong>. Use checkboxes to apply bulk changes: Start Time, Checkout Time, Site & Location, Job, Pay Style & Rate, Duration.</p>
+        <div class="warn"><strong>Changes apply to all selected timecards.</strong> If times were changed, a confirmation screen shows before/after in timeline view. Review carefully before saving.</div>
+        <h3>Pay Rate Rule</h3>
+        <div class="tip"><strong>The higher rate always wins.</strong> An employee's unique compensation on their profile overrides the job's default rate. If no rate is set on the profile, the job's minimum wage applies.</div>
+        <h3>Switching Crew</h3>
+        <p>Select one or multiple timecards → right-click → <strong>Switch Crew</strong> → choose the correct crew → Save. Switch Crew works for both single and multiple selections.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tc-breaks" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#e67e22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div><div class="card-title">Breaks & Lunches</div><div class="card-desc">Adding bulk breaks, fixing doubles, using the Exclude filter</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Adding Bulk Breaks for a Crew</p><code>/videos/timecards/add-breaks-bulk.mp4</code></div>
+      <div class="prose">
+        <h3>Adding Breaks in Bulk</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Filter to the crew. Select all employees missing breaks.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Click <strong>+</strong> → <strong>Add static duration jobs</strong></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Check <strong>"Dynamic start time after first checkin"</strong></div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Set timing per your state's regulations (e.g., lunch 5 hours after check-in)</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Select Break or Lunch. If both are missing, click <strong>"+ add another job"</strong></div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text">Save</div></div>
+        </div>
+        <div class="tip"><strong>"Dynamic start time"</strong> means relative timing — give everyone a break X hours after their individual start time. No manual calculation needed even if employees started at different times.</div>
+        <h3>Fixing Double Break / Double Lunch</h3>
+        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fixing a Double Break</p><code>/videos/timecards/fix-double-break.mp4</code></div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Select the duplicate break → right-click → <strong>Archive check in</strong></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Select the timecard before the break → <strong>Duplicate check in</strong></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Edit start time to begin immediately after the break → Save</div></div>
+        </div>
+        <h3>The Exclude Filter — Critical Technique</h3>
+        <div class="danger"><strong>Changing jobs? Always exclude breaks first.</strong> Otherwise the bulk edit overwrites break job data. Changing ranch/block? Include breaks so they match the correct location.</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text">Open Search / Filter bar</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Under Job, select <strong>Break</strong> and <strong>Lunch</strong></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>"Exclude"</strong> instead of "Include" → Apply</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Breaks are hidden. Select remaining timecards and bulk edit safely.</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Specific Changes</div>
-      <div class="title">Common Edit Types</div>
-
-      <div class="stabs">
-        <button class="stab active" onclick="stab(this,'sp-loc')">Site / Location</button>
-        <button class="stab" onclick="stab(this,'sp-job')">Job / Work Bundle</button>
-        <button class="stab" onclick="stab(this,'sp-pay')">Pay Style / Rate</button>
-        <button class="stab" onclick="stab(this,'sp-crew')">Crew</button>
-      </div>
-
-      <div class="sp active" id="sp-loc">
-        <div class="two">
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Select the <strong>Site/Location</strong> field</div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new location &rarr; Save</div></div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set site and location"</strong></div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new location &rarr; Save</div></div>
-            </div>
-          </div>
+  <div id="tc-audit" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="card-title">Daily Auditing Workflow</div><div class="card-desc">The 8-step daily audit and weekly payroll cycle</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Daily Audit Walkthrough (Full Crew)</p><code>/videos/timecards/daily-audit.mp4</code></div>
+      <div class="prose">
+        <h3>Daily Audit Steps</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Set date and filter to one crew.</strong> Select yesterday. Open Search → Crew → select the crew → Apply. Never audit without filtering to a crew first.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Sort by Name, then Start Time.</strong> Groups each employee's timecards chronologically.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Correct flagged errors.</strong> Red icons appear automatically. Look for: missing check-ins, multiple check-outs, missing piece records, overlapping timecards, 24+ hour timecards.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Verify start times, end times, and total hours.</strong> Watch for 12:00 AM starts and checkout times past midnight.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Verify breaks and lunches.</strong> Switch to Timeline View — look for yellow blocks. No yellow = missing breaks.</div></div>
+          <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Verify jobs, sites, and locations</strong> against crew timesheets.</div></div>
+          <div class="step"><div class="step-num">7</div><div class="step-text"><strong>Visual check with Timeline View.</strong> No gaps, no 24-hour blocks, yellow breaks visible for every employee.</div></div>
+          <div class="step"><div class="step-num">8</div><div class="step-text"><strong>Review and approve.</strong> Select all → right-click → <strong>Review Timecards</strong>. Run the Unreviewed filter as your final check.</div></div>
         </div>
-      </div>
-
-      <div class="sp" id="sp-job">
-        <div class="two">
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Select the <strong>Work Bundle/Job</strong> field</div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new work bundle, then job &rarr; Save</div></div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set Job"</strong></div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Choose the new work bundle, then job &rarr; Save</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If the job you need isn't in the drop-down, change the Work Bundle first.</div>
-        <div class="crit"><strong>When bulk-changing jobs, exclude breaks and lunches first.</strong> Use the Search bar &rarr; Job: Break, Lunch &rarr; Exclude &rarr; Apply. See the Breaks &amp; Lunches section for details.</div>
-        <div class="tip"><strong>Switching hourly to piecework?</strong> Check both "Set Job" and "Set Pay Style" checkboxes in the bulk edit panel.</div>
-      </div>
-
-      <div class="sp" id="sp-pay">
-        <div class="two">
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Single Timecard</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Select <strong>Pay Style</strong> &rarr; choose Hourly, Piece, or Hourly+Piece</div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Enter the rate &rarr; Save</div></div>
-            </div>
-          </div>
-          <div>
-            <h3 style="font-size:15px;margin-bottom:8px">Multiple Timecards</h3>
-            <div class="steps">
-              <div class="step"><div class="sn">1</div><div class="step-text">Select multiple &rarr; right-click &rarr; Edit</div></div>
-              <div class="step"><div class="sn">2</div><div class="step-text">Check <strong>"Set pay style"</strong></div></div>
-              <div class="step"><div class="sn">3</div><div class="step-text">Choose the pay style, enter the rate &rarr; Save</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="darkbox">
-          <div class="label">Pay Rate Rule</div>
-          <strong>The higher rate always wins.</strong> An employee's unique compensation on their profile overrides the job's default rate. If no rate is set on the profile, the job's minimum wage applies. Right-click any employee &rarr; navigate to their Employee Profile to view or update compensation.
-        </div>
-      </div>
-
-      <div class="sp" id="sp-crew">
-        <div class="steps" style="max-width:500px">
-          <div class="step"><div class="sn">1</div><div class="step-text">Select one or multiple timecards</div></div>
-          <div class="step"><div class="sn">2</div><div class="step-text">Right-click &rarr; <strong>Switch Crew</strong></div></div>
-          <div class="step"><div class="sn">3</div><div class="step-text">Choose the correct crew from the drop-down &rarr; Save</div></div>
-        </div>
-        <div class="tip"><strong>Switch Crew works for both single and multiple selections</strong> &mdash; one of the few actions that behaves the same way for both.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================ -->
-<!--  BREAKS & LUNCHES                                             -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-breaks">
-
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Breaks &amp; Lunches</div>
-      <div class="title">Adding Breaks in Bulk</div>
-      <p class="desc">Breaks and lunches appear as yellow blocks in the Timeline view. When an entire crew is missing breaks &mdash; often because the field user skipped the prompt &mdash; add them for everyone at once.</p>
-
-      <div class="fr">
-        <div class="fr-text">
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Filter to the crew. Select all employees missing breaks.</div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Click the <strong>+</strong> icon next to the search bar &rarr; <strong>Add static duration jobs</strong>.</div></div>
-            <div class="step"><div class="sn">3</div><div class="step-text">Check <strong>"Dynamic start time after first checkin"</strong>.</div></div>
-            <div class="step"><div class="sn">4</div><div class="step-text">Set the timing per your state's regulations (e.g., lunch 5 hours after checkin).</div></div>
-            <div class="step"><div class="sn">5</div><div class="step-text">Select Break or Lunch. If both are missing, click <strong>"+ add another job"</strong>.</div></div>
-            <div class="step"><div class="sn">6</div><div class="step-text">Save.</div></div>
-          </div>
-          <div class="tip"><strong>"Dynamic start time" means relative timing</strong> &mdash; "give everyone a break X hours after their individual start time." No manual calculation needed even if employees started at different times.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="breaks-static-duration.png" data-desc="Add static duration dialog with Dynamic start time and job selection"></div></div></div>
-        </div>
+        <div class="tip"><strong>By auditing daily, weekly payroll becomes a quick review</strong> rather than a scramble.</div>
       </div>
     </div>
   </div>
 
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="fr rev">
-        <div class="fr-text">
-          <div class="label">Inserting</div>
-          <h3>Adding a Break Mid-Day</h3>
-          <p>When adding a break into the middle of an existing day, you must also add back the <strong>continuation timecard</strong> after the break. Otherwise the employee appears to stop working after their break.</p>
-          <div class="warn"><strong>Don't forget the continuation.</strong> Add the break, then create a new timecard that picks up immediately after the break ends, in the same job and location.</div>
+  <div id="tc-errors" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#c0392b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg></div><div><div class="card-title">Errors & Fixes</div><div class="card-desc">Every common timecard error — symptoms, fix steps, and prevention</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="prose"><p>PickTrace flags errors with a red icon next to the employee name. Click any error below to expand.</p></div>
+      <div class="err-item open">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Missing Checkout / Running Timecard</div><span class="err-badge tag tag-red">Most Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body">
+          <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Missing Checkout</p><code>/videos/timecards/errors/missing-checkout.mp4</code></div>
+          <div class="prose"><h4>Symptoms</h4><ul><li>12:00 AM start time on the next day's card</li><li>~24 hours shown</li><li>Timeline runs the entire day through 11:59 PM</li><li>Bulk checkout changes skip this employee</li></ul><h4>Fix</h4><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Verify actual checkout with your field team</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the timecard → right-click → Edit</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Update the End Time → Save</div></div></div><div class="tip"><strong>Bulk shortcut:</strong> Right-click → "Select all 12am start times" → Archive. Then set correct start time in bulk.</div></div>
         </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="breaks-insert-middle.png" data-desc="Timeline showing a break inserted mid-day with continuation after"></div></div></div>
-        </div>
+      </div>
+      <div class="err-item">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Wrong Date on Checkout</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Date on Bulk Checkout</p><code>/videos/timecards/errors/wrong-date.mp4</code></div><div class="prose"><p>Bulk checkout saves to tomorrow because a running timecard pushed past midnight.</p><div class="danger"><strong>This is the #1 bulk-edit trap.</strong> Always check the date field before saving. If it shows tomorrow, change it to today. Root fix: always clear running timecards first.</div></div></div>
+      </div>
+      <div class="err-item">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Wrong Job</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Job on Timecards</p><code>/videos/timecards/errors/wrong-job.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Use Exclude filter first: Search → Job: Break/Lunch → Exclude → Apply</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select timecards → right-click → Edit → check "Set Job"</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Select correct Work Bundle and Job → Save</div></div></div><div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If the job isn't in the drop-down, change the Work Bundle first.</div></div></div>
+      </div>
+      <div class="err-item">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Wrong Location</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Location</p><code>/videos/timecards/errors/wrong-location.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select timecard(s) → right-click → Edit</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Check "Set Site and Location" → choose correct location → Save</div></div></div><div class="tip"><strong>Include breaks in your selection</strong> when changing location so they match the correct ranch/block.</div></div></div>
+      </div>
+      <div class="err-item">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Overlapping Timecards</div><span class="err-badge tag tag-red">Tricky</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Overlapping Timecards</p><code>/videos/timecards/errors/overlapping.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the timecard → Edit</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Review start/end times of each overlapping timecard</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Adjust so they don't overlap, or archive the incorrect one</div></div></div></div></div>
+      </div>
+      <div class="err-item">
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Employee Missing from Crew</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Missing Employee Timecard</p><code>/videos/timecards/errors/missing-employee.mp4</code></div><div class="prose"><p>Find a coworker who did the same work → right-click their timecard → <strong>Duplicate</strong> → assign to the missing employee → adjust details → Save.</p><div class="tip"><strong>Duplicating is faster than creating from scratch</strong> when a coworker did the same work.</div></div></div>
       </div>
     </div>
   </div>
 
-  <div class="sect">
-    <div class="wrap">
-      <div class="fr">
-        <div class="fr-text">
-          <div class="label">Common Fix</div>
-          <h3>Double Break / Double Lunch</h3>
-          <p>Happens when the crew leader taps the break prompt twice due to slow reception. Two consecutive break timecards appear with no work continuation after them.</p>
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Select the duplicate break &rarr; right-click &rarr; <strong>Archive check in</strong></div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Select the timecard before the break &rarr; <strong>Duplicate check in</strong></div></div>
-            <div class="step"><div class="sn">3</div><div class="step-text">Edit the start time to begin immediately after the break &rarr; Save</div></div>
-          </div>
-          <div class="good"><strong>Prevention:</strong> Tell field teams to tap the break prompt once only, even if the screen is slow.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="breaks-double-lunch.png" data-desc="Timeline showing two consecutive yellow lunch blocks"></div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Critical Technique</div>
-      <div class="title">The Exclude Filter</div>
-      <p class="desc">When bulk-changing jobs, you must exclude breaks and lunches from your selection first. Otherwise the bulk edit overwrites break data.</p>
-      <div class="fr">
-        <div class="fr-text">
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Open the Search / Filter bar</div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Under Job, select Break and Lunch</div></div>
-            <div class="step"><div class="sn">3</div><div class="step-text">Click <strong>"Exclude"</strong> instead of "Include" &rarr; Apply</div></div>
-            <div class="step"><div class="sn">4</div><div class="step-text">Breaks are now hidden. Select remaining timecards and edit safely.</div></div>
-          </div>
-          <div class="crit"><strong>Changing jobs? Exclude breaks. Changing ranch/block? Include breaks</strong> so they match the correct location. This is the most important rule for safe bulk editing.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="breaks-exclude-filter.png" data-desc="Search bar with Job: Break/Lunch and the Exclude toggle"></div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect">
-    <div class="wrap">
-      <div class="fr rev">
-        <div class="fr-text">
-          <div class="label">Configuration</div>
-          <h3>Break &amp; Lunch Prompts</h3>
-          <p>Break/lunch prompts are configured per crew. If prompts fire at the wrong time, update them: <strong>Crews</strong> (left sidebar) &rarr; select the crew &rarr; <strong>Edit</strong> &rarr; under "Break and Lunch Prompt", toggle on/off, set the timing, and add additional prompts as needed. Save.</p>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="breaks-prompt-config.png" data-desc="Crew edit screen showing Break and Lunch Prompt settings"></div></div></div>
-        </div>
+  <div id="tc-archive" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#7f8c8d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div><div><div class="card-title">Archiving & Reviewing</div><div class="card-desc">Remove records from reporting and mark timecards as approved</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Archiving & Reviewing Timecards</p><code>/videos/timecards/archive-review.mp4</code></div>
+      <div class="prose">
+        <h3>Archive</h3>
+        <p>Removes a timecard from reporting but does not delete it — it can be restored at any time. Select one or multiple → right-click → <strong>Archive Timecard(s)</strong>.</p>
+        <h3>Unarchive</h3>
+        <div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Click the <strong>settings gear</strong> (top-right) → toggle on <strong>"Show archived"</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the archived timecard(s)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Right-click → <strong>Unarchive Timecard(s)</strong></div></div></div>
+        <h3>Review & Approve</h3>
+        <p>Reviewing marks timecards as audited and approved. Select timecards → right-click → <strong>Review Timecards</strong>.</p>
+        <div class="tip"><strong>Use the Unreviewed filter as your final check</strong> before payroll export. Search → check "Unreviewed" to find anything still needing attention.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!--  DAILY AUDITING                                               -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-audit">
+<!-- ══════════ PRODUCTION RECORDS ══════════ -->
+<div id="module-production" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Production Records</h1><p>View and correct piece-pay records — bins, trays, trees, and any other unit your crews produce in the field.</p></div>
+  <div id="pr-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div><div class="card-title">What Are Production Records?</div><div class="card-desc">Where they come from and how to read the Production Records page</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Production Records Overview</p><code>/videos/production/overview.mp4</code></div><div class="prose"><p>Production Records are created on the handheld device when a crew leader or device user credits an employee with a unit of production (e.g., one bin, one tray, one tree). Each record is linked to an employee, a site, a location, a crop, a job, a unit count, and a piece rate.</p><h3>Key Columns</h3><table class="tbl"><tr><th>Column</th><th>What it shows</th></tr><tr><td>PT ID</td><td>Employee's PickTrace ID</td></tr><tr><td>Unit Count</td><td>Number of units credited</td></tr><tr><td>Unit</td><td>Type of unit (bins, trees, trays, etc.)</td></tr><tr><td>Piece Rate</td><td>Dollar amount per unit</td></tr><tr><td>Site / Location</td><td>Ranch and block where the work happened</td></tr><tr><td>Crop</td><td>Crop variety associated with the work</td></tr></table><div class="tip"><strong>Check total piece count</strong> at the bottom-right of the table. Compare it to physical tickets to quickly spot discrepancies.</div></div></div>
+  </div>
+  <div id="pr-add" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="card-title">Adding a Production Record</div><div class="card-desc">Manually adding a missing piece record in Office</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Adding a Missing Production Record</p><code>/videos/production/add-record.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">On the Production Records page, click the <strong>[+]</strong> icon to the right of the search bar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Fill in employee, site, location, crop, job, unit count, and piece rate</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>Save</strong> in the top-right corner</div></div></div><div class="tip">After adding a production record that matches the employee's timecard, the "Missing Piece Record" warning on the timecards page will clear automatically.</div></div></div>
+  </div>
+  <div id="pr-edit" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><div class="card-title">Editing Piece Rates</div><div class="card-desc">Update incorrect piece rates on one or many records</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Updating Piece Rates</p><code>/videos/production/edit-piece-rate.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the production records to update</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Right-click → <strong>Edit Production Record</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Check <strong>"Set Piece Rate"</strong> → enter the correct rate</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Click <strong>Save</strong></div></div></div><div class="tip"><strong>Where are piece rates set?</strong> Piece rates are configured per block inside the Crew Scheduler under "Location and Piece Rates." Update them there to prevent the issue recurring.</div></div></div>
+  </div>
+  <div id="pr-errors" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#c0392b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg></div><div><div class="card-title">Production Record Errors</div><div class="card-desc">No Match, Record at Different Location, Missing Piece Record</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="prose"><h3>No Match Error</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: No Match Error</p><code>/videos/production/errors/no-match.mp4</code></div><p>A production record exists but no matching timecard was found for that employee at that time.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirm with your field team if the worker was indeed working a piece-tracked job</div></div><div class="step"><div class="step-num">2</div><div class="step-text">If yes — add a timecard with matching ranch, block, and job. This resolves the error.</div></div><div class="step"><div class="step-num">3</div><div class="step-text">If the worker was not working — select the record → <strong>Archive Production Record</strong></div></div></div><h3>Record Created at a Different Location</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Location Error</p><code>/videos/production/errors/wrong-location.mp4</code></div><p>The production record was credited at a different location than the employee's timecard at that time. Fix by updating the timecard's Site and Location to match the production record.</p></div></div>
+  </div>
+</div>
 
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Daily Workflow</div>
-      <div class="title">Daily Timecard Auditing</div>
-      <p class="desc">Each morning, audit yesterday's timecards for errors and correct them. Repeat for each crew.</p>
+<!-- ══════════ CREW SCHEDULER ══════════ -->
+<div id="module-scheduler" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#2c1654 0%,#8e44ad 100%)"><div class="hero-label">Module</div><h1>Crew Scheduler</h1><p>Schedule your crews to jobs, sites, and locations before the day starts. This is where piece rates, job assignments, and break prompts are all configured.</p></div>
+  <div id="cs-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="card-title">What Is the Crew Scheduler?</div><div class="card-desc">Why scheduling matters and what it controls in the field</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Crew Scheduler Overview</p><code>/videos/crew-scheduler/overview.mp4</code></div><div class="prose"><p>The Crew Scheduler tells PickTrace where each crew will work, what jobs they'll do, and what rates apply — before the field day begins. Device users in the field see only the jobs and locations that were scheduled for their crew that day, reducing errors.</p><div class="tip"><strong>The Crew Scheduler is the single most important setup step for accurate payroll.</strong> If a job isn't scheduled, it won't appear on the device, leading to wrong-job errors.</div></div></div>
+  </div>
+  <div id="cs-create" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="card-title">Creating a Schedule</div><div class="card-desc">Step-by-step: assign a crew to a day, job, and location</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Creating a Crew Schedule</p><code>/videos/crew-scheduler/create-schedule.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Navigate to <strong>Crew Scheduler</strong> from the sidebar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the date for the schedule</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>+ Add Schedule</strong> → select the Crew</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Choose the Work Bundle and Job</div></div><div class="step"><div class="step-num">5</div><div class="step-text">Add Location(s) under "Location and Piece Rates"</div></div><div class="step"><div class="step-num">6</div><div class="step-text">Set piece rates per location if applicable</div></div><div class="step"><div class="step-num">7</div><div class="step-text">Save</div></div></div></div></div>
+  </div>
+  <div id="cs-rates" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="card-title">Locations & Piece Rates</div><div class="card-desc">Set per-block piece rates inside the scheduler</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Setting Piece Rates in the Crew Scheduler</p><code>/videos/crew-scheduler/piece-rates.mp4</code></div><div class="prose"><p>Piece rates are set per block within the Crew Scheduler. When you add a location to a schedule, you'll see a <strong>Piece Rate</strong> field for that block. Enter the dollar amount per unit (e.g., $2.00 per bin). This rate flows through to Production Records and ultimately to payroll.</p><div class="tip"><strong>PickTrace uses the highest rate that applies.</strong> Rate hierarchy: Employee Profile rate → Job rate → Crew Scheduler rate → minimum wage.</div></div></div>
+  </div>
+  <div id="cs-breaks" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg></div><div><div class="card-title">Break & Lunch Prompts</div><div class="card-desc">Configure when the device prompts crew leaders for breaks</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Updating Break & Lunch Prompts</p><code>/videos/crew-scheduler/break-prompts.mp4</code></div><div class="prose"><p>Break and lunch prompts are configured per crew. Go to <strong>Crews</strong> in the sidebar → select the crew → <strong>Edit</strong> → under "Break and Lunch Prompt" toggle on/off, set the timing, and add additional prompts as needed → Save.</p><div class="warn"><strong>If prompts fire at the wrong time</strong>, it's likely the timing is misconfigured at the crew level. Update each affected crew's settings.</div></div></div>
+  </div>
+</div>
 
-      <div class="vstepper">
-        <div class="vs-item"><div class="sn">1</div><div class="vs-body">
-          <h4>Set date and filter to one crew</h4>
-          <p>Select yesterday's date. Open Search &rarr; Crew &rarr; select the crew &rarr; Apply.</p>
-          <div class="crit"><strong>Never audit without filtering to a crew first.</strong> You risk editing another crew's data.</div>
-        </div></div>
+<!-- ══════════ REPORTS ══════════ -->
+<div id="module-reports" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a2a3a 0%,#2980b9 100%)"><div class="hero-label">Module</div><h1>Reports</h1><p>Build custom reports, save templates, and export data to spreadsheets or your payroll system.</p></div>
 
-        <div class="vs-item"><div class="sn">2</div><div class="vs-body">
-          <h4>Sort by Name, then Start Time</h4>
-          <p>Click the Name column header, then the Start Time header. This groups each employee's timecards chronologically.</p>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">3</div><div class="vs-body">
-          <h4>Correct flagged errors</h4>
-          <p>Red icons appear automatically next to employee names. Look for:</p>
-          <ul>
-            <li>Missing check-ins &mdash; checkout without a preceding checkin</li>
-            <li>Multiple check-outs &mdash; two checkouts in a row</li>
-            <li>Missing piece records &mdash; "Missing" in the Piece column</li>
-            <li>Overlapping timecards</li>
-            <li>24+ hour timecards (running from midnight)</li>
-          </ul>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">4</div><div class="vs-body">
-          <h4>Verify start times, end times, and total hours</h4>
-          <p>Check for 12:00 AM starts (running timecards), checkout times past midnight, and totals that don't match expected shift length.</p>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">5</div><div class="vs-body">
-          <h4>Verify breaks and lunches</h4>
-          <p>In the Timeline view, look for yellow blocks. Their absence means breaks are missing. Use Add Static Duration to add them in bulk.</p>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">6</div><div class="vs-body">
-          <h4>Verify jobs, sites, and locations</h4>
-          <p>Compare PickTrace timecard details to the crew timesheets for accuracy.</p>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">7</div><div class="vs-body">
-          <h4>Visual check with Timeline</h4>
-          <p>Switch to the Timeline View for a final scan. No gaps, no 24-hour blocks, yellow breaks visible for every employee.</p>
-        </div></div>
-
-        <div class="vs-item"><div class="sn">8</div><div class="vs-body">
-          <h4>Review and approve</h4>
-          <p>Select all timecards &rarr; right-click &rarr; <strong>Review Timecards</strong>. Run the Unreviewed filter as your final check.</p>
-        </div></div>
+  <div id="rpt-format" class="card">
+    <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="card-title">Step 1 — Choose Your Report Format</div><div class="card-desc">Daily vs. weekly, one crew vs. whole company, which template to start with</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Introduction to Reports — Choosing a Format</p><code>/videos/reports/intro-format.mp4</code></div>
+      <div class="prose">
+        <p>Before building a report, answer two questions: <strong>What time range do I need?</strong> (a single day vs. the full week) and <strong>Who am I looking at?</strong> (one crew vs. the entire company). Your answers determine which report template and filters to use.</p>
+        <h3>Recommended Starting Template: Employee Hours</h3>
+        <p>The <strong>Employee Hours</strong> report is the best all-around starting point — it gives enough detail without overwhelming you. It provides one row per employee per date, broken out by site, and subtotals per employee so you can see totals at a glance.</p>
+        <div class="tip"><strong>Always use Employee ID (PT ID), not employee name,</strong> as your row identifier. If two employees share the same name, the report will merge their records together. Employee ID is always unique.</div>
+        <h3>Rows & Sections</h3>
+        <p>Under <strong>Rows & Sections</strong> in the report builder, you control how data is grouped. The default gives you a unique row per date, per site, and per employee. If you're running a single-crew report, you can remove the crew subtotal — it just adds an extra line you don't need when only one crew is visible.</p>
       </div>
-
-      <div class="good" style="margin-top:20px"><strong>By auditing daily, weekly payroll becomes a quick review</strong> rather than a scramble.</div>
     </div>
   </div>
 
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Weekly Workflow</div>
-      <div class="title">Payroll Auditing Cycle</div>
-      <p class="desc">Follow this cycle each time you process payroll.</p>
-      <div class="pgrid">
-        <div class="pgrid-item"><div class="num">1</div><p>Crew leaders complete crew sheets throughout the day &mdash; hours, location, pieces, jobs.</p></div>
-        <div class="pgrid-item"><div class="num">2</div><p>Crew leaders submit sheets after shift or the next morning.</p></div>
-        <div class="pgrid-item"><div class="num">3</div><p>Payroll admin edits timecards in PickTrace against crew sheets.</p></div>
-        <div class="pgrid-item"><div class="num">4</div><p>Payroll admin calls crew leaders with questions from the audit.</p></div>
-        <div class="pgrid-item"><div class="num">5</div><p>End of week: payroll admin sends crew leaders a weekly summary.</p></div>
-        <div class="pgrid-item"><div class="num">6</div><p>Crew leaders validate totals, sign, and return.</p></div>
-        <div class="pgrid-item"><div class="num">7</div><p>Payroll admin makes final edits based on feedback.</p></div>
-        <div class="pgrid-item"><div class="num">8</div><p>Payroll is submitted.</p></div>
+  <div id="rpt-columns" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6" stroke-width="3"/><line x1="3" y1="12" x2="3.01" y2="12" stroke-width="3"/><line x1="3" y1="18" x2="3.01" y2="18" stroke-width="3"/></svg></div><div><div class="card-title">Step 2 — Select & Customize Columns</div><div class="card-desc">Which columns matter, Total Hours vs. Paid Hours, and renaming columns</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Selecting and Customizing Report Columns</p><code>/videos/reports/columns.mp4</code></div>
+      <div class="prose">
+        <h3>Recommended Column Set for Auditing</h3>
+        <table class="tbl">
+          <tr><th>Column</th><th>Include?</th><th>Why</th></tr>
+          <tr><td>Date</td><td><span class="tag tag-green">Yes</span></td><td>Shows which day each row covers</td></tr>
+          <tr><td>Employee Name</td><td><span class="tag tag-green">Yes</span></td><td>Human-readable identification</td></tr>
+          <tr><td>Employee ID (PT ID)</td><td><span class="tag tag-green">Yes</span></td><td>Unique identifier — use this for payroll matching</td></tr>
+          <tr><td>Alt ID</td><td>Optional</td><td>Payroll number if your payroll system uses it</td></tr>
+          <tr><td>Employer</td><td>Optional</td><td>Skip if all employees are under one employer</td></tr>
+          <tr><td>Crew</td><td><span class="tag tag-green">Yes</span></td><td>Required for multi-crew reports</td></tr>
+          <tr><td>Site</td><td><span class="tag tag-green">Yes</span></td><td>Ranch/farm level location</td></tr>
+          <tr><td>Location</td><td>Optional</td><td>Block level — include if your auditing needs it</td></tr>
+          <tr><td>Job</td><td><span class="tag tag-green">Yes</span></td><td>Shows what work type was performed</td></tr>
+          <tr><td>Total Hours</td><td>Optional</td><td>Includes lunch time in the total</td></tr>
+          <tr><td>Paid Hours</td><td><span class="tag tag-green">Yes</span></td><td>Excludes lunch — this is what employees are paid for</td></tr>
+          <tr><td>Lunch Hours</td><td><span class="tag tag-green">Yes</span></td><td>Separate column so you can see it explicitly</td></tr>
+          <tr><td>Break Hours</td><td><span class="tag tag-green">Yes</span></td><td>Confirms breaks were given</td></tr>
+          <tr><td>Regular Hours</td><td><span class="tag tag-green">Yes</span></td><td>Straight-time hours before OT/DT thresholds</td></tr>
+          <tr><td>Overtime Hours</td><td><span class="tag tag-green">Yes</span></td><td>Hours that triggered overtime pay</td></tr>
+          <tr><td>Double Time Hours</td><td><span class="tag tag-green">Yes</span></td><td>Hours that triggered double-time pay</td></tr>
+          <tr><td>Pieces</td><td>Optional</td><td>Unit count for piecework employees</td></tr>
+          <tr><td>Piece Rate</td><td>Optional</td><td>Rate per unit for that day</td></tr>
+          <tr><td>Gross Pay</td><td><span class="tag tag-green">Yes</span></td><td>Total dollar amount earned — key for cost review</td></tr>
+        </table>
+        <div class="tip"><strong>Total Hours vs. Paid Hours:</strong> Total Hours includes lunch. Paid Hours does not. For payroll purposes, use Paid Hours. Keep a separate Lunch Hours column so the breakdown is visible and auditable.</div>
+        <h3>Renaming Columns</h3>
+        <p>You can rename any column header to match your payroll system's terminology. For example, rename "Employee ID" to "DataTech ID" or "ADP Number." Click the column name in the column builder to edit it.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="rpt-filters" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div><div><div class="card-title">Step 3 — Filter Your Data</div><div class="card-desc">Scope the report to the right crew, date range, jobs, and sites</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Filtering a Report</p><code>/videos/reports/filters.mp4</code></div>
+      <div class="prose">
+        <table class="tbl">
+          <tr><th>Filter</th><th>Common Use</th></tr>
+          <tr><td>Date Range</td><td>Yesterday (daily audit) or the full pay week (payroll run)</td></tr>
+          <tr><td>Crew</td><td>One crew at a time for auditing; all crews for payroll export</td></tr>
+          <tr><td>Job</td><td>Isolate productive jobs only, or include breaks/lunches</td></tr>
+          <tr><td>Site / Location</td><td>Scope to one ranch or block for location-based cost review</td></tr>
+          <tr><td>Paid Hours &lt; 40</td><td>Find employees who didn't hit 40 hours in the week</td></tr>
+        </table>
+        <h3>Finding Employees Under 40 Hours</h3>
+        <div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Set date range to the full work week</div></div><div class="step"><div class="step-num">2</div><div class="step-text">In column filters, find <strong>Paid Hours</strong> → set condition to <strong>"less than 40"</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Run the report — only employees under 40 hours appear</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Save this as a template for recurring weekly use</div></div></div>
+        <div class="tip"><strong>Save filters as part of your template</strong> so you don't have to re-apply them every time.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rpt-save" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div><div><div class="card-title">Step 4 — Save, Schedule & Export</div><div class="card-desc">Save as My Reports or org-wide, schedule daily emails, export CSV or print</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Saving, Scheduling & Exporting Reports</p><code>/videos/reports/save-schedule-export.mp4</code></div>
+      <div class="prose">
+        <h3>Saving a Report Template</h3>
+        <p><strong>My Reports</strong> — visible only to you. Good for personal daily auditing views.</p>
+        <p><strong>Organization Reports</strong> — visible to all office users. Good for shared payroll and audit workflows.</p>
+        <h3>Scheduling Automatic Delivery</h3>
+        <div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Open a saved report → click <strong>Schedule</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Set the delivery time (e.g., 7:00 AM daily)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Choose whether to send yesterday's data or same-day data</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Add email recipients (crew leaders, payroll admin, managers)</div></div><div class="step"><div class="step-num">5</div><div class="step-text">Save the schedule</div></div></div>
+        <div class="tip"><strong>Scheduling daily crew summary reports</strong> to crew leaders means they arrive each morning with their crew's previous day already reviewed — reducing back-and-forth calls to the office.</div>
+        <h3>Exporting</h3>
+        <p><strong>CSV / Excel</strong> — best for importing into your payroll system or further analysis. <strong>Printable</strong> — best for physical sign-offs and crew leader review sheets.</p>
+        <div class="warn"><strong>Preview before you export.</strong> Verify the column layout, row groupings, and totals look correct before downloading or sending.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!--  ERRORS & FIXES                                               -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-errors">
-
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Troubleshooting</div>
-      <div class="title">Common Errors</div>
-      <p class="desc">PickTrace flags errors with a red icon next to the employee name. Click any error below for symptoms, fixes, and prevention.</p>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#c62828"></div><div class="ec-titles"><div class="ec-t">Missing Checkout / Running Timecard <span class="ec-tag" style="background:#fce4ec;color:#c62828">Most Common</span></div><div class="ec-s">Employee never clocked out. System gives checkout at 11:59 PM.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Symptoms</h5>
-          <ul><li>12:00 AM start time on the next day's card</li><li>~24 hours shown</li><li>Timeline runs the entire day through 11:59 PM</li><li>Bulk checkout changes skip this employee</li></ul>
-          <h5>Fix</h5>
-          <ol><li>Verify actual checkout with your field team</li><li>Select the timecard &rarr; right-click &rarr; Edit</li><li>If multiple timecards: check "Set Checkout Time", update, Save</li><li>If one timecard: edit the "End Time" directly, Save</li></ol>
-          <div class="tip"><strong>Bulk shortcut:</strong> Right-click &rarr; "Select all 12am start times" &rarr; Archive. Then set correct start time in bulk.</div>
-          <h5>Prevention</h5><p>Train device users on checkout. Consider long-press checkout (without a badge) when the team is scattered.</p>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Wrong Date on Checkout <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Bulk checkout saves to tomorrow because a running timecard pushed past midnight.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Symptoms</h5><ul><li>Timecard spans two calendar days</li><li>Total hours inflated</li><li>Date field shows tomorrow</li></ul>
-          <h5>Fix</h5><ol><li>Before saving: check the date field</li><li>If it shows tomorrow, change to today</li><li>Root fix: always clear running timecards first</li></ol>
-          <div class="warn"><strong>This is the #1 bulk-edit trap.</strong> Always check the date before saving.</div>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Missing Check-In <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Checkout exists without a preceding check-in.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Add a check-in point to complete start and end times</li><li>Save</li></ol></div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Multiple Check-Outs <span class="ec-tag" style="background:#fff3e0;color:#e65100">Common</span></div><div class="ec-s">Two checkouts in a row without a check-in between them.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Remove one of the checkouts, or add a check-in between them</li><li>Save</li></ol></div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#7e3bd0"></div><div class="ec-titles"><div class="ec-t">Wrong Job <span class="ec-tag" style="background:#f3e8ff;color:#7e3bd0">Common</span></div><div class="ec-s">Device user forgot to switch jobs before scanning.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Fix (Bulk)</h5>
-          <ol><li>If breaks exist: use the Exclude filter first (Search &rarr; Job: Break/Lunch &rarr; Exclude &rarr; Apply)</li><li>Select timecards &rarr; right-click &rarr; Edit &rarr; check "Set Job"</li><li>Select correct Work Bundle and Job &rarr; Save</li></ol>
-          <h5>Fix (Single)</h5><ol><li>Right-click &rarr; Edit &rarr; update Job in the flyout &rarr; Save</li></ol>
-          <div class="crit"><strong>Set the correct pay style too</strong> when changing jobs. If switching hourly to piecework, check both "Set Job" and "Set Pay Style".</div>
-          <h5>Prevention</h5><p>Train device users to verify the job before scanning. Ensure jobs are scheduled via the Crew Scheduler.</p>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#7e3bd0"></div><div class="ec-titles"><div class="ec-t">Wrong Location <span class="ec-tag" style="background:#f3e8ff;color:#7e3bd0">Common</span></div><div class="ec-s">Device user forgot to switch location before scanning.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Fix</h5><ol><li>Select timecard(s) &rarr; right-click &rarr; Edit</li><li>Check "Set Site and Location"</li><li>Choose correct location &rarr; Save</li></ol>
-          <div class="tip"><strong>Include breaks in your selection</strong> when changing location so they match the correct ranch/block.</div>
-          <h5>Prevention</h5><p>Train device users to verify Site and Location before scanning.</p>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#888"></div><div class="ec-titles"><div class="ec-t">Overlapping Timecards <span class="ec-tag" style="background:#f3f4f6;color:#555">Tricky</span></div><div class="ec-s">Two timecards overlap in time.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd"><h5>Fix</h5><ol><li>Select the timecard &rarr; Edit</li><li>Review start/end times of each overlapping timecard</li><li>Adjust so they don't overlap, or archive the incorrect one</li></ol></div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#2e7d32"></div><div class="ec-titles"><div class="ec-t">Double Break / Double Lunch <span class="ec-tag" style="background:#e8f5e9;color:#2e7d32">Preventable</span></div><div class="ec-s">Break prompt tapped twice. Two consecutive breaks, no continuation.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Fix</h5><ol><li>Archive the duplicate break</li><li>Select the timecard before the break &rarr; Duplicate check in</li><li>Set start time to immediately after the break &rarr; Save</li></ol>
-          <div class="good"><strong>Prevention:</strong> Tell field teams to tap the prompt once only.</div>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#2ea3f2"></div><div class="ec-titles"><div class="ec-t">Employee Missing from Crew <span class="ec-tag" style="background:#e8f4fd;color:#1565c0">Common</span></div><div class="ec-s">Employee worked but was never clocked in.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Symptoms</h5><ul><li>Head count is off</li><li>No timecard exists for the employee</li></ul>
-          <h5>Fix</h5><ol><li>Find a coworker who did the same work</li><li>Right-click their timecard &rarr; Duplicate</li><li>Assign to the missing employee, adjust details &rarr; Save</li></ol>
-          <div class="tip"><strong>You can also create a timecard from scratch</strong> &mdash; see the Creating tab. Duplicating is just faster when a coworker did the same work.</div>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#888"></div><div class="ec-titles"><div class="ec-t">Same Employee in Two Crews <span class="ec-tag" style="background:#f3f4f6;color:#555">Rare</span></div><div class="ec-s">Badge scanned into two crews on the same day.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Symptoms</h5><ul><li>Employee under two crew names on the same day</li><li>Same moment: system throws overlapping error</li><li>Different times: system allows it (crew change)</li></ul>
-          <h5>Fix</h5><ol><li>Review both crews to find where the employee actually worked</li><li>Archive the incorrect timecard</li></ol>
-        </div>
-      </div>
-
-      <div class="ec" onclick="this.classList.toggle('open')">
-        <div class="ec-hd"><div class="ec-dot" style="background:#f57c00"></div><div class="ec-titles"><div class="ec-t">Missing Piece Record <span class="ec-tag" style="background:#fff3e0;color:#e65100">Warning</span></div><div class="ec-s">Piece/hourly+piece timecard with no production records. Shows "Missing" in the Piece column.</div></div><div class="ec-chev">&#9654;</div></div>
-        <div class="ec-bd">
-          <h5>Fix</h5><ol><li>Open Production Records in a new tab</li><li>Check if the employee should have a record</li><li>If yes: add a production record</li><li>If no pieces were logged: the warning can be ignored</li></ol>
-          <div class="tip"><strong>This is a warning, not a hard error.</strong> It shows as text in the Piece column, not a red icon.</div>
-        </div>
-      </div>
-
-    </div>
+<!-- ══════════ PAYROLL ══════════ -->
+<div id="module-payroll" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Payroll</h1><p>Map your PickTrace jobs, sites, and locations to payroll codes, then export the file directly into your payroll system (DataTech, ADP, Famous, and more).</p></div>
+  <div id="pay-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><div><div class="card-title">How Payroll Works in PickTrace</div><div class="card-desc">PickTrace as the timekeeping system — not the payroll processor</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Payroll Overview</p><code>/videos/payroll/overview.mp4</code></div><div class="prose"><p>PickTrace collects your time, pay, and pieces. Your payroll system (DataTech, ADP, etc.) generates checks, pay stubs, and calculates withholding taxes. The two systems connect via an import file — you pull a CSV from PickTrace and import it into your payroll system.</p><div class="tip"><strong>PickTrace calculates:</strong> Hourly pay, piecework pay, overtime/doubletime, rest break premiums, sick pay, and minimum wage adjustments. Your payroll system handles withholding, check generation, and pay stubs.</div></div></div>
+  </div>
+  <div id="pay-codes" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div><div class="card-title">Payroll Code Mapping</div><div class="card-desc">One-time setup: map PickTrace jobs/sites to your payroll codes</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Mapping Payroll Codes (DataTech Example)</p><code>/videos/payroll/code-mapping.mp4</code></div><div class="prose"><p>This is a one-time configuration. In your Payroll settings, map each Job, Site, and Location in PickTrace to the corresponding code in your payroll system. Once mapped, these codes are automatically included in every export.</p><table class="tbl"><tr><th>PickTrace Field</th><th>DataTech Equivalent</th></tr><tr><td>Job</td><td>Phase ID</td></tr><tr><td>Site / Location</td><td>Call Center (ranch or block level)</td></tr><tr><td>Employer</td><td>Employer code</td></tr></table><div class="warn"><strong>Ask your payroll provider for an example export file</strong> if you're unsure how to map fields. This makes alignment much easier.</div></div></div>
+  </div>
+  <div id="pay-export" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div><div class="card-title">Exporting Payroll</div><div class="card-desc">Pull the weekly CSV and import it into your payroll system</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Exporting and Importing Payroll</p><code>/videos/payroll/export.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Navigate to <strong>Payroll</strong> in the sidebar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the payroll period (e.g., March 2–8)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Review the data — verify totals for hourly, piecework, overtime, and break pay</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Click <strong>Download CSV</strong></div></div><div class="step"><div class="step-num">5</div><div class="step-text">Open your payroll system and import the file</div></div></div><div class="tip"><strong>Review the CSV before importing.</strong> Confirm all employee names, hours, and pay codes look correct.</div></div></div>
+  </div>
+  <div id="pay-calc" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></div><div><div class="card-title">Pay Calculations</div><div class="card-desc">How PickTrace calculates hourly, piecework, overtime, and premiums</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Understanding Pay Calculations</p><code>/videos/payroll/calculations.mp4</code></div><div class="prose"><table class="tbl"><tr><th>Pay Type</th><th>How PickTrace Handles It</th></tr><tr><td>Hourly</td><td>Start to end time × hourly rate</td></tr><tr><td>Piecework</td><td>Unit count × piece rate per unit</td></tr><tr><td>Hourly + Piece</td><td>Both calculated, employee receives higher of the two</td></tr><tr><td>Overtime / Doubletime</td><td>Calculated per state rules (daily or weekly)</td></tr><tr><td>Rest Break Premium</td><td>1 hr × Regular Rate of Pay (weekly total ÷ hours worked)</td></tr><tr><td>Minimum Wage</td><td>Applies if piece pay falls below state minimum</td></tr></table><div class="tip"><strong>The higher rate always wins.</strong> Employee profile rate → Job rate → Crew Scheduler rate → minimum wage.</div></div></div>
   </div>
 </div>
 
-<!-- ============================================================ -->
-<!--  ARCHIVING & REVIEWING                                        -->
-<!-- ============================================================ -->
-<div class="tab-panel" id="tab-archive">
-
-  <div class="sect">
-    <div class="wrap">
-      <div class="label">Archiving</div>
-      <div class="title">Archive &amp; Unarchive</div>
-      <p class="desc">Archiving removes a timecard from reporting but does not delete it. It can be restored at any time. Works from either view.</p>
-
-      <div class="two">
-        <div>
-          <h3 style="font-size:15px;margin-bottom:8px">Archive</h3>
-          <p style="font-size:13px;color:var(--text)">Select one or multiple timecards &rarr; right-click &rarr; <strong>Archive Timecard(s)</strong>.</p>
-          <p style="font-size:12px;color:var(--text-muted);margin-top:6px">Or: open the Edit flyout and click "Archive Timecard" at the bottom of each card.</p>
-        </div>
-        <div>
-          <h3 style="font-size:15px;margin-bottom:8px">Unarchive</h3>
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Click the <strong>settings gear</strong> (top-right) &rarr; toggle on <strong>"Show archived"</strong></div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Select the archived timecard(s)</div></div>
-            <div class="step"><div class="sn">3</div><div class="step-text">Right-click &rarr; <strong>Unarchive Timecard(s)</strong></div></div>
-          </div>
-          <div class="tip"><strong>You only need "Show archived" when unarchiving.</strong> For archiving, the timecard is already visible.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sect alt">
-    <div class="wrap">
-      <div class="label">Reviewing</div>
-      <div class="title">Review &amp; Approve Timecards</div>
-      <p class="desc">Reviewing marks timecards as audited and approved, clearing the "unreviewed" error. This signals the data is ready for payroll.</p>
-
-      <div class="fr">
-        <div class="fr-text">
-          <div class="steps">
-            <div class="step"><div class="sn">1</div><div class="step-text">Select the timecard(s) to review</div></div>
-            <div class="step"><div class="sn">2</div><div class="step-text">Right-click &rarr; <strong>Review Timecards</strong></div></div>
-          </div>
-          <div class="good"><strong>Use the Unreviewed filter as your final check.</strong> Search &rarr; check "Unreviewed" to find anything still needing attention before payroll export.</div>
-        </div>
-        <div class="fr-media">
-          <div class="bf"><div class="bf-bar"><div class="bf-dot r"></div><div class="bf-dot y"></div><div class="bf-dot g"></div><div class="bf-url"></div></div>
-          <div class="bf-body"><div class="ss" data-file="archive-review-menu.png" data-desc="Right-click menu showing Review Timecards"></div></div></div>
-        </div>
-      </div>
-    </div>
+<!-- ══════════ WORKFORCE CENTER ══════════ -->
+<div id="module-employees" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a2a4a 0%,#2980b9 100%)"><div class="hero-label">Workforce Center</div><h1>Employees</h1><p>Manage employee profiles, compensation settings, and badge assignments.</p></div>
+  <div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="card-title">Employee Profiles</div><div class="card-desc">Adding employees, setting compensation, and managing badges</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Employee Profiles Overview</p><code>/videos/employees/overview.mp4</code></div><div class="prose"><p>Each employee has a profile containing their name, PT ID, Alt ID, hire date, employer, assigned crew, and compensation settings. An employee must have an active profile and a badge to be scanned in the field.</p><div class="tip"><strong>Archiving an employee profile = termination.</strong> Their badge will no longer scan on any device.</div><h3>Compensation Settings</h3><p>Navigate to an employee's profile → <strong>Compensation</strong> tab. Set a unique hourly rate or piece rate that overrides the job default. This is the top level of the pay rate hierarchy.</p></div></div>
   </div>
 </div>
+
+<div id="module-employers" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#2a1a1a 0%,#c0392b 100%)"><div class="hero-label">Workforce Center</div><h1>Employers</h1><p>Manage the employer entities (growers, FLCs, labor contractors) that employees are associated with for payroll mapping.</p></div>
+  <div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#c0392b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div><div><div class="card-title">Managing Employers</div><div class="card-desc">Employer entities and how they map to payroll codes</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Employers Overview</p><code>/videos/employers/overview.mp4</code></div><div class="prose"><p>Employers represent the legal entities that employ your workers — your own operation, a labor contractor (FLC), or a sub-contractor. Each employee is linked to an employer, and that employer maps to a payroll code in your export settings.</p><div class="tip"><strong>When multiple FLCs are involved</strong>, use unique employer names and update crew names to include identifiers (e.g., initials) to prevent naming conflicts across crews.</div></div></div>
+  </div>
+</div>
+
+<div id="module-crews" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a2a1a 0%,#16a085 100%)"><div class="hero-label">Workforce Center</div><h1>Crews</h1><p>Organize employees into crews, assign crew leaders, and configure break/lunch prompt timing.</p></div>
+  <div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div><div class="card-title">Managing Crews</div><div class="card-desc">Creating crews, adding members, and setting break prompts</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Crews Overview</p><code>/videos/crews/overview.mp4</code></div><div class="prose"><p>Each crew groups a set of employees under a crew leader. Crews are the primary filter used during daily auditing and scheduling. Break and lunch prompt timing is set at the crew level.</p><h3>Updating Break/Lunch Prompts</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Go to <strong>Crews</strong> → select the crew → <strong>Edit</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Under "Break and Lunch Prompt" — toggle on/off and set timing</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>"add break/lunch"</strong> to add more prompts as needed</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Save</div></div></div></div></div>
+  </div>
+</div>
+
+<div id="module-devices" class="module-panel">
+  <div class="hero" style="background:linear-gradient(135deg,#1a1a2e 0%,#0e5f7a 100%)"><div class="hero-label">Workforce Center</div><h1>Devices</h1><p>Monitor the handheld devices assigned to your crews, check sync status, and manage device assignments.</p></div>
+  <div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#0e5f7a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg></div><div><div class="card-title">Device Management</div><div class="card-desc">Sync status, device assignments, and troubleshooting</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Devices Overview</p><code>/videos/devices/overview.mp4</code></div><div class="prose"><p>The Devices page shows all registered handheld devices in your organization — last sync time, assigned crew, and current status. Data from the field appears in PickTrace Office once the device syncs.</p><div class="tip"><strong>If timecards are not appearing</strong> for a crew, check the Devices page to confirm that crew's device has synced recently. Devices require a Wi-Fi or data connection to sync.</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════ ADMIN CENTER ══════════ -->
+<div id="module-crops" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Admin Center</div><h1>Crops & Varieties</h1><p>Configure the crop types and varieties used across your operations.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z"/></svg></div><div><div class="card-title">Managing Crops & Varieties</div><div class="card-desc">Add and organize crop types for reports and scheduler</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Crops & Varieties Setup</p><code>/videos/admin/crops.mp4</code></div><div class="prose"><p>Crops and varieties are assigned to Work Bundles. When a device user credits production, the associated crop populates on the production record and is visible in reports. Keep crop names consistent to ensure clean reporting.</p></div></div></div></div>
+
+<div id="module-workbundles" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#2a1a2a 0%,#8e44ad 100%)"><div class="hero-label">Admin Center</div><h1>Work Bundles</h1><p>Work Bundles group related Jobs together. They are selected first when scheduling or editing a timecard.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/></svg></div><div><div class="card-title">Managing Work Bundles</div><div class="card-desc">How bundles organize jobs and why the hierarchy matters</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Work Bundles Overview</p><code>/videos/admin/work-bundles.mp4</code></div><div class="prose"><p>A Work Bundle is a container for jobs. For example, a "Harvest" bundle might contain: Picking Piecework, Picking Hourly, Bin Hauling. When editing a timecard, you select the Work Bundle first, then the specific Job inside it.</p><div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If a job is missing from the drop-down, the Work Bundle is wrong or the job hasn't been added to that bundle.</div></div></div></div></div>
+
+<div id="module-jobs" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a1a2a 0%,#2c3e50 100%)"><div class="hero-label">Admin Center</div><h1>Jobs</h1><p>Jobs define the specific activities employees perform — Picking Piecework, Pruning Hourly, Break, Lunch, etc.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2c3e50"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div><div class="card-title">Managing Jobs</div><div class="card-desc">Pay styles, default rates, productive vs. non-productive</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Jobs Setup</p><code>/videos/admin/jobs.mp4</code></div><div class="prose"><p>Each job is configured with a pay style (Hourly, Piece, or Hourly+Piece) and a default rate. Jobs marked as non-productive (Break, Lunch) appear as yellow blocks in Timeline View. Jobs must be assigned to a Work Bundle before they appear on devices.</p></div></div></div></div>
+
+<div id="module-sites" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a2a2a 0%,#16a085 100%)"><div class="hero-label">Admin Center</div><h1>Sites</h1><p>Sites represent the ranches, farms, or locations where work happens. Each site contains one or more blocks (locations).</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="card-title">Managing Sites & Locations</div><div class="card-desc">Ranches, farms, and blocks — the location hierarchy</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Sites & Locations Setup</p><code>/videos/admin/sites.mp4</code></div><div class="prose"><p>Sites are the top-level location (ranch/farm). Each site has one or more locations (blocks/rows). When fixing location errors on timecards, you select Site first, then the Location within it.</p></div></div></div></div>
+
+<div id="module-packstyles" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#2a1a1a 0%,#e67e22 100%)"><div class="hero-label">Admin Center</div><h1>Pack Styles</h1><p>Configure the units of production — bins, trays, lugs, trees — that appear on production records.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#e67e22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div><div class="card-title">Managing Pack Styles</div><div class="card-desc">Units used in production records</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pack Styles Setup</p><code>/videos/admin/pack-styles.mp4</code></div><div class="prose"><p>Pack styles define the unit of production credited to employees (bins, 25 lb lugs, trays, trees, etc.). These appear as the "Unit" column on production records and are used to calculate piece-rate earnings.</p></div></div></div></div>
+
+<div id="module-users" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a1a3a 0%,#2980b9 100%)"><div class="hero-label">Admin Center</div><h1>Users</h1><p>Manage who has access to PickTrace Office and what they can do.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="card-title">Managing Office Users</div><div class="card-desc">Adding users and assigning roles and permissions</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Adding Users & Roles</p><code>/videos/admin/users.mp4</code></div><div class="prose"><p>Office Users are the people who log into PickTrace Office (payroll admins, office managers, supervisors). Each user is assigned a Role that determines what they can view and edit. Users are separate from Employees — an employee works in the field, a user works in the office.</p></div></div></div></div>
+
+<div id="module-roles" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#2a2a1a 0%,#f39c12 100%)"><div class="hero-label">Admin Center</div><h1>Roles</h1><p>Define permission sets that control what each type of user can see and do in PickTrace Office.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#f39c12"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><div><div class="card-title">Managing Roles & Permissions</div><div class="card-desc">Control what office users can view, edit, and export</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Roles & Permissions</p><code>/videos/admin/roles.mp4</code></div><div class="prose"><p>Roles control access levels in PickTrace Office. Common roles include: Admin (full access), Payroll (timecards + payroll export), Viewer (read-only). Assign roles to users to ensure each person only has access to the sections they need.</p></div></div></div></div>
+
+<!-- ══════════ PULSE ══════════ -->
+<div id="module-pulse-live" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a2a1a 0%,#27ae60 100%)"><div class="hero-label">Pulse</div><h1>Live</h1><p>Real-time view of active crews in the field — who is clocked in, where, and what job they are on right now.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div><div><div class="card-title">Live Dashboard</div><div class="card-desc">Real-time crew activity and field monitoring</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pulse Live Overview</p><code>/videos/pulse/live.mp4</code></div><div class="prose"><p>The Live view shows each active crew as a single summary row: first check-in time, last check-in time, job, head count, total hours, costing, production, performance, and compliance flags. Click into any crew to see the full Timeline View for that crew in real time.</p></div></div></div></div>
+
+<div id="module-pulse-costing" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#2ecc71 100%)"><div class="hero-label">Pulse</div><h1>Costing</h1><p>Track real-time labor costs across crews, sites, and work bundles.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2ecc71"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="card-title">Labor Cost Analytics</div><div class="card-desc">Total labor cost, cost per unit, and cost by crew or variety</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pulse Costing Overview</p><code>/videos/pulse/costing.mp4</code></div><div class="prose"><p>Pulse Costing shows total labor cost and cost-per-unit breakdowns across your operation. View by Total, Average Per Plant, Average Per Acre, or Average Per Unit. Use this to compare cost efficiency across ranches, varieties, and crews over time.</p></div></div></div></div>
+
+<div id="module-pulse-production" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a1a3a 0%,#3498db 100%)"><div class="hero-label">Pulse</div><h1>Production</h1><p>Analyze production volumes — total units harvested, units per hour, and trends over time.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#3498db"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="card-title">Production Analytics</div><div class="card-desc">Volume trends, units per hour, and crew comparisons</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pulse Production Overview</p><code>/videos/pulse/production.mp4</code></div><div class="prose"><p>The Production view shows total units produced, broken down by crop, variety, site, and crew. Track daily production trends and compare performance across different ranches or blocks.</p></div></div></div></div>
+
+<div id="module-pulse-performance" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#2a1a1a 0%,#e74c3c 100%)"><div class="hero-label">Pulse</div><h1>Performance</h1><p>Measure worker and crew efficiency — units per hour, productivity trends, and top performers.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#e74c3c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div><div class="card-title">Performance Analytics</div><div class="card-desc">Efficiency metrics and productivity comparisons</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pulse Performance Overview</p><code>/videos/pulse/performance.mp4</code></div><div class="prose"><p>Performance analytics show units-per-hour and other efficiency metrics at the employee, crew, and site level. Use this to identify top performers, spot training opportunities, and compare performance between similar crews or blocks over time.</p></div></div></div></div>
+
+<div id="module-pulse-compliance" class="module-panel"><div class="hero" style="background:linear-gradient(135deg,#1a2a2a 0%,#16a085 100%)"><div class="hero-label">Pulse</div><h1>Compliance</h1><p>Automatically flag wage violations, missed breaks, and overtime issues before they become payroll problems.</p></div><div class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="card-title">Compliance Dashboard</div><div class="card-desc">Missed breaks, overtime, meal premium penalties, wage adjustments</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div><div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Pulse Compliance Overview</p><code>/videos/pulse/compliance.mp4</code></div><div class="prose"><p>The Compliance view surfaces potential violations automatically — missed meal periods that trigger premium penalties, employees approaching or exceeding overtime thresholds, and minimum wage adjustments. Review this daily alongside your timecard audit to catch issues before payroll is processed.</p><div class="tip"><strong>Meal Premium Penalty:</strong> When a break is missed and a penalty is applied, PickTrace adds 1.0 hour at the employee's Regular Rate of Pay (weekly total ÷ total hours worked that week) automatically. Use Reports → Column Visibility → add "Is Penalty Applied" and "Penalty Hours" to audit these.</div></div></div></div></div>
 
 <!-- FOOTER -->
 <div class="ftr">
-  <div class="ftr-inner">
-    <div>
-      <a href="https://picktrace-help.helpscoutdocs.com/article/351-what-are-timecards" target="_blank">What are Timecards?</a> &middot;
-      <a href="https://picktrace-help.helpscoutdocs.com/article/440-daily-timecard-auditing-process" target="_blank">Daily Auditing</a> &middot;
-      <a href="https://picktrace-help.helpscoutdocs.com/article/399-how-do-i-edit-a-timecard" target="_blank">Editing</a> &middot;
-      <a href="https://picktrace-help.helpscoutdocs.com/article/474-how-to-archive" target="_blank">Archiving</a>
-    </div>
-    <div>Last updated: March 2026</div>
+  <div class="ftr-links">
+    <a href="https://picktrace-help.helpscoutdocs.com" target="_blank">PickTrace Help Center</a>
+    <a href="https://picktrace-help.helpscoutdocs.com/article/351-what-are-timecards" target="_blank">Timecards Help Article</a>
+    <a href="https://picktrace-help.helpscoutdocs.com/article/393-audit-timecards-production-records" target="_blank">Audit Guide</a>
   </div>
+  <div class="ftr-date">PickTrace Office Suite Guide · Last updated: March 2026</div>
 </div>
 
+</main></div>
+
 <script>
-var tabs=['overview','create','edit','breaks','audit','errors','archive'];
-function go(id){
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
-  document.getElementById('tab-'+id).classList.add('active');
-  document.querySelectorAll('.hdr-nav button').forEach(function(b){b.classList.remove('active')});
-  var i=tabs.indexOf(id),bs=document.querySelectorAll('.hdr-nav button');
-  if(i>=0&&bs[i])bs[i].classList.add('active');
-  document.getElementById('heroEl').style.display=id==='overview'?'':'none';
-  document.querySelector('.hdr-nav').classList.remove('open');
+var moduleNames={dashboard:'Dashboard',timecards:'Timecards',production:'Production Records',scheduler:'Crew Scheduler',reports:'Reports',payroll:'Payroll',employees:'Employees',employers:'Employers',crews:'Crews',devices:'Devices',crops:'Crops & Varieties',workbundles:'Work Bundles',jobs:'Jobs',sites:'Sites',packstyles:'Pack Styles',users:'Users',roles:'Roles','pulse-live':'Live','pulse-costing':'Costing','pulse-production':'Production','pulse-performance':'Performance','pulse-compliance':'Compliance'};
+
+function showModule(id,el){
+  document.querySelectorAll('.module-panel').forEach(p=>p.classList.remove('active'));
+  var panel=document.getElementById('module-'+id);
+  if(panel) panel.classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  var t=document.getElementById('tb-page-title');
+  if(t&&moduleNames[id]) t.textContent=moduleNames[id];
   window.scrollTo(0,0);
 }
-function stab(btn,pid){
-  var p=btn.closest('.sect');
-  p.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active')});
-  btn.classList.add('active');
-  p.querySelectorAll('.sp').forEach(function(s){s.classList.remove('active')});
-  document.getElementById(pid).classList.add('active');
+
+function toggleSub(subId,el){
+  var sub=document.getElementById(subId);
+  var isOpen=sub.classList.contains('open');
+  document.querySelectorAll('.sb-sub').forEach(s=>s.classList.remove('open'));
+  if(!isOpen) sub.classList.add('open');
+  var map={'sub-tc':'timecards','sub-pr':'production','sub-cs':'scheduler','sub-rpt':'reports','sub-pay':'payroll'};
+  var modId=map[subId];
+  if(modId) showModule(modId,el);
 }
-function xBanner(){document.getElementById('banner').classList.add('hidden');try{localStorage.setItem('pt-b','1')}catch(e){}}
-(function(){try{if(localStorage.getItem('pt-b')==='1')document.getElementById('banner').classList.add('hidden')}catch(e){}})();
-function renderSS(){
-  document.querySelectorAll('.ss').forEach(function(s){
-    var f=s.getAttribute('data-file'),d=s.getAttribute('data-desc'),img=new Image();
-    img.onload=function(){s.innerHTML='<img src="./screenshots/'+f+'" alt="'+d+'" style="width:100%;display:block"/>'};
-    img.onerror=function(){s.innerHTML='<div class="ph"><div class="ph-file">'+f+'</div><div class="ph-desc">'+d+'</div></div>'};
-    img.src='./screenshots/'+f;
-  });
+
+function showModuleSub(modId,sectionId,el){
+  showModule(modId,null);
+  document.querySelectorAll('.sb-subitem').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  setTimeout(function(){
+    var sec=document.getElementById(sectionId);
+    if(sec){
+      var hdr=sec.querySelector('.card-hdr');
+      if(hdr&&!hdr.classList.contains('open')) toggleCard(hdr);
+      sec.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  },50);
 }
-renderSS();
+
+function toggleCard(hdr){
+  hdr.classList.toggle('open');
+  var body=hdr.nextElementSibling;
+  if(body) body.style.display=hdr.classList.contains('open')?'block':'none';
+}
+
+function toggleErr(hdr){
+  hdr.parentElement.classList.toggle('open');
+}
+
+document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
+  var body=hdr.nextElementSibling;
+  if(body) body.style.display='block';
+});
 </script>
 </body>
 </html>
