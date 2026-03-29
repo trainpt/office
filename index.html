@@ -116,6 +116,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .video-placeholder svg{width:40px;height:40px;color:rgba(255,255,255,.25);margin:0 auto 10px;display:block}
 .video-placeholder p{color:rgba(255,255,255,.35);font-size:12px}
 .video-placeholder code{background:rgba(255,255,255,.08);padding:2px 8px;border-radius:4px;font-size:11px;color:rgba(255,255,255,.5)}
+.video-embed{position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;margin-bottom:20px}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
 /* Steps */
 .steps{counter-reset:step;margin:0 0 16px}
@@ -125,6 +127,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 /* Callouts */
 .tip{background:#f0f7ff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#1a4a7a;line-height:1.6}
+.tip-media{display:flex;align-items:center;gap:14px;padding:10px 16px}
+.tip-media img{width:320px;flex-shrink:0;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
 .tip strong{color:var(--blue)}
 .warn{background:#fff8ed;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#7a4a00;line-height:1.6}
 .warn strong{color:var(--accent)}
@@ -395,7 +399,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tc-overview" class="card">
     <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#1a6fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="card-title">Overview — What Are Timecards?</div><div class="card-desc">How timecards are created, where to find them, and the two views</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Timecard Overview Walkthrough</p><code>/videos/timecards/overview.mp4</code></div>
+      <img src="screenshots/v2/timecard.png" alt="Timecard overview" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)">
       <div class="prose">
         <p>Timecards are records that capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
         <h3>Where to Find Them</h3>
@@ -422,7 +426,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tc-create" class="card">
     <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="card-title">Creating & Duplicating Timecards</div><div class="card-desc">Add missing records manually or copy from an existing employee</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Creating a Timecard from Scratch</p><code>/videos/timecards/creating.mp4</code></div>
+      <div class="video-embed"><iframe id="loom-creating" data-src="https://www.loom.com/embed/f8e73e94aec340179d706b580639e664" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
       <div class="prose">
         <h3>How to Create a Timecard</h3>
         <div class="steps">
@@ -432,14 +436,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="step"><div class="step-num">4</div><div class="step-text">Need multiple entries? Click <strong>+ Add another timecard</strong> for each (different jobs, breaks)</div></div>
           <div class="step"><div class="step-num">5</div><div class="step-text">Click <strong>Checkout</strong> to set end time → <strong>Save</strong></div></div>
         </div>
-        <div class="tip"><strong>Adding by crew is faster</strong> when everyone is missing — type the crew name and all members are added in one step.</div>
+        <div class="tip tip-media"><img src="screenshots/v2/crew-employee.png" alt="Crew vs Employee selector"/><span><strong>Adding by crew is faster</strong> when everyone is missing — type the crew name and all members are added in one step.</span></div>
         <h3>Duplicate a Timecard</h3>
-        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Duplicating a Timecard</p><code>/videos/timecards/duplicating.mp4</code></div>
+        <div class="video-embed"><iframe id="loom-duplicating" data-src="https://www.loom.com/embed/ba16548c4baa478294f07a72ced496f1" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
         <p>Copies all attributes from an existing timecard and assigns it to a different employee. Right-click → <strong>Duplicate Timecard</strong>. Change the employee name and any other details → Save.</p>
-        <div class="tip"><strong>You can assign the duplicate to multiple employees at once</strong> — add several names before saving.</div>
-        <h3>Transfer a Timecard</h3>
-        <p>Reassigns a timecard from one employee to another. The original employee loses the record entirely. Select one timecard → right-click → <strong>Transfer Timecard</strong> → update the employee name.</p>
-        <div class="warn"><strong>Transfer only works for a single timecard.</strong> To move multiple records, use Duplicate + Archive instead.</div>
+        <div class="tip tip-media"><img src="screenshots/v2/duplicate-multiple.png" alt="Duplicating to multiple employees"/><span><strong>You can assign the duplicate to multiple employees at once</strong> — add several names before saving.</span></div>
       </div>
     </div>
   </div>
@@ -447,12 +448,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tc-edit" class="card">
     <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><div class="card-title">Editing Timecards</div><div class="card-desc">Single and bulk editing — times, jobs, sites, pay styles, crew</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Editing a Single Timecard</p><code>/videos/timecards/edit-single.mp4</code></div>
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/275a987f822f4707aeee6e121767747c" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
       <div class="prose">
         <h3>Editing One Timecard</h3>
         <p>Select one timecard → right-click → <strong>Edit Timecard</strong>. The flyout shows all timecards for that employee on the selected day. Edit any attribute: start time, end time, crew, site, location, work bundle, job, pay style, rate.</p>
         <h3>Editing Multiple Timecards</h3>
-        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Bulk Editing Timecards</p><code>/videos/timecards/edit-bulk.mp4</code></div>
+        <div class="video-embed"><iframe data-src="https://www.loom.com/embed/01eac1004dc446b5bbd899ef3d7e2e0a" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
         <p>Select multiple timecards (Shift+Click or Ctrl+Click) → right-click → <strong>Edit Timecards</strong>. Use checkboxes to apply bulk changes: Start Time, Checkout Time, Site & Location, Job, Pay Style & Rate, Duration.</p>
         <div class="warn"><strong>Changes apply to all selected timecards.</strong> If times were changed, a confirmation screen shows before/after in timeline view. Review carefully before saving.</div>
         <h3>Pay Rate Rule</h3>
@@ -466,7 +467,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div id="tc-breaks" class="card">
     <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#e67e22"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div><div class="card-title">Breaks & Lunches</div><div class="card-desc">Adding bulk breaks, fixing doubles, using the Exclude filter</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body">
-      <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Adding Bulk Breaks for a Crew</p><code>/videos/timecards/add-breaks-bulk.mp4</code></div>
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/756ae93ebb404abb8fb31c11db225986" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
       <div class="prose">
         <h3>Adding Breaks in Bulk</h3>
         <div class="steps">
@@ -817,7 +818,9 @@ function showModuleSub(modId,sectionId,el){
     if(sec){
       var hdr=sec.querySelector('.card-hdr');
       if(hdr&&!hdr.classList.contains('open')) toggleCard(hdr);
-      sec.scrollIntoView({behavior:'smooth',block:'start'});
+      var hdrH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr-h'))||52;
+      var top=sec.getBoundingClientRect().top+window.pageYOffset-hdrH-8;
+      window.scrollTo({top:top,behavior:'smooth'});
     }
   },50);
 }
@@ -853,6 +856,20 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
   var body=hdr.nextElementSibling;
   if(body) body.style.display='block';
 });
+
+(function(){
+  document.querySelectorAll('iframe[data-src]').forEach(function(iframe){
+    var observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !iframe.src){
+          iframe.src=iframe.dataset.src+'?autoplay=1&loop=1';
+          observer.disconnect();
+        }
+      });
+    },{threshold:0.3});
+    observer.observe(iframe);
+  });
+})();
 </script>
 </body>
 </html>
