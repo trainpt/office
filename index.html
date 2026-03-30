@@ -116,7 +116,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .video-placeholder svg{width:40px;height:40px;color:rgba(255,255,255,.25);margin:0 auto 10px;display:block}
 .video-placeholder p{color:rgba(255,255,255,.35);font-size:12px}
 .video-placeholder code{background:rgba(255,255,255,.08);padding:2px 8px;border-radius:4px;font-size:11px;color:rgba(255,255,255,.5)}
-.video-embed{position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;margin-bottom:20px}
+.video-embed{position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;margin-bottom:20px;background:#0b1a2e}
+.vid-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:1;pointer-events:none;transition:opacity .1s}
+.vid-loader img{height:28px}
+.vid-loader .dots{display:flex;gap:8px;opacity:0;transition:opacity .2s}
+.vid-loader.loading .dots{opacity:1}
+.vid-loader .dots span{width:8px;height:8px;border-radius:50%;background:#fff;opacity:.3;animation:dotPulse 1.2s ease-in-out infinite}
+.vid-loader .dots span:nth-child(2){animation-delay:.2s}
+.vid-loader .dots span:nth-child(3){animation-delay:.4s}
 .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
 /* Steps */
@@ -223,9 +230,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   display:flex;align-items:center;gap:8px;transition:background .15s}
 .filter-chk:hover{background:rgba(26,111,186,.04)}
 .filter-chk::before{content:'';width:13px;height:13px;border:1.5px solid #b0bec5;border-radius:3px;flex-shrink:0}
+#pt-loader{position:fixed;inset:0;z-index:9999;background:#0b1a2e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .3s}
+#pt-loader img{height:36px}
+#pt-loader .dots{display:flex;gap:8px}
+#pt-loader .dots span{width:8px;height:8px;border-radius:50%;background:#fff;opacity:.3;animation:dotPulse 1.2s ease-in-out infinite}
+#pt-loader .dots span:nth-child(2){animation-delay:.2s}
+#pt-loader .dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotPulse{0%,80%,100%{opacity:.3;transform:scale(1)}40%{opacity:1;transform:scale(1.3)}}
 </style>
 </head>
 <body>
+<div id="pt-loader"><img src="https://picktrace.com/wp-content/uploads/2022/03/Web22-PicktraceLogo80.png" alt="PickTrace"/><div class="dots"><span></span><span></span><span></span></div></div>
 
 <div id="sidebar-trigger"></div>
 
@@ -638,14 +653,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="step"><div class="step-num">2</div><div class="step-text">Select the timecard before the break → <strong>Duplicate check in</strong></div></div>
           <div class="step"><div class="step-num">3</div><div class="step-text">Edit start time to begin immediately after the break → Save</div></div>
         </div>
-        <h3>The Exclude Filter — Critical Technique</h3>
-        <div class="danger"><strong>Changing jobs? Always exclude breaks first.</strong> Otherwise the bulk edit overwrites break job data. Changing ranch/block? Include breaks so they match the correct location.</div>
-        <div class="steps">
-          <div class="step"><div class="step-num">1</div><div class="step-text">Open Search / Filter bar</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Under Job, select <strong>Break</strong> and <strong>Lunch</strong></div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>"Exclude"</strong> instead of "Include" → Apply</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Breaks are hidden. Select remaining timecards and bulk edit safely.</div></div>
-        </div>
       </div>
     </div>
   </div>
@@ -1010,17 +1017,55 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
 });
 
 (function(){
-  document.querySelectorAll('iframe[data-src]').forEach(function(iframe){
-    var observer=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting && !iframe.src){
-          iframe.src=iframe.dataset.src+'?autoplay=1&loop=1&muted=1&hide_owner=true&hide_title=true&hide_share=true&hideEmbedTopBar=true';
-          observer.disconnect();
+  var params='?autoplay=1&loop=1&muted=1&hide_owner=true&hide_title=true&hide_share=true&hideEmbedTopBar=true';
+  var allIframes=document.querySelectorAll('iframe[data-src]');
+  var activeIframe=null;
+
+  // Add logo placeholder to all video embeds
+  allIframes.forEach(function(iframe){
+    var container=iframe.parentElement;
+    var ldr=document.createElement('div');
+    ldr.className='vid-loader';
+    ldr.innerHTML='<img src="screenshots/logo.png" alt="PickTrace"/><div class="dots"><span></span><span></span><span></span></div>';
+    container.appendChild(ldr);
+  });
+
+  function activateNearest(){
+    var best=null;var bestDist=Infinity;
+    var center=window.innerHeight/2;
+    allIframes.forEach(function(iframe){
+      var rect=iframe.getBoundingClientRect();
+      if(rect.top<window.innerHeight&&rect.bottom>0){
+        var dist=Math.abs((rect.top+rect.bottom)/2-center);
+        if(dist<bestDist){bestDist=dist;best=iframe;}
+      }
+    });
+    if(best!==activeIframe){
+      // Stop all others by removing src, show logo
+      allIframes.forEach(function(iframe){
+        if(iframe!==best&&iframe.src){
+          iframe.removeAttribute('src');
+          var ldr=iframe.parentElement.querySelector('.vid-loader');
+          if(ldr){ldr.style.opacity='1';ldr.classList.remove('loading');}
         }
       });
-    },{threshold:0.3});
-    observer.observe(iframe);
-  });
+      // Load the active one
+      if(best&&!best.src){
+        var container=best.parentElement;
+        var ldr=container.querySelector('.vid-loader');
+        if(ldr){ldr.style.opacity='1';ldr.classList.add('loading');}
+        best.src=best.dataset.src+params;
+        best.addEventListener('load',function(){
+          if(ldr){ldr.style.opacity='0';ldr.classList.remove('loading');}
+        },{once:true});
+      }
+      activeIframe=best;
+    }
+  }
+
+  var timer;
+  window.addEventListener('scroll',function(){clearTimeout(timer);timer=setTimeout(activateNearest,150);});
+  setTimeout(activateNearest,500);
 })();
 
 function stab(btn,pid){
@@ -1049,6 +1094,71 @@ function stab(btn,pid){
     });
   },{threshold:0.2,rootMargin:'-20% 0px -60% 0px'});
   cards.forEach(function(card){observer.observe(card)});
+})();
+
+
+// Restore scroll position on refresh (not fresh visit)
+(function(){
+  var NAV_KEY='pt-office-nav';
+  var isReload=performance.navigation?performance.navigation.type===1:
+    performance.getEntriesByType('navigation').some(function(n){return n.type==='reload'});
+
+  var loader=document.getElementById('pt-loader');
+  if(isReload){
+    var saved=sessionStorage.getItem(NAV_KEY);
+    if(saved){
+      var data=JSON.parse(saved);
+      if(data.module){
+        showModule(data.module,null,true);
+        var sbItem=document.querySelector('.sb-item[data-module="'+data.module+'"]');
+        if(sbItem){
+          sbItem.classList.add('active');
+          var subMenu=sbItem.nextElementSibling;
+          if(subMenu&&subMenu.classList.contains('sb-sub')) subMenu.classList.add('open');
+        }
+        if(data.card){
+          document.querySelectorAll('.sb-subitem').forEach(function(item){
+            var onclick=item.getAttribute('onclick')||'';
+            if(onclick.indexOf("'"+data.card+"'")!==-1) item.classList.add('active');
+          });
+          var sec=document.getElementById(data.card);
+          if(sec){
+            var hdr=sec.querySelector('.card-hdr');
+            if(hdr&&!hdr.classList.contains('open')) toggleCard(hdr);
+          }
+        }
+      }
+      window.scrollTo(0,data.scroll||0);
+    }
+  }
+  var minTime=1500;
+  var start=performance.now();
+  function hideLoader(){
+    var elapsed=performance.now()-start;
+    var remaining=Math.max(0,minTime-elapsed);
+    setTimeout(function(){
+      if(loader){loader.style.opacity='0';setTimeout(function(){loader.remove()},300);}
+    },remaining);
+  }
+  hideLoader();
+
+  var saveTimer;
+  function saveNav(){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(function(){
+      var activeCard=null;
+      document.querySelectorAll('.card[id]').forEach(function(card){
+        var rect=card.getBoundingClientRect();
+        if(rect.top<window.innerHeight/2&&rect.bottom>0) activeCard=card.id;
+      });
+      var activeModule=null;
+      var visiblePanel=document.querySelector('.module-panel.active');
+      if(visiblePanel) activeModule=visiblePanel.id.replace('module-','');
+      sessionStorage.setItem(NAV_KEY,JSON.stringify({module:activeModule,card:activeCard,scroll:window.pageYOffset}));
+    },200);
+  }
+  window.addEventListener('scroll',saveNav);
+  window.addEventListener('click',saveNav);
 })();
 </script>
 </body>
