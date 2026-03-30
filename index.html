@@ -192,6 +192,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   .hero{padding:24px 20px}
   .hero h1{font-size:20px}
 }
+/* ── Sub-tabs (Advanced Search filter categories) ── */
+.search-intro{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#f0f6fc,#e8f0fe);border-radius:8px;padding:14px 18px;margin-bottom:18px;overflow:visible;position:relative}
+.search-intro p{margin:0;font-size:13px;color:var(--text);line-height:1.6}
+.search-intro .sb-trigger{height:34px;border-radius:6px;border:1px solid var(--border);flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer}
+.search-intro .sb-popup{display:none;position:absolute;top:calc(100% + 8px);right:0;width:min(600px,90vw);border-radius:8px;border:1px solid var(--border);box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:100;cursor:pointer;background:#fff;overflow:hidden}
+.search-intro .sb-popup img{width:100%;display:block}
+.stabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin:0 0 18px}
+.stab{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;
+  padding:9px 16px;font-size:12px;font-weight:600;color:var(--text-light);
+  cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap;border-radius:6px 6px 0 0}
+.stab:hover{color:var(--text);background:rgba(26,111,186,.04)}
+.stab.active{color:var(--blue);border-bottom-color:var(--blue);background:rgba(26,111,186,.06)}
+.sp{display:none;animation:fadeIn .2s ease}
+.sp.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.filter-grid{display:grid;grid-template-columns:140px auto 140px auto;gap:0;margin:10px 0 14px;align-items:center}
+.filter-item{font-size:12px;color:var(--text);display:contents}
+.filter-item .fn{padding:6px 0;border-bottom:1px solid #f0f2f5;display:flex;align-items:center;gap:8px}
+.filter-item .fn::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0;opacity:.4}
+.filter-item .ft{padding:6px 8px 6px 0;border-bottom:1px solid #f0f2f5}
+.filter-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:600;
+  background:#deeaf8;color:#1a4a7a;margin-left:4px;letter-spacing:.02em;text-transform:uppercase}
+.filter-toggles{display:inline-flex;flex-shrink:0}
+.ft-inc{display:inline-block;padding:2px 7px;font-size:10px;font-weight:600;
+  background:#3272b5;color:#fff;border-radius:3px 0 0 3px;line-height:1.4}
+.ft-exc{display:inline-block;padding:2px 7px;font-size:10px;font-weight:600;
+  background:#c0392b;color:#fff;border-radius:0 3px 3px 0;line-height:1.4}
+.filter-chk{font-size:12px;color:var(--text);line-height:1;padding:7px 10px;border-radius:6px;
+  display:flex;align-items:center;gap:8px;transition:background .15s}
+.filter-chk:hover{background:rgba(26,111,186,.04)}
+.filter-chk::before{content:'';width:13px;height:13px;border:1.5px solid #b0bec5;border-radius:3px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -225,6 +256,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
     <div class="sb-sub" id="sub-tc">
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-overview',this)">Overview</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-views',this)">Views & Settings</div>
+      <div class="sb-subitem" onclick="showModuleSub('timecards','tc-search',this)">Advanced Search & Filter</div>
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-create',this)">Creating & Duplicating</div>
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-edit',this)">Editing</div>
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-breaks',this)">Breaks & Lunches</div>
@@ -401,24 +434,143 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="card-body">
       <img src="screenshots/v2/timecard.png" alt="Timecard overview" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)">
       <div class="prose">
-        <p>Timecards are records that capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
-        <h3>Where to Find Them</h3>
-        <p>Navigate to <strong>Timecards</strong> from the left sidebar. The page defaults to today's date in List View. Use the date drop-down to select a different day, a range, or a preset like "Last 7 days." The arrow buttons step forward or back one day.</p>
-        <h3>Two Views</h3>
-        <table class="tbl">
-          <tr><th></th><th>List View</th><th>Timeline View</th></tr>
-          <tr><td><strong>Best for</strong></td><td>Complex edits, bulk changes, CSV export</td><td>Visual confirmation, quick drag-to-adjust edits</td></tr>
-          <tr><td><strong>Editing</strong></td><td>Single and bulk via flyout panel</td><td>Individual only — drag check-in/check-out edges</td></tr>
-          <tr><td><strong>Unique features</strong></td><td>Sortable columns, CSV export, extra hidden columns</td><td>Color-coded blocks <span class="tag tag-blue">Blue = Work</span> <span class="tag tag-yellow">Yellow = Break</span></td></tr>
-        </table>
-        <div class="tip"><strong>Tip:</strong> Add the <strong>Reviewed</strong>, <strong>Device</strong>, and <strong>Geolocation</strong> columns in Settings → Column Visibility for a complete audit view.</div>
-        <h3>Search & Filter</h3>
-        <p>Click <strong>Search</strong> in the top header. Combine criteria and click Apply. Available filters: Name, Site/Location, Crop, Employer, Crew, Job, Device, Hourly Rate, Production Records, Work Hours, Audited by, Has no Prod. Records, Edited Record.</p>
-        <div class="tip"><strong>Check "Edited Record"</strong> to see only timecards modified after creation — useful for spotting what's already been touched.</div>
+        <p>Timecards capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
+        <p>Navigate to <strong>Timecards</strong> from the left sidebar.</p>
         <h3>Right-Click Context Menu</h3>
         <p><strong>One selected:</strong> Navigate to Employee Profile · Edit · Duplicate · Transfer · Archive · Add New</p>
         <p><strong>Multiple selected:</strong> Edit Timecards · Switch Crew · Archive Timecards</p>
         <p><strong>Shift+Click</strong> selects a consecutive range. <strong>Ctrl+Click</strong> picks non-adjacent timecards.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tc-views" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div><div><div class="card-title">Views, Toolbar &amp; Settings</div><div class="card-desc">Timeline, List, Summary views — navigation, zoom, column visibility, and page settings</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="prose">
+
+        <h3>Timeline View</h3>
+        <p>Color-coded blocks per employee. <span class="tag tag-blue">Blue = Work</span> <span class="tag tag-yellow">Yellow = Break</span></p>
+      </div>
+      <img src="screenshots/v2/timeline.png" alt="Timeline View" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/>
+
+      <div class="prose">
+        <h3>List View</h3>
+        <p>Tabular view with sortable columns. Best for bulk editing and CSV export.</p>
+      </div>
+      <img src="screenshots/v2/listview.png" alt="List View" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/>
+
+      <div class="prose">
+        <h3>Summary View</h3>
+        <p>Aggregated totals per employee.</p>
+      </div>
+      <img src="screenshots/v2/summary.png" alt="Summary View" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/>
+
+      <div class="prose">
+        <h3>Date Navigation</h3>
+        <p>Arrows step one day. Dropdown selects specific dates or presets.</p>
+      </div>
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/4b9b0ec59bd440d0b097e7ca65eb6393" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+
+      <div class="prose">
+        <h3>Toolbar Actions</h3>
+        <p>+ Add timecards / bulk breaks · Bulk checkout · Copy timecards · Select all</p>
+      </div>
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/a04a1e402d8e4273bf774fc11d794370" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+
+      <div class="prose">
+        <h3>Zoom Slider</h3>
+        <p>Timeline only — top-right corner. Zoom in for detail, out for full day.</p>
+      </div>
+      <img src="screenshots/v2/zoom.png" alt="Zoom Slider" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/>
+
+      <div class="prose">
+        <h3>Settings (Gear Icon)</h3>
+        <p>Column visibility, records per page, records status, overnights toggle.</p>
+      </div>
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/13aef40ad75342558bedf073cf3de0d7" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+
+      <div class="prose">
+        <h3>Bottom Status Bar</h3>
+        <p>Shows employees, timecards, total hours, and minutes for the current view.</p>
+      </div>
+      <div style="background:#f8f9fa;border-radius:8px;padding:12px 20px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08);font-size:14px;color:#555;display:flex;gap:24px">
+        <span><strong>9</strong> employees</span>
+        <span><strong>63</strong> timecards</span>
+        <span><strong>76</strong> hours</span>
+        <span><strong>30</strong> minutes</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="tc-search" class="card">
+    <div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div><div class="card-title">Advanced Search &amp; Filter</div><div class="card-desc">Master every filter to find exactly the timecards you need</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body">
+      <div class="video-embed"><iframe data-src="https://www.loom.com/embed/24e18c1f5dfd4d27b1e32a088910aa9b" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+      <div class="prose">
+        <div class="search-intro">
+          <p>Click the <strong>Search ▾</strong> dropdown in the top header to open <strong>Advanced Search</strong>.</p>
+          <span style="position:relative;flex-shrink:0">
+            <img class="sb-trigger" src="screenshots/v2/searchbar.png" alt="Advanced Search dropdown" onclick="var pop=this.parentElement.querySelector('.sb-popup');pop.style.display=pop.style.display==='block'?'none':'block'" title="Click to preview"/>
+            <div class="sb-popup" onclick="this.style.display='none'"><img src="screenshots/v2/adv-search.png" alt="Advanced Search panel"/></div>
+          </span>
+        </div>
+
+        <div class="stabs">
+          <button class="stab active" onclick="stab(this,'sf-people')">People &amp; Location</button>
+          <button class="stab" onclick="stab(this,'sf-work')">Work Details</button>
+          <button class="stab" onclick="stab(this,'sf-status')">Status &amp; Compliance</button>
+          <button class="stab" onclick="stab(this,'sf-flags')">Record Flags</button>
+        </div>
+
+        <div class="sp active" id="sf-people">
+          <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">Narrow by who worked and where.</p>
+          <div class="filter-grid">
+            <div class="filter-item"><span class="fn">Employee</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Crew</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Employer</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Employee title</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Team</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Site</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Location</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Device user</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+          </div>
+          <div class="tip"><strong>Always filter by Crew first</strong> before making any edits — this prevents accidentally touching another crew's timecards.</div>
+        </div>
+
+        <div class="sp" id="sf-work">
+          <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">Filter by what the employee was doing, how long, and on what device.</p>
+          <div class="filter-grid">
+            <div class="filter-item"><span class="fn">Job</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Work Bundle</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Crop</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Variety</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Device</span><span class="ft"><span class="filter-tag">text field</span></span><span class="fn">Hourly rate</span><span class="ft"><span class="filter-tag">Equal to / Less than / Greater than</span></span></div>
+            <div class="filter-item"><span class="fn">Hours</span><span class="ft"><span class="filter-tag">Work / Shift</span> <span class="filter-tag">Equal to / Less than / Greater than</span></span><span class="fn"></span><span class="ft"></span></div>
+          </div>
+          <div class="tip"><strong>Use the Exclude toggle on Job</strong> and select Break + Lunch before any bulk job edit — this prevents overwriting break records.</div>
+        </div>
+
+        <div class="sp" id="sf-status">
+          <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">Surface errors, break violations, and penalty premium status.</p>
+          <div class="filter-grid">
+            <div class="filter-item"><span class="fn">Error/warning</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn">Break warnings</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span></div>
+            <div class="filter-item"><span class="fn">Attestation Status</span><span class="ft"><span class="filter-toggles"><span class="ft-inc">Include</span><span class="ft-exc">Exclude</span></span></span><span class="fn"></span><span class="ft"></span></div>
+          </div>
+          <div class="tip" style="margin-top:10px"><strong>Break warnings → Apply Penalty</strong> using the star icon to the right of the search bar. Filter by <em>Penalty Premium Applied</em> to find and remove previously applied penalties.</div>
+        </div>
+
+        <div class="sp" id="sf-flags">
+          <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">Checkbox filters that show or hide specific record types.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 20px;margin:8px 0">
+            <div class="filter-chk">No production records</div>
+            <div class="filter-chk">Edited record</div>
+            <div class="filter-chk">H-2A Employee</div>
+            <div class="filter-chk">Reviewed data</div>
+            <div class="filter-chk">Unreviewed data</div>
+            <div class="filter-chk">Notes</div>
+            <div class="filter-chk">Open Timecards</div>
+            <div class="filter-chk">From Kiosk Device</div>
+            <div class="filter-chk">Shift Start Timecards</div>
+            <div class="filter-chk">Penalty Premium Applied</div>
+          </div>
+          <div class="tip"><strong>Use "Unreviewed data" as your final pre-payroll check</strong> to catch anything not yet approved. Use "Edited record" to see every timecard touched after creation.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -480,7 +632,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         </div>
         <div class="tip"><strong>"Dynamic start time"</strong> means relative timing — give everyone a break X hours after their individual start time. No manual calculation needed even if employees started at different times.</div>
         <h3>Fixing Double Break / Double Lunch</h3>
-        <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fixing a Double Break</p><code>/videos/timecards/fix-double-break.mp4</code></div>
+        <div class="video-embed"><iframe data-src="https://www.loom.com/embed/766d2b705b454ebcbeafaad9604601a7" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
         <div class="steps">
           <div class="step"><div class="step-num">1</div><div class="step-text">Select the duplicate break → right-click → <strong>Archive check in</strong></div></div>
           <div class="step"><div class="step-num">2</div><div class="step-text">Select the timecard before the break → <strong>Duplicate check in</strong></div></div>
@@ -526,8 +678,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="err-item open">
         <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Missing Checkout / Running Timecard</div><span class="err-badge tag tag-red">Most Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
         <div class="err-body">
-          <div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Missing Checkout</p><code>/videos/timecards/errors/missing-checkout.mp4</code></div>
-          <div class="prose"><h4>Symptoms</h4><ul><li>12:00 AM start time on the next day's card</li><li>~24 hours shown</li><li>Timeline runs the entire day through 11:59 PM</li><li>Bulk checkout changes skip this employee</li></ul><h4>Fix</h4><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Verify actual checkout with your field team</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the timecard → right-click → Edit</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Update the End Time → Save</div></div></div><div class="tip"><strong>Bulk shortcut:</strong> Right-click → "Select all 12am start times" → Archive. Then set correct start time in bulk.</div></div>
+          <div class="video-embed"><iframe data-src="https://www.loom.com/embed/d4dd2cd8a5e741bfb8a7b638884f0c0d" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+          <div class="prose"><h4>Symptoms</h4><ul><li>12:00 AM start time on the next day's card</li><li>~24 hours shown</li><li>Timeline runs the entire day through 11:59 PM</li><li>Bulk checkout changes skip this employee</li></ul><h4>Fix</h4><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Verify actual checkout with your field team</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the affected timecard, or hold <strong>Ctrl</strong> (Windows) / <strong>⌘ Cmd</strong> (Mac) and click to bulk-select multiple affected running timecards</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Right-click → Edit</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Update the End Time → Save</div></div></div><div class="tip"><strong>Bulk shortcut:</strong> Right-click → "Select all 12am start times" → Archive. Then set correct start time in bulk.</div></div>
         </div>
       </div>
       <div class="err-item">
@@ -536,19 +688,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
       <div class="err-item">
         <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Wrong Job</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
-        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Job on Timecards</p><code>/videos/timecards/errors/wrong-job.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Use Exclude filter first: Search → Job: Break/Lunch → Exclude → Apply</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select timecards → right-click → Edit → check "Set Job"</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Select correct Work Bundle and Job → Save</div></div></div><div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If the job isn't in the drop-down, change the Work Bundle first.</div></div></div>
+        <div class="err-body"><div class="prose"><h4 style="margin-top:0">Single Timecard</h4></div><div class="video-embed"><iframe data-src="https://www.loom.com/embed/72c3545bd4164733adf68a381dc2bf9c" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the timecard → right-click → <strong>Edit</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Check <strong>"Set Job"</strong> → select the correct Work Bundle and Job → Save</div></div></div><h4>Bulk Edit</h4></div><div class="video-embed"><iframe data-src="https://www.loom.com/embed/4f208e74a92547c8a9332a743679e43b" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Use Exclude filter first: Search → Job: Break/Lunch → <strong>Exclude</strong> → Apply</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select all affected timecards (hold <strong>Ctrl</strong> / <strong>⌘ Cmd</strong> for non-adjacent, <strong>Shift</strong> for range)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Right-click → <strong>Edit Timecards</strong> → check <strong>"Set Job"</strong></div></div><div class="step"><div class="step-num">4</div><div class="step-text">Select correct Work Bundle and Job → Save</div></div></div><div class="tip"><strong>Jobs depend on the Work Bundle.</strong> If the job isn't in the drop-down, change the Work Bundle first.</div></div></div>
       </div>
       <div class="err-item">
         <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Wrong Location</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
-        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Location</p><code>/videos/timecards/errors/wrong-location.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select timecard(s) → right-click → Edit</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Check "Set Site and Location" → choose correct location → Save</div></div></div><div class="tip"><strong>Include breaks in your selection</strong> when changing location so they match the correct ranch/block.</div></div></div>
+        <div class="err-body"><div class="prose"><h4 style="margin-top:0">Single Timecard</h4></div><div class="video-embed"><iframe data-src="https://www.loom.com/embed/12f64575dd8647ba8235a19afa47ebf7" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the timecard → right-click → <strong>Edit</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Check <strong>"Set Site and Location"</strong> → choose the correct site and location → Save</div></div></div><h4>Bulk Edit</h4></div><div class="video-embed"><iframe data-src="https://www.loom.com/embed/7844d78a4a5543a6ac2b021c602988ef" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Use Exclude filter first: Search → Job: Break/Lunch → <strong>Exclude</strong> → Apply</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select all affected timecards (hold <strong>Ctrl</strong> / <strong>⌘ Cmd</strong> for non-adjacent, <strong>Shift</strong> for range)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Right-click → <strong>Edit Timecards</strong> → check <strong>"Set Site and Location"</strong></div></div><div class="step"><div class="step-num">4</div><div class="step-text">Choose the correct site and location → Save</div></div></div><div class="danger"><strong>Always exclude breaks/lunches first.</strong> Otherwise the bulk edit overwrites break job data with the new location's job.</div></div></div>
       </div>
       <div class="err-item">
         <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot red"></div><div class="err-name">Overlapping Timecards</div><span class="err-badge tag tag-red">Tricky</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
         <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Overlapping Timecards</p><code>/videos/timecards/errors/overlapping.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the timecard → Edit</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Review start/end times of each overlapping timecard</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Adjust so they don't overlap, or archive the incorrect one</div></div></div></div></div>
       </div>
       <div class="err-item">
-        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Employee Missing from Crew</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
-        <div class="err-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Missing Employee Timecard</p><code>/videos/timecards/errors/missing-employee.mp4</code></div><div class="prose"><p>Find a coworker who did the same work → right-click their timecard → <strong>Duplicate</strong> → assign to the missing employee → adjust details → Save.</p><div class="tip"><strong>Duplicating is faster than creating from scratch</strong> when a coworker did the same work.</div></div></div>
+        <div class="err-hdr" onclick="toggleErr(this)"><div class="err-dot orange"></div><div class="err-name">Employee Missing Timecard</div><span class="err-badge tag tag-yellow">Common</span><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="err-body"><div class="video-embed"><iframe data-src="https://www.loom.com/embed/4ef983da91294af3be4572e282e54bb4" allow="autoplay; fullscreen" allowfullscreen></iframe></div><div class="prose"><p>Find a coworker who did the same work → right-click their timecard → <strong>Duplicate</strong> → assign to the missing employee → adjust details → Save.</p><div class="tip"><strong>Duplicating is faster than creating from scratch</strong> when a coworker did the same work.</div></div></div>
       </div>
     </div>
   </div>
@@ -862,13 +1014,41 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
     var observer=new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting && !iframe.src){
-          iframe.src=iframe.dataset.src+'?autoplay=1&loop=1';
+          iframe.src=iframe.dataset.src+'?autoplay=1&loop=1&muted=1&hide_owner=true&hide_title=true&hide_share=true&hideEmbedTopBar=true';
           observer.disconnect();
         }
       });
     },{threshold:0.3});
     observer.observe(iframe);
   });
+})();
+
+function stab(btn,pid){
+  var p=btn.closest('.stabs').parentElement;
+  p.querySelectorAll('.stab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  p.querySelectorAll('.sp').forEach(function(s){s.classList.remove('active')});
+  var panel=document.getElementById(pid);
+  if(panel) panel.classList.add('active');
+}
+
+(function(){
+  var cards=document.querySelectorAll('.card[id]');
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id=entry.target.id;
+        document.querySelectorAll('.sb-subitem').forEach(function(item){
+          var onclick=item.getAttribute('onclick')||'';
+          if(onclick.indexOf("'"+id+"'")!==-1){
+            document.querySelectorAll('.sb-subitem').forEach(function(i){i.classList.remove('active')});
+            item.classList.add('active');
+          }
+        });
+      }
+    });
+  },{threshold:0.2,rootMargin:'-20% 0px -60% 0px'});
+  cards.forEach(function(card){observer.observe(card)});
 })();
 </script>
 </body>
