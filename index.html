@@ -620,18 +620,10 @@ body.on-dashboard .tb-search{display:none}
   <div id="tc-overview" class="card">
     <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#1a6fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="card-title">Overview — What Are Timecards?</div><div class="card-desc">How timecards are created, where to find them, and the two views</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body">
-      <img src="screenshots/v2/timecard.png" alt="Timecard overview" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)">
+      <img src="screenshots/v2/overview.png" alt="Timecard overview" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)">
       <div class="prose">
         <p style="font-size:15px;line-height:1.8;margin-bottom:16px">Timecards capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
         <p style="font-size:15px;line-height:1.8;margin-bottom:20px">Navigate to <strong>Timecards</strong> from the left sidebar.</p>
-        <h3 id="h3-rightclick">Right-Click Context Menu</h3>
-        <p>Right-click a time block to open the context menu. The available options depend on how many timecards you have selected.</p>
-      </div>
-      <div style="display:flex;gap:120px;justify-content:center;align-items:flex-start;margin-bottom:20px">
-        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">One Selected</h4><img src="screenshots/v2/quick-settings.png" alt="Single timecard context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
-        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">Multiple Selected</h4><img src="screenshots/v2/quick-settings-bulk.png" alt="Multiple timecards context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
-      </div>
-      <div class="prose">
       </div>
     </div>
   </div>
@@ -692,6 +684,15 @@ body.on-dashboard .tb-search{display:none}
         <span><strong>63</strong> timecards</span>
         <span><strong>76</strong> hours</span>
         <span><strong>30</strong> minutes</span>
+      </div>
+
+      <div class="prose">
+        <h3 id="h3-rightclick">Right-Click Context Menu</h3>
+        <p>Right-click a time block to open the context menu. The available options depend on how many timecards you have selected.</p>
+      </div>
+      <div style="display:flex;gap:120px;justify-content:center;align-items:flex-start;margin-bottom:20px">
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">One Selected</h4><img src="screenshots/v2/quick-settings.png" alt="Single timecard context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">Multiple Selected</h4><img src="screenshots/v2/quick-settings-bulk.png" alt="Multiple timecards context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
       </div>
 
     </div>
@@ -1526,7 +1527,7 @@ var _suppressObserver=false;
 var SEARCH_INDEX=[
     {title:'Dashboard',path:'',mod:'dashboard',keywords:'home landing overview start'},
     {title:'Timecards Overview',path:'Timecards',mod:'timecards',sec:'tc-overview',keywords:'timecard intro time clock hours'},
-    {title:'Right-Click Context Menu',path:'Timecards › Overview',mod:'timecards',sec:'tc-overview',h3:'h3-rightclick',keywords:'right click context menu select shift ctrl'},
+    {title:'Right-Click Context Menu',path:'Timecards › Views & Settings',mod:'timecards',sec:'tc-views',h3:'h3-rightclick',keywords:'right click context menu select shift ctrl'},
     {title:'Views & Settings',path:'Timecards',mod:'timecards',sec:'tc-views',keywords:'gear settings icon view options display columns configure layout toggle'},
     {title:'Timeline View',path:'Timecards › Views',mod:'timecards',sec:'tc-views',h3:'h3-timeline',keywords:'timeline color blocks blue yellow purple in progress live view'},
     {title:'List View',path:'Timecards › Views',mod:'timecards',sec:'tc-views',h3:'h3-listview',keywords:'list view table sort columns bulk csv'},
