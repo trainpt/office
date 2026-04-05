@@ -76,6 +76,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 }
 .sb-subitem:hover{color:#fff;background:rgba(255,255,255,.05)}
 .sb-subitem.active{color:var(--accent);font-weight:600}
+.sb-coming-soon{opacity:0;transition:opacity 0s}
+#sidebar:hover .sb-coming-soon{opacity:1;transition:opacity .2s .1s}
+.sb-item.sb-disabled{opacity:.35;pointer-events:none;cursor:default}
+.sb-subitem.sb-disabled{opacity:.35;pointer-events:none;cursor:default}
 
 /* ── TOPBAR ── */
 #topbar{
@@ -139,6 +143,7 @@ body.on-dashboard .tb-search{display:none}
 .dash-mod-icon svg{width:20px;height:20px;fill:#fff}
 .dash-mod-title{font-size:14px;font-weight:700;color:#1a1a2e}
 .dash-mod-desc{font-size:12px;color:var(--text-light);line-height:1.5}
+.dash-mod.dash-disabled{opacity:.35;pointer-events:none;cursor:default}
 
 /* ── MAIN CONTENT ── */
 #main-wrapper{margin-top:var(--hdr-h);margin-left:var(--sidebar-collapsed)}
@@ -413,7 +418,7 @@ body.on-dashboard .tb-search{display:none}
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-errors',this)">Errors & Fixes</div>
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-archive',this)">Archiving & Reviewing</div>
     </div>
-    <div class="sb-item" data-module="production" onclick="toggleSub('sub-pr',this)">
+    <div class="sb-item sb-disabled" data-module="production" onclick="toggleSub('sub-pr',this)">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6h-3.14c-.47 0-.84.33-.97.78C14.53 11.04 13.35 12 12 12s-2.53-.96-2.89-2.22c-.13-.45-.5-.78-.97-.78H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v3zm-3.13 7H20c.55 0 1 .45 1 1v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-2c0-.55.45-1 1-1h4.13c.47 0 .85.34.98.8.35 1.27 1.51 2.2 2.89 2.2s2.54-.93 2.89-2.2c.13-.46.51-.8.98-.8z"/></svg>
       <span>Production Records</span>
     </div>
@@ -423,7 +428,7 @@ body.on-dashboard .tb-search{display:none}
       <div class="sb-subitem" onclick="showModuleSub('production','pr-edit',this)">Editing Records</div>
       <div class="sb-subitem" onclick="showModuleSub('production','pr-errors',this)">Errors & Fixes</div>
     </div>
-    <div class="sb-item" data-module="scheduler" onclick="toggleSub('sub-cs',this)">
+    <div class="sb-item sb-disabled" data-module="scheduler" onclick="toggleSub('sub-cs',this)">
       <svg viewBox="0 0 24 24"><path d="M19 4h-1V3c0-.55-.45-1-1-1s-1 .45-1 1v1H8V3c0-.55-.45-1-1-1s-1 .45-1 1v1H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 15c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1V9h14v10zM7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
       <span>Crew Scheduler</span>
     </div>
@@ -433,7 +438,7 @@ body.on-dashboard .tb-search{display:none}
       <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-rates',this)">Locations & Piece Rates</div>
       <div class="sb-subitem" onclick="showModuleSub('scheduler','cs-breaks',this)">Break & Lunch Prompts</div>
     </div>
-    <div class="sb-item" data-module="reports" onclick="toggleSub('sub-rpt',this)">
+    <div class="sb-item sb-disabled" data-module="reports" onclick="toggleSub('sub-rpt',this)">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
       <span>Reports</span>
     </div>
@@ -443,7 +448,7 @@ body.on-dashboard .tb-search{display:none}
       <div class="sb-subitem" onclick="showModuleSub('reports','rpt-filters',this)">Filter Your Data</div>
       <div class="sb-subitem" onclick="showModuleSub('reports','rpt-save',this)">Save, Schedule & Export</div>
     </div>
-    <div class="sb-item" data-module="payroll" onclick="toggleSub('sub-pay',this)">
+    <div class="sb-item sb-disabled" data-module="payroll" onclick="toggleSub('sub-pay',this)">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
       <span>Payroll</span>
     </div>
@@ -457,19 +462,19 @@ body.on-dashboard .tb-search{display:none}
 
   <div class="sb-section">
     <div class="sb-section-label">Workforce Center</div>
-    <div class="sb-item" data-module="employees" onclick="showModule('employees',this)">
+    <div class="sb-item sb-disabled" data-module="employees" onclick="showModule('employees',this)">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
       <span>Employees</span>
     </div>
-    <div class="sb-item" data-module="employers" onclick="showModule('employers',this)">
+    <div class="sb-item sb-disabled" data-module="employers" onclick="showModule('employers',this)">
       <svg viewBox="0 0 24 24"><path d="M20 3h-8c-.55 0-1 .45-1 1v1.61l.01.01 5 4.5c.63.56.99 1.38.99 2.23V13h2v2h-2v2h2v2h-2v2h3c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zm-5 4h-2V5h2v2zm4 4h-2V9h2v2zm0-4h-2V5h2v2z"/><path d="M15 20v-7.65c0-.28-.12-.55-.33-.74l-5-4.5c-.19-.18-.43-.26-.67-.26-.24 0-.48.09-.67.26l-5 4.5c-.21.18-.33.45-.33.74V20c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-4h4v4c0 .55.45 1 1 1h2c.55 0 1-.45 1-1z"/></svg>
       <span>Employers</span>
     </div>
-    <div class="sb-item" data-module="crews" onclick="showModule('crews',this)">
+    <div class="sb-item sb-disabled" data-module="crews" onclick="showModule('crews',this)">
       <svg viewBox="0 0 24 24"><path d="M11.99 2c-5.52 0-10 4.48-10 10s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm3.61 6.34c1.07 0 1.93.86 1.93 1.93 0 1.07-.86 1.93-1.93 1.93-1.07 0-1.93-.86-1.93-1.93-.01-1.07.86-1.93 1.93-1.93zm-6-1.58c1.3 0 2.36 1.06 2.36 2.36 0 1.3-1.06 2.36-2.36 2.36s-2.36-1.06-2.36-2.36c0-1.31 1.05-2.36 2.36-2.36zm0 9.13v3.75c-2.4-.75-4.3-2.6-5.14-4.96 1.05-1.12 3.67-1.69 5.14-1.69.53 0 1.2.08 1.9.22-1.64.87-1.9 2.02-1.9 2.68zM11.99 20c-.27 0-.53-.01-.79-.04v-4.07c0-1.42 2.94-2.13 4.4-2.13 1.07 0 2.92.39 3.84 1.15-1.17 2.97-4.06 5.09-7.45 5.09z"/></svg>
       <span>Crews</span>
     </div>
-    <div class="sb-item" data-module="devices" onclick="showModule('devices',this)">
+    <div class="sb-item sb-disabled" data-module="devices" onclick="showModule('devices',this)">
       <svg viewBox="0 0 24 24"><path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"/></svg>
       <span>Devices</span>
     </div>
@@ -477,31 +482,31 @@ body.on-dashboard .tb-search{display:none}
 
   <div class="sb-section">
     <div class="sb-section-label">Admin Center</div>
-    <div class="sb-item" data-module="crops" onclick="showModule('crops',this)">
+    <div class="sb-item sb-disabled" data-module="crops" onclick="showModule('crops',this)">
       <svg viewBox="0 0 24 24"><path d="M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z"/></svg>
       <span>Crops & Varieties</span>
     </div>
-    <div class="sb-item" data-module="workbundles" onclick="showModule('workbundles',this)">
+    <div class="sb-item sb-disabled" data-module="workbundles" onclick="showModule('workbundles',this)">
       <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
       <span>Work Bundles</span>
     </div>
-    <div class="sb-item" data-module="jobs" onclick="showModule('jobs',this)">
+    <div class="sb-item sb-disabled" data-module="jobs" onclick="showModule('jobs',this)">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"/></svg>
       <span>Jobs</span>
     </div>
-    <div class="sb-item" data-module="sites" onclick="showModule('sites',this)">
+    <div class="sb-item sb-disabled" data-module="sites" onclick="showModule('sites',this)">
       <svg viewBox="0 0 24 24"><path d="M12,2c-4.2,0-8,3.22-8,8.2c0,3.32,2.67,7.25,8,11.8c5.33-4.55,8-8.48,8-11.8C20,5.22,16.2,2,12,2z M12,12c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2c1.1,0,2,0.9,2,2C14,11.1,13.1,12,12,12z"/></svg>
       <span>Sites</span>
     </div>
-    <div class="sb-item" data-module="packstyles" onclick="showModule('packstyles',this)">
+    <div class="sb-item sb-disabled" data-module="packstyles" onclick="showModule('packstyles',this)">
       <svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/></svg>
       <span>Pack Styles</span>
     </div>
-    <div class="sb-item" data-module="users" onclick="showModule('users',this)">
+    <div class="sb-item sb-disabled" data-module="users" onclick="showModule('users',this)">
       <svg viewBox="0 0 24 24"><path d="M10.67,13.02C10.45,13.01,10.23,13,10,13c-2.42,0-4.68,0.67-6.61,1.82C2.51,15.34,2,16.32,2,17.35V19c0,0.55,0.45,1,1,1h8.26C10.47,18.87,10,17.49,10,16C10,14.93,10.25,13.93,10.67,13.02z"/><circle cx="10" cy="8" r="4"/><path d="M20.75,16c0-0.22-0.03-0.42-0.06-0.63l0.84-0.73c0.18-0.16,0.22-0.42,0.1-0.63l-0.59-1.02c-0.12-0.21-0.37-0.3-0.59-0.22l-1.06,0.36c-0.32-0.27-0.68-0.48-1.08-0.63l-0.22-1.09c-0.05-0.23-0.25-0.4-0.49-0.4h-1.18c-0.24,0-0.44,0.17-0.49,0.4l-0.22,1.09c-0.4,0.15-0.76,0.36-1.08,0.63l-1.06-0.36c-0.23-0.08-0.47,0.02-0.59,0.22l-0.59,1.02c-0.12,0.21-0.08,0.47,0.1,0.63l0.84,0.73c-0.03,0.21-0.06,0.41-0.06,0.63s0.03,0.42,0.06,0.63l-0.84,0.73c-0.18,0.16-0.22,0.42-0.1,0.63l0.59,1.02c0.12,0.21,0.37,0.3,0.59,0.22l1.06-0.36c0.32,0.27,0.68,0.48,1.08,0.63l0.22,1.09c0.05,0.23,0.25,0.4,0.49,0.4h1.18c0.24,0,0.44-0.17,0.49-0.4l0.22-1.09c0.4-0.15,0.76-0.36,1.08-0.63l1.06,0.36c0.23,0.08,0.47-0.02,0.59-0.22l0.59-1.02c0.12-0.21,0.08-0.47-0.1-0.63l-0.84-0.73C20.72,16.42,20.75,16.22,20.75,16z M17,18c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S18.1,18,17,18z"/></svg>
       <span>Users</span>
     </div>
-    <div class="sb-item" data-module="roles" onclick="showModule('roles',this)">
+    <div class="sb-item sb-disabled" data-module="roles" onclick="showModule('roles',this)">
       <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
       <span>Roles</span>
     </div>
@@ -509,28 +514,29 @@ body.on-dashboard .tb-search{display:none}
 
   <div class="sb-section">
     <div class="sb-section-label">Pulse</div>
-    <div class="sb-item" data-module="pulse-live" onclick="showModule('pulse-live',this)">
+    <div class="sb-item sb-disabled" data-module="pulse-live" onclick="showModule('pulse-live',this)">
       <svg class="live-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#27ae60"/></svg>
       <span>Live</span>
     </div>
-    <div class="sb-item" data-module="pulse-costing" onclick="showModule('pulse-costing',this)">
+    <div class="sb-item sb-disabled" data-module="pulse-costing" onclick="showModule('pulse-costing',this)">
       <svg viewBox="0 0 24 24"><path d="M11 5.08V2c-5 .5-9 4.81-9 10s4 9.5 9 10v-3.08c-3-.48-6-3.4-6-6.92s3-6.44 6-6.92zM18.97 11H22c-.47-5-4-8.53-9-9v3.08C16 5.51 18.54 8 18.97 11zM13 18.92V22c5-.47 8.53-4 9-9h-3.03c-.43 3-2.97 5.49-5.97 5.92z"/></svg>
       <span>Costing</span>
     </div>
-    <div class="sb-item" data-module="pulse-production" onclick="showModule('pulse-production',this)">
+    <div class="sb-item sb-disabled" data-module="pulse-production" onclick="showModule('pulse-production',this)">
       <svg viewBox="0 0 24 24"><circle cx="7.2" cy="14.4" r="3.2"/><circle cx="14.8" cy="18" r="2"/><circle cx="15.2" cy="8.8" r="4.8"/></svg>
       <span>Production</span>
     </div>
-    <div class="sb-item" data-module="pulse-performance" onclick="showModule('pulse-performance',this)">
+    <div class="sb-item sb-disabled" data-module="pulse-performance" onclick="showModule('pulse-performance',this)">
       <svg viewBox="0 0 24 24"><path d="M16.85 6.85l1.44 1.44-4.88 4.88-3.29-3.29a.9959.9959 0 00-1.41 0l-6 6.01c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L9.41 12l3.29 3.29c.39.39 1.02.39 1.41 0l5.59-5.58 1.44 1.44c.31.31.85.09.85-.35V6.5c.01-.28-.21-.5-.49-.5h-4.29c-.45 0-.67.54-.36.85z"/></svg>
       <span>Performance</span>
     </div>
-    <div class="sb-item" data-module="pulse-compliance" onclick="showModule('pulse-compliance',this)">
+    <div class="sb-item sb-disabled" data-module="pulse-compliance" onclick="showModule('pulse-compliance',this)">
       <svg viewBox="0 -960 960 960"><path d="M110-120q-13 0-21.5-8.5T80-150q0-13 8.5-21.5T110-180h340v-484q-26-9-46.5-29.5T374-740H215l116 280q5 11 6.5 24.5T337-414q-10 36-45.5 60T210-330q-46 0-81.5-24T83-414q-2-8-.5-21.5T89-460l116-280h-55q-13 0-21.5-8.5T120-770q0-13 8.5-21.5T150-800h224q12-35 41-57.5t65-22.5q36 0 65 22.5t41 57.5h224q13 0 21.5 8.5T840-770q0 13-8.5 21.5T810-740h-55l116 280q5 11 6.5 24.5T877-414q-10 36-45.5 60T750-330q-46 0-81.5-24T623-414q-2-8-.5-21.5T629-460l116-280H586q-9 26-29.5 46.5T510-664v484h340q13 0 21.5 8.5T880-150q0 13-8.5 21.5T850-120H110Zm565-320h150l-75-184-75 184Zm-540 0h150l-75-184-75 184Zm345-280q21 0 35.5-15t14.5-35q0-21-14.5-35.5T480-820q-20 0-35 14.5T430-770q0 20 15 35t35 15Z"/></svg>
       <span>Compliance</span>
     </div>
   </div>
   </div>
+  <div class="sb-coming-soon" style="padding:12px 14px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;font-style:italic">Greyed-out modules are coming soon</div>
 </nav>
 
 <!-- MAIN -->
@@ -566,42 +572,43 @@ body.on-dashboard .tb-search{display:none}
       <div class="dash-mod-title">Timecards</div>
       <div class="dash-mod-desc">Audit, edit, and approve every time record from the field</div>
     </div>
-    <div class="dash-mod" onclick="var e=document.querySelector('.sb-item[data-module=production]');toggleSub('sub-pr',e)">
+    <div class="dash-mod dash-disabled" onclick="var e=document.querySelector('.sb-item[data-module=production]');toggleSub('sub-pr',e)">
       <div class="dash-mod-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6h-3.14c-.47 0-.84.33-.97.78C14.53 11.04 13.35 12 12 12s-2.53-.96-2.89-2.22c-.13-.45-.5-.78-.97-.78H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v3zm-3.13 7H20c.55 0 1 .45 1 1v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-2c0-.55.45-1 1-1h4.13c.47 0 .85.34.98.8.35 1.27 1.51 2.2 2.89 2.2s2.54-.93 2.89-2.2c.13-.46.51-.8.98-.8z"/></svg></div>
       <div class="dash-mod-title">Production Records</div>
       <div class="dash-mod-desc">View and correct piece-pay records — bins, trays, trees</div>
     </div>
-    <div class="dash-mod" onclick="var e=document.querySelector('.sb-item[data-module=scheduler]');toggleSub('sub-cs',e)">
+    <div class="dash-mod dash-disabled" onclick="var e=document.querySelector('.sb-item[data-module=scheduler]');toggleSub('sub-cs',e)">
       <div class="dash-mod-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V3c0-.55-.45-1-1-1s-1 .45-1 1v1H8V3c0-.55-.45-1-1-1s-1 .45-1 1v1H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 15c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1V9h14v10zM7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg></div>
       <div class="dash-mod-title">Crew Scheduler</div>
       <div class="dash-mod-desc">Schedule crews to jobs, sites, and set piece rates</div>
     </div>
-    <div class="dash-mod" onclick="var e=document.querySelector('.sb-item[data-module=reports]');toggleSub('sub-rpt',e)">
+    <div class="dash-mod dash-disabled" onclick="var e=document.querySelector('.sb-item[data-module=reports]');toggleSub('sub-rpt',e)">
       <div class="dash-mod-icon" style="background:#0e7490"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
       <div class="dash-mod-title">Reports</div>
       <div class="dash-mod-desc">Build, save, schedule, and export custom data reports</div>
     </div>
-    <div class="dash-mod" onclick="var e=document.querySelector('.sb-item[data-module=payroll]');toggleSub('sub-pay',e)">
+    <div class="dash-mod dash-disabled" onclick="var e=document.querySelector('.sb-item[data-module=payroll]');toggleSub('sub-pay',e)">
       <div class="dash-mod-icon" style="background:#b7791f"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg></div>
       <div class="dash-mod-title">Payroll</div>
       <div class="dash-mod-desc">Map pay codes and export payroll files to your system</div>
     </div>
-    <div class="dash-mod" onclick="showModule('employees',document.querySelector('.sb-item[data-module=employees]'))">
+    <div class="dash-mod dash-disabled" onclick="showModule('employees',document.querySelector('.sb-item[data-module=employees]'))">
       <div class="dash-mod-icon" style="background:#2563eb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
       <div class="dash-mod-title">Workforce</div>
       <div class="dash-mod-desc">Employees, employers, crews, and field devices</div>
     </div>
-    <div class="dash-mod" onclick="showModule('crops',document.querySelector('.sb-item[data-module=crops]'))">
+    <div class="dash-mod dash-disabled" onclick="showModule('crops',document.querySelector('.sb-item[data-module=crops]'))">
       <div class="dash-mod-icon" style="background:#4a7c59"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z"/></svg></div>
       <div class="dash-mod-title">Admin Center</div>
       <div class="dash-mod-desc">Crops, work bundles, jobs, sites, pack styles, users</div>
     </div>
-    <div class="dash-mod" onclick="showModule('pulse-live',document.querySelector('.sb-item[data-module=pulse-live]'))">
+    <div class="dash-mod dash-disabled" onclick="showModule('pulse-live',document.querySelector('.sb-item[data-module=pulse-live]'))">
       <div class="dash-mod-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/></svg></div>
       <div class="dash-mod-title">Pulse</div>
       <div class="dash-mod-desc">Live analytics — costing, production, performance, compliance</div>
     </div>
   </div>
+  <p style="text-align:center;font-size:11px;color:var(--text-light);font-style:italic;padding:0 24px 20px">Greyed-out modules are currently in development and will be available soon.</p>
 
 </div>
 
@@ -615,12 +622,16 @@ body.on-dashboard .tb-search{display:none}
     <div class="card-body">
       <img src="screenshots/v2/timecard.png" alt="Timecard overview" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)">
       <div class="prose">
-        <p>Timecards capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
-        <p>Navigate to <strong>Timecards</strong> from the left sidebar.</p>
+        <p style="font-size:15px;line-height:1.8;margin-bottom:16px">Timecards capture every activity an employee performs — start time, end time, duration, Job, Site, Location, pay style, rate, Production Records, Crew, and Employer. Each time a worker is checked into an activity on a device, a Timecard is created automatically.</p>
+        <p style="font-size:15px;line-height:1.8;margin-bottom:20px">Navigate to <strong>Timecards</strong> from the left sidebar.</p>
         <h3 id="h3-rightclick">Right-Click Context Menu</h3>
-        <p><strong>One selected:</strong> Navigate to Employee Profile · Edit · Duplicate · Transfer · Archive · Add New</p>
-        <p><strong>Multiple selected:</strong> Edit Timecards · Switch Crew · Archive Timecards</p>
-        <p><strong>Shift+Click</strong> selects a consecutive range. <strong>Ctrl+Click</strong> picks non-adjacent timecards.</p>
+        <p>Right-click a time block to open the context menu. The available options depend on how many timecards you have selected.</p>
+      </div>
+      <div style="display:flex;gap:120px;justify-content:center;align-items:flex-start;margin-bottom:20px">
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">One Selected</h4><img src="screenshots/v2/quick-settings.png" alt="Single timecard context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">Multiple Selected</h4><img src="screenshots/v2/quick-settings-bulk.png" alt="Multiple timecards context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
+      </div>
+      <div class="prose">
       </div>
     </div>
   </div>
@@ -662,6 +673,7 @@ body.on-dashboard .tb-search{display:none}
       <div class="prose">
         <h3 id="h3-zoom">Zoom Slider</h3>
         <p>Timeline only — top-right corner. Zoom in for detail, out for full day.</p>
+        <div class="tip"><strong>Note:</strong> When fully zoomed out, production record and checkout icons on the time blocks are hidden. If information appears to be missing, try zooming in a bit more.</div>
       </div>
       <img src="screenshots/v2/zoom.png" alt="Zoom Slider" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/>
 
@@ -1654,7 +1666,9 @@ function buildSearchUI(inputId,resultsId){
     var words=q2.toLowerCase().split(/\s+/).filter(Boolean);
     filtered=SEARCH_INDEX.filter(function(s){
       var hay=s.title+' '+s.path+' '+(s.keywords||'');
-      return words.every(function(w){return matchWord(hay,w);});
+      if(!words.every(function(w){return matchWord(hay,w);})) return false;
+      if(s.mod){var sbEl=document.querySelector('.sb-item[data-module="'+s.mod+'"]');if(sbEl&&sbEl.classList.contains('sb-disabled')) return false;}
+      return true;
     });
     active=-1;
     if(!filtered.length){results.innerHTML='<div class="qs-empty">No results for "'+q2+'"</div>';results.classList.add('open');return;}
