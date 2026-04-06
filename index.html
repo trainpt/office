@@ -85,13 +85,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 #topbar{
   position:fixed;top:0;left:var(--sidebar-collapsed);right:0;height:var(--hdr-h);
   background:var(--white);display:flex;align-items:center;
-  padding:0 20px;z-index:150;border-bottom:1px solid var(--border);
-  justify-content:space-between;transition:left .2s ease;
+  padding:0 28px;z-index:150;border-bottom:1px solid var(--border);
+  transition:left .2s ease;
 }
-.tb-left{display:flex;align-items:center;gap:12px}
-.tb-title{color:var(--text);font-size:16px;font-weight:600;letter-spacing:.2px}
-.tb-right{display:flex;align-items:center;gap:14px}
-.tb-badge{background:var(--blue);color:#fff;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+.tb-left{display:flex;align-items:center;gap:16px;flex:1}
+.tb-title{color:#1a1a2e;font-size:17px;font-weight:700;letter-spacing:-.2px}
+.tb-sep{width:1px;height:20px;background:var(--border)}
+.tb-badge{color:var(--blue);font-size:12px;font-weight:500;letter-spacing:.2px}
+.tb-right{display:flex;align-items:center}
 body.on-dashboard .tb-search{display:none}
 /* Quick search */
 .tb-search{position:relative;display:flex;align-items:center}
@@ -118,7 +119,7 @@ body.on-dashboard .tb-search{display:none}
 .qs-item-title mark{background:none;color:#1d4ed8;font-weight:600}
 .qs-item-path{font-size:11px;color:#94a3b8;white-space:nowrap;flex-shrink:0;padding-left:6px}
 /* ── Dashboard Hero ── */
-.dash-hero{position:relative;background:linear-gradient(150deg,#071321 0%,#0d2444 45%,#1a5a96 100%);padding:72px 24px 60px;text-align:center;overflow:visible}
+.dash-hero{position:relative;background:linear-gradient(150deg,#071321 0%,#0d2444 45%,#1a5a96 100%);padding:72px 24px 60px;text-align:center;overflow:hidden;border-radius:18px;margin:20px 24px 0}
 .dash-hero::before{content:'';position:absolute;inset:0;overflow:hidden;pointer-events:none;border-radius:inherit}
 .dash-hero-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(26,111,186,.45) 0%,transparent 70%);pointer-events:none}
 .dash-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
@@ -166,7 +167,7 @@ body.on-dashboard .tb-search{display:none}
 .card-controls button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
 
 /* Card */
-.card{background:var(--white);border-radius:10px;border:1px solid var(--border);margin-bottom:20px;overflow:hidden}
+.card{background:var(--white);border-radius:10px;border:1px solid var(--border);margin-bottom:20px}
 .card-hdr{display:flex;align-items:center;gap:12px;padding:18px 22px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:background .12s}
 .card-hdr:hover{background:#fafbfd}
 .card-hdr.open{border-bottom-color:var(--border)}
@@ -176,7 +177,7 @@ body.on-dashboard .tb-search{display:none}
 .card-desc{font-size:12px;color:var(--text-light);margin-top:2px}
 .card-chevron{transition:transform .2s;color:var(--text-light)}
 .card-hdr.open .card-chevron{transform:rotate(180deg)}
-.card-body{display:none;padding:24px 22px 22px}
+.card-body{display:none;padding:24px 22px 22px;overflow:visible}
 .card-hdr.open+.card-body{display:block}
 
 /* Video placeholder */
@@ -232,7 +233,7 @@ body.on-dashboard .tb-search{display:none}
 /* Callouts */
 .tip{background:#f0f7ff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#1a4a7a;line-height:1.6}
 .tip-media{display:flex;align-items:center;gap:14px;padding:10px 16px}
-.tip-media img{width:320px;flex-shrink:0;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+.tip-media img{width:400px;flex-shrink:0;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
 .tip strong{color:var(--blue)}
 .warn{background:#fff8ed;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#7a4a00;line-height:1.6}
 .warn strong{color:var(--accent)}
@@ -327,11 +328,15 @@ body.on-dashboard .tb-search{display:none}
   .hero h1{font-size:20px}
 }
 /* ── Sub-tabs (Advanced Search filter categories) ── */
-.search-intro{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#f0f6fc,#e8f0fe);border-radius:8px;padding:14px 18px;margin-bottom:18px;overflow:visible;position:relative}
+.search-intro{display:flex;align-items:center;gap:60px;background:linear-gradient(135deg,#f0f6fc,#e8f0fe);border-radius:12px;padding:16px 20px;margin-bottom:18px;overflow:visible;position:relative}
 .search-intro p{margin:0;font-size:13px;color:var(--text);line-height:1.6}
-.search-intro .sb-trigger{height:34px;border-radius:6px;border:1px solid var(--border);flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer}
-.search-intro .sb-popup{display:none;position:absolute;top:calc(100% + 8px);right:0;width:min(600px,90vw);border-radius:8px;border:1px solid var(--border);box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:100;cursor:pointer;background:#fff;overflow:hidden}
+.search-intro .sb-trigger-wrap{position:relative;flex-shrink:0}
+.search-intro .sb-trigger{height:36px;border-radius:20px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.08);cursor:pointer}
+.search-intro .sb-pulse{position:absolute;top:46%;right:7.5%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;border:2px solid rgba(26,111,186,.5);pointer-events:none;animation:sb-pulse 2.5s ease-in-out infinite}
+@keyframes sb-pulse{0%{opacity:.15;box-shadow:0 0 0 0 rgba(26,111,186,.25);border-color:rgba(26,111,186,.2)}50%{opacity:1;box-shadow:0 0 0 8px rgba(26,111,186,0);border-color:rgba(26,111,186,.6)}100%{opacity:.15;box-shadow:0 0 0 0 rgba(26,111,186,.25);border-color:rgba(26,111,186,.2)}}
+.search-intro .sb-popup{display:none;position:absolute;top:calc(100% + 28px);left:50%;transform:translateX(-50%);width:min(600px,90vw);border-radius:12px;border:1px solid var(--border);box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:100;cursor:pointer;background:#fff;overflow:hidden}
 .search-intro .sb-popup img{width:100%;display:block}
+.sb-popup-overlay{display:none;position:fixed;inset:0;z-index:99}
 .stabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin:0 0 18px}
 .stab{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;
   padding:9px 16px;font-size:12px;font-weight:600;color:var(--text-light);
@@ -380,6 +385,8 @@ body.on-dashboard .tb-search{display:none}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="tb-title" id="tb-page-title">Dashboard</div>
+    <div class="tb-sep"></div>
+    <span class="tb-badge">Training Guide</span>
   </div>
   <div class="tb-right">
     <div class="tb-search">
@@ -387,7 +394,6 @@ body.on-dashboard .tb-search{display:none}
       <input type="text" id="qs-input" placeholder="Search sections…" autocomplete="off" spellcheck="false">
       <div id="qs-results"></div>
     </div>
-    <span class="tb-badge">Training Guide</span>
   </div>
 </div>
 
@@ -705,9 +711,11 @@ body.on-dashboard .tb-search{display:none}
       <div class="prose">
         <div class="search-intro">
           <p>Click the <strong>Search ▾</strong> dropdown in the top header to open <strong>Advanced Search</strong>.</p>
-          <span style="position:relative;flex-shrink:0">
-            <img class="sb-trigger" src="screenshots/v2/searchbar.png" alt="Advanced Search dropdown" onclick="var pop=this.parentElement.querySelector('.sb-popup');pop.style.display=pop.style.display==='block'?'none':'block'" title="Click to preview"/>
-            <div class="sb-popup" onclick="this.style.display='none'"><img src="screenshots/v2/adv-search.png" alt="Advanced Search panel"/></div>
+          <span class="sb-trigger-wrap">
+            <img class="sb-trigger" src="screenshots/v2/searchbar.png" alt="Advanced Search dropdown" onclick="var pop=this.parentElement.querySelector('.sb-popup');var ov=this.parentElement.querySelector('.sb-popup-overlay');var show=pop.style.display!=='block';pop.style.display=show?'block':'none';ov.style.display=show?'block':'none'"/>
+            <div class="sb-pulse"></div>
+            <div class="sb-popup-overlay" onclick="this.style.display='none';this.parentElement.querySelector('.sb-popup').style.display='none'"></div>
+            <div class="sb-popup"><img src="screenshots/v2/adv-search.png" alt="Advanced Search panel"/></div>
           </span>
         </div>
 
