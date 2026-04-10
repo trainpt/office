@@ -4,12 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PickTrace Office Suite</title>
-<link rel="icon" type="image/png" href="screenshots/icon/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="screenshots/icon/favicon.svg" />
-<link rel="shortcut icon" href="screenshots/icon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="screenshots/icon/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="PT Training" />
-<link rel="manifest" href="screenshots/icon/site.webmanifest" />
 <style>
 :root{
   --navy:#0e2a47;--navy2:#0b2240;--blue:#1a6fba;--blue-light:#2887d4;
@@ -158,23 +152,23 @@ body.on-dashboard .tb-search{display:none}
 /* ── MAIN CONTENT ── */
 #main-wrapper{margin-top:var(--hdr-h);margin-left:var(--sidebar-collapsed);height:calc(100vh - var(--hdr-h));overflow-y:auto;scrollbar-width:none}
 #main-wrapper::-webkit-scrollbar{display:none}
-body.on-dashboard #main-wrapper{overflow-y:auto}
+body.on-dashboard #main-wrapper{overflow:hidden}
 #main{max-width:1140px;margin:0 auto;padding:32px 40px;display:flex;flex-direction:column;min-height:100%}
 
 .module-panel{display:none}
 .module-panel.active{display:flex;flex-direction:column;flex:1}
 
 /* Hero */
-.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:12px;padding:36px 40px 52px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none}
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:12px;padding:36px 40px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%}
 .hero-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;opacity:.6;margin-bottom:6px}
 .hero h1{font-size:26px;font-weight:700;margin-bottom:8px}
 .hero p{font-size:14px;opacity:.8;max-width:560px;line-height:1.65}
 
 /* Expand/Collapse controls */
-.card-controls{display:flex;gap:8px;position:absolute;bottom:20px;right:20px;z-index:2}
-.card-controls button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.85);cursor:pointer;transition:background .15s,color .15s,border-color .15s;display:flex;align-items:center;gap:5px}
-.card-controls button:hover{background:rgba(255,255,255,.25);color:#fff;border-color:rgba(255,255,255,.4)}
+.card-controls{display:flex;gap:8px;justify-content:flex-end;margin-bottom:16px}
+.card-controls button{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--text-light);cursor:pointer;transition:background .15s,color .15s,border-color .15s;display:flex;align-items:center;gap:5px}
+.card-controls button:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
 .card-controls button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
 
 /* Card */
@@ -186,9 +180,9 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 .card-icon svg{width:16px;height:16px;color:#fff}
 .card-title{font-size:15px;font-weight:700;color:#1a1a2e;flex:1}
 .card-desc{font-size:12px;color:var(--text-light);margin-top:2px}
-.card-chevron{transition:transform .2s;color:var(--text-light);margin-left:auto;flex-shrink:0}
+.card-chevron{transition:transform .2s;color:var(--text-light)}
 .card-hdr.open .card-chevron{transform:rotate(180deg)}
-.card-body{display:none;padding:24px 22px 0px;overflow:visible}
+.card-body{display:none;padding:24px 22px 22px;overflow:visible}
 .card-hdr.open+.card-body{display:block}
 
 /* Video placeholder */
@@ -196,8 +190,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 .video-placeholder svg{width:40px;height:40px;color:rgba(255,255,255,.25);margin:0 auto 10px;display:block}
 .video-placeholder p{color:rgba(255,255,255,.35);font-size:12px}
 .video-placeholder code{background:rgba(255,255,255,.08);padding:2px 8px;border-radius:4px;font-size:11px;color:rgba(255,255,255,.5)}
-.video-embed{position:relative;border-radius:8px;overflow:hidden;margin-bottom:20px;background:#0b1a2e;cursor:pointer}
-.video-embed video{width:100%;display:block;pointer-events:none}
+.video-embed{position:relative;border-radius:8px;overflow:hidden;margin-bottom:20px;background:#0b1a2e;cursor:pointer;aspect-ratio:16/9}
+.video-embed video{width:100%;height:100%;display:block;pointer-events:none;object-fit:contain}
 .video-embed{-webkit-user-select:none;user-select:none}
 /* Loader */
 .vid-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:3;pointer-events:none;transition:opacity .3s;background:#0b1a2e}
@@ -244,7 +238,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 /* Callouts */
 .tip{background:#f0f7ff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#1a4a7a;line-height:1.6}
 .tip-media{display:flex;align-items:center;gap:14px;padding:10px 16px}
-.tip-media img{width:min(400px,100%);flex-shrink:1;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+.tip-media img{width:400px;flex-shrink:0;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
 .tip strong{color:var(--blue)}
 .warn{background:#fff8ed;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13px;color:#7a4a00;line-height:1.6}
 .warn strong{color:var(--accent)}
@@ -306,6 +300,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 /* Large screen (1080p+): fully expanded sidebar always open */
 @media(min-width:1920px){
   #sidebar{width:var(--sidebar-w)}
+  .sb-logo-compact{opacity:0}
+  .sb-logo-full{opacity:1}
   .sb-logo-text{opacity:.85}
   .sb-section-label{display:block;opacity:1}
   .sb-section{padding:14px 0 4px}
@@ -359,7 +355,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
   .dash-mod-desc{font-size:12px}
 }
 @media(max-width:720px){
-  #main{padding:20px 5px}
+  #main{padding:20px 16px}
   .hero{padding:24px 20px}
   .hero h1{font-size:20px}
 }
@@ -372,7 +368,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 @keyframes sb-pulse{0%{opacity:.15;box-shadow:0 0 0 0 rgba(26,111,186,.25);border-color:rgba(26,111,186,.2)}50%{opacity:1;box-shadow:0 0 0 8px rgba(26,111,186,0);border-color:rgba(26,111,186,.6)}100%{opacity:.15;box-shadow:0 0 0 0 rgba(26,111,186,.25);border-color:rgba(26,111,186,.2)}}
 .search-intro .sb-popup{display:none;position:absolute;top:calc(100% + 28px);left:50%;transform:translateX(-50%);width:min(600px,90vw);border-radius:12px;border:1px solid var(--border);box-shadow:0 12px 32px rgba(0,0,0,.18);z-index:100;cursor:pointer;background:#fff;overflow:hidden}
 .search-intro .sb-popup img{width:100%;display:block}
-.sb-popup-overlay{display:none;position:fixed;inset:0;z-index:99;pointer-events:none}
+.sb-popup-overlay{display:none;position:fixed;inset:0;z-index:99}
 .stabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin:0 0 18px}
 .stab{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;
   padding:9px 16px;font-size:12px;font-weight:600;color:var(--text-light);
@@ -405,55 +401,11 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 #pt-loader .dots span:nth-child(2){animation-delay:.2s}
 #pt-loader .dots span:nth-child(3){animation-delay:.4s}
 @keyframes dotPulse{0%,80%,100%{opacity:.3;transform:scale(1)}40%{opacity:1;transform:scale(1.3)}}
-
-/* ── Context-menu screenshot pair ── */
-.ctx-screens{display:flex;gap:60px;justify-content:center;align-items:flex-start;margin-bottom:16px}
-.ctx-screen-img{height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)}
-
-/* ── Mobile layout & spacing ── */
-@media(max-width:767px){
-  .card{margin-bottom:10px}
-  .card-hdr{padding:12px 14px;gap:15px}
-  .card-icon{width:28px;height:28px;border-radius:6px;flex-shrink:0}
-  .card-icon svg{width:14px;height:14px}
-  .card-title{font-size:13px}
-  .card-desc{font-size:11px}
-  .card-body{padding:14px 5px 12px}
-  .hero{padding:18px 16px 16px;margin-bottom:14px}
-  .hero h1{font-size:18px;margin-bottom:6px}
-  .hero p{font-size:12.5px;margin:0}
-  .hero-label{margin-bottom:4px}
-  .card-controls{position:static;margin-top:12px;justify-content:flex-end}
-  .card-controls button{padding:5px 10px;font-size:11px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.85)}
-  .prose p{font-size:12.5px;margin-bottom:8px}
-  .prose h3{font-size:13px;margin:12px 0 5px}
-  .prose h4{font-size:12px;margin:10px 0 4px}
-  .prose li{font-size:12.5px;margin-bottom:2px}
-  .prose ul{margin-bottom:8px}
-  .step{margin-bottom:6px}
-  .step-num{width:20px;height:20px;font-size:11px}
-  .step-text{font-size:12.5px;padding-top:1px}
-  .tip,.warn,.danger{padding:9px 12px;font-size:12px;margin:10px 0}
-  .tip-media{flex-direction:column;gap:10px}
-  .tip-media img{width:100%;max-width:100%}
-  .video-embed{margin-bottom:12px}
-  .err-hdr{padding:10px 12px}
-  .err-body{padding:10px 12px}
-  .tbl th,.tbl td{padding:7px 8px;font-size:12px}
-  .search-intro{flex-direction:column;gap:10px;padding:12px 14px}
-  .stabs{flex-wrap:wrap}
-  .stab{flex:1;text-align:center;white-space:normal;padding:6px 4px;font-size:10px;line-height:1.2}
-  .ctx-screens{flex-direction:column;align-items:center;gap:14px}
-  .ctx-screen-img{height:auto;max-height:380px;max-width:100%;width:auto}
-  .filter-grid{grid-template-columns:minmax(0,auto) minmax(0,1fr);row-gap:0;column-gap:12px}
-  .filter-item .fn{padding:8px 0;font-size:12px;min-width:0}
-  .filter-item .fn:empty{padding:0;border-bottom:none}
-  .filter-item .fn:empty::before{display:none}
-  .filter-item .ft{padding:8px 0;min-width:0}
-  .filter-item .ft:empty{padding:0;border-bottom:none}
-  .filter-tag{white-space:normal;word-break:break-word;line-height:1.4}
-  .flag-grid{grid-template-columns:1fr 1fr !important;gap:4px 12px !important}
-}
+/* ── Language Toggle ── */
+.lang-toggle{display:flex;align-items:center;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-right:12px;cursor:pointer;user-select:none;flex-shrink:0}
+.lang-opt{padding:4px 10px;font-size:11px;font-weight:700;color:var(--text-light);transition:all .15s;letter-spacing:.3px}
+.lang-opt.active{background:var(--blue);color:#fff}
+.lang-opt:hover:not(.active){background:#f0f2f5}
 </style>
 </head>
 <body>
@@ -474,6 +426,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
     <span class="tb-badge">Training Guide</span>
   </div>
   <div class="tb-right">
+    <div class="lang-toggle" onclick="toggleLanguage()"><span class="lang-opt active" data-lang="en">EN</span><span class="lang-opt" data-lang="es">ES</span></div>
     <div class="tb-search">
       <svg class="tb-search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="qs-input" placeholder="Search sections…" autocomplete="off" spellcheck="false">
@@ -705,7 +658,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <!-- ══════════ TIMECARDS ══════════ -->
 <div id="module-timecards" class="module-panel">
-  <div class="hero"><div class="hero-label">Module</div><h1>Timecards</h1><p>View, create, edit, audit, and manage every time record generated by your field devices. This is where daily auditing and payroll prep happens.</p><div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div></div>
+  <div class="hero"><div class="hero-label">Module</div><h1>Timecards</h1><p>View, create, edit, audit, and manage every time record generated by your field devices. This is where daily auditing and payroll prep happens.</p></div>
+  <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
 
   <div id="tc-overview" class="card">
     <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#1a6fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="card-title">Overview — What Are Timecards?</div><div class="card-desc">How timecards are created, where to find them, and the two views</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
@@ -800,9 +754,9 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
         <h3 id="h3-rightclick">Right-Click Context Menu</h3>
         <p>Right-click a time block to open the context menu. The available options depend on how many timecards you have selected.</p>
       </div>
-      <div class="ctx-screens">
-        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">One Selected</h4><img src="screenshots/v2/quick-settings.png" alt="Single timecard context menu" class="ctx-screen-img"/></div>
-        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">Multiple Selected</h4><img src="screenshots/v2/quick-settings-bulk.png" alt="Multiple timecards context menu" class="ctx-screen-img"/></div>
+      <div style="display:flex;gap:120px;justify-content:center;align-items:flex-start;margin-bottom:20px">
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">One Selected</h4><img src="screenshots/v2/quick-settings.png" alt="Single timecard context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
+        <div style="text-align:center"><h4 style="font-size:12px;color:#555;margin:0 0 6px">Multiple Selected</h4><img src="screenshots/v2/quick-settings-bulk.png" alt="Multiple timecards context menu" style="height:360px;border-radius:8px;border:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.1)"/></div>
       </div>
 
     </div>
@@ -816,9 +770,9 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
         <div class="search-intro">
           <p>Click the <strong>Search ▾</strong> dropdown in the top header to open <strong>Advanced Search</strong>.</p>
           <span class="sb-trigger-wrap">
-            <img class="sb-trigger" src="screenshots/v2/searchbar.png" alt="Advanced Search dropdown" onclick="var pop=this.parentElement.querySelector('.sb-popup');var show=pop.style.display!=='block';pop.style.display=show?'block':'none';event.stopPropagation()"/>
+            <img class="sb-trigger" src="screenshots/v2/searchbar.png" alt="Advanced Search dropdown" onclick="var pop=this.parentElement.querySelector('.sb-popup');var ov=this.parentElement.querySelector('.sb-popup-overlay');var show=pop.style.display!=='block';pop.style.display=show?'block':'none';ov.style.display=show?'block':'none'"/>
             <div class="sb-pulse"></div>
-            <div class="sb-popup-overlay"></div>
+            <div class="sb-popup-overlay" onclick="this.style.display='none';this.parentElement.querySelector('.sb-popup').style.display='none'"></div>
             <div class="sb-popup"><img src="screenshots/v2/adv-search.png" alt="Advanced Search panel"/></div>
           </span>
         </div>
@@ -863,7 +817,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
         <div class="sp" id="sf-flags">
           <p style="font-size:12px;color:var(--text-light);margin-bottom:8px">Checkbox filters that show or hide specific record types.</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 20px;margin:8px 0" class="flag-grid">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 20px;margin:8px 0">
             <div class="filter-chk">No production records</div>
             <div class="filter-chk">Edited record</div>
             <div class="filter-chk">H-2A Employee</div>
@@ -1020,7 +974,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <!-- ══════════ PRODUCTION RECORDS ══════════ -->
 <div id="module-production" class="module-panel">
-  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Production Records</h1><p>View and correct piece-pay records — bins, trays, trees, and any other unit your crews produce in the field.</p><div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div></div>
+  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Production Records</h1><p>View and correct piece-pay records — bins, trays, trees, and any other unit your crews produce in the field.</p></div>
+  <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
   <div id="pr-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div><div class="card-title">What Are Production Records?</div><div class="card-desc">Where they come from and how to read the Production Records page</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Production Records Overview</p><code>/videos/production/overview.mp4</code></div><div class="prose"><p>Production Records are created on the handheld device when a crew leader or device user credits an employee with a unit of production (e.g., one bin, one tray, one tree). Each record is linked to an employee, a site, a location, a crop, a job, a unit count, and a piece rate.</p><h3>Key Columns</h3><table class="tbl"><tr><th>Column</th><th>What it shows</th></tr><tr><td>PT ID</td><td>Employee's PickTrace ID</td></tr><tr><td>Unit Count</td><td>Number of units credited</td></tr><tr><td>Unit</td><td>Type of unit (bins, trees, trays, etc.)</td></tr><tr><td>Piece Rate</td><td>Dollar amount per unit</td></tr><tr><td>Site / Location</td><td>Ranch and block where the work happened</td></tr><tr><td>Crop</td><td>Crop variety associated with the work</td></tr></table><div class="tip"><strong>Check total piece count</strong> at the bottom-right of the table. Compare it to physical tickets to quickly spot discrepancies.</div></div></div>
   </div>
@@ -1037,7 +992,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <!-- ══════════ CREW SCHEDULER ══════════ -->
 <div id="module-scheduler" class="module-panel">
-  <div class="hero" style="background:linear-gradient(135deg,#2c1654 0%,#8e44ad 100%)"><div class="hero-label">Module</div><h1>Crew Scheduler</h1><p>Schedule your crews to jobs, sites, and locations before the day starts. This is where piece rates, job assignments, and break prompts are all configured.</p><div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div></div>
+  <div class="hero" style="background:linear-gradient(135deg,#2c1654 0%,#8e44ad 100%)"><div class="hero-label">Module</div><h1>Crew Scheduler</h1><p>Schedule your crews to jobs, sites, and locations before the day starts. This is where piece rates, job assignments, and break prompts are all configured.</p></div>
+  <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
   <div id="cs-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#8e44ad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="card-title">What Is the Crew Scheduler?</div><div class="card-desc">Why scheduling matters and what it controls in the field</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Crew Scheduler Overview</p><code>/videos/crew-scheduler/overview.mp4</code></div><div class="prose"><p>The Crew Scheduler tells PickTrace where each crew will work, what jobs they'll do, and what rates apply — before the field day begins. Device users in the field see only the jobs and locations that were scheduled for their crew that day, reducing errors.</p><div class="tip"><strong>The Crew Scheduler is the single most important setup step for accurate payroll.</strong> If a job isn't scheduled, it won't appear on the device, leading to wrong-job errors.</div></div></div>
   </div>
@@ -1054,7 +1010,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <!-- ══════════ REPORTS ══════════ -->
 <div id="module-reports" class="module-panel">
-  <div class="hero" style="background:linear-gradient(135deg,#1a2a3a 0%,#2980b9 100%)"><div class="hero-label">Module</div><h1>Reports</h1><p>Build custom reports, save templates, and export data to spreadsheets or your payroll system.</p><div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div></div>
+  <div class="hero" style="background:linear-gradient(135deg,#1a2a3a 0%,#2980b9 100%)"><div class="hero-label">Module</div><h1>Reports</h1><p>Build custom reports, save templates, and export data to spreadsheets or your payroll system.</p></div>
+  <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
 
   <div id="rpt-format" class="card">
     <div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#2980b9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="card-title">Step 1 — Choose Your Report Format</div><div class="card-desc">Daily vs. weekly, one crew vs. whole company, which template to start with</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
@@ -1156,7 +1113,8 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <!-- ══════════ PAYROLL ══════════ -->
 <div id="module-payroll" class="module-panel">
-  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Payroll</h1><p>Map your PickTrace jobs, sites, and locations to payroll codes, then export the file directly into your payroll system (DataTech, ADP, Famous, and more).</p><div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div></div>
+  <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Payroll</h1><p>Map your PickTrace jobs, sites, and locations to payroll codes, then export the file directly into your payroll system (DataTech, ADP, Famous, and more).</p></div>
+  <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
   <div id="pay-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><div><div class="card-title">How Payroll Works in PickTrace</div><div class="card-desc">The 3-step flow: Timecards → Reports → Export</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
     <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Payroll Overview</p><code>/videos/payroll/overview.mp4</code></div><div class="prose"><p>PickTrace records what happens in the field — hours, piecework, breaks, and locations. At the end of each pay period, you export that data as a file and import it into your payroll software. PickTrace is your timekeeping and calculation system; your payroll software generates checks, pay stubs, and handles tax withholding.</p><h3>The 3-Step Flow Every Pay Period</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text"><strong>Timecards</strong> — Review your crew's time data for the period. Use Timeline View to spot issues visually, List View for bulk editing, or Summary View for crew-level totals.</div></div><div class="step"><div class="step-num">2</div><div class="step-text"><strong>Reports</strong> — Run the Labor Cost Summary Report (LCSR) to audit hours, piece counts, and gross pay before exporting. Fix anything that looks off, then re-run until it's clean.</div></div><div class="step"><div class="step-num">3</div><div class="step-text"><strong>Payroll Export</strong> — Download your payroll file from PickTrace and import it into your payroll software (DataTech, Famous, Computech, ADP, QuickBooks).</div></div></div><div class="tip"><strong>PickTrace calculates:</strong> Hourly pay, piecework, overtime, doubletime, rest break premiums, minimum wage adjustments, and sick pay. Your payroll software handles withholding, check generation, and pay stubs.</div></div></div>
   </div>
@@ -1240,6 +1198,7 @@ body.on-dashboard #main-wrapper{overflow-y:auto}
 
 <script>
 var moduleNames={dashboard:'Dashboard',timecards:'Timecards',production:'Production Records',scheduler:'Crew Scheduler',reports:'Reports',payroll:'Payroll',employees:'Employees',employers:'Employers',crews:'Crews',devices:'Devices',crops:'Crops & Varieties',workbundles:'Work Bundles',jobs:'Jobs',sites:'Sites',packstyles:'Pack Styles',users:'Users',roles:'Roles','pulse-live':'Live','pulse-costing':'Costing','pulse-production':'Production','pulse-performance':'Performance','pulse-compliance':'Compliance'};
+var _mw=document.getElementById('main-wrapper');
 
 function toggleSidebar(force){
   var sb=document.getElementById('sidebar');
@@ -1257,8 +1216,8 @@ document.getElementById('sb-overlay').addEventListener('click',function(){toggle
   sb.addEventListener('click',function(e){
     if(window.innerWidth>767)return;
     if(!sb.classList.contains('sb-open')){
-      var item=e.target.closest('.sb-item,.sb-subitem');
-      if(!item){e.stopPropagation();e.preventDefault();}
+      e.stopPropagation();
+      e.preventDefault();
       toggleSidebar(true);
     }
   },true);
@@ -1282,17 +1241,7 @@ document.getElementById('sb-overlay').addEventListener('click',function(){toggle
   });
 })();
 
-// Close sb-popup when clicking outside
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.sb-trigger-wrap')){
-    document.querySelectorAll('.sb-popup').forEach(function(p){p.style.display='none';});
-  }
-});
-
-var _subModules={timecards:'sub-tc',production:'sub-pr',scheduler:'sub-cs',reports:'sub-rpt',payroll:'sub-pay'};
 function showModule(id,el,skipScroll){
-  // Close all subs when switching to a module that has no sub-menu
-  if(!_subModules[id]) document.querySelectorAll('.sb-sub').forEach(function(s){s.classList.remove('open');});
   document.querySelectorAll('.module-panel').forEach(p=>p.classList.remove('active'));
   var panel=document.getElementById('module-'+id);
   if(panel) panel.classList.add('active');
@@ -1301,11 +1250,9 @@ function showModule(id,el,skipScroll){
   if(activeEl) activeEl.classList.add('active');
   var t=document.getElementById('tb-page-title');
   if(t&&moduleNames[id]) t.textContent=moduleNames[id];
-  if(!skipScroll){var mw=document.getElementById('main-wrapper');if(mw)mw.scrollTop=0;else window.scrollTo(0,0);}
+  if(!skipScroll) _mw.scrollTo(0,0);
   document.body.classList.toggle('on-dashboard', id==='dashboard');
   if(window.innerWidth<=767) toggleSidebar(false);
-  setTimeout(activateNearest,100);
-  setTimeout(function(){if(window._updateActiveSubitem)window._updateActiveSubitem();},150);
 }
 document.body.classList.add('on-dashboard');
 
@@ -1323,23 +1270,14 @@ function showModuleSub(modId,sectionId,el){
   showModule(modId,null,true);
   document.querySelectorAll('.sb-subitem').forEach(i=>i.classList.remove('active'));
   if(el) el.classList.add('active');
-  _suppressObserver=true;
   setTimeout(function(){
     var sec=document.getElementById(sectionId);
     if(sec){
       var hdr=sec.querySelector('.card-hdr');
       if(hdr&&!hdr.classList.contains('open')) toggleCard(hdr);
-      var hdrH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr-h'))||52;
-      var mw=document.getElementById('main-wrapper');
-      if(mw){
-        var top=sec.getBoundingClientRect().top - mw.getBoundingClientRect().top + mw.scrollTop - hdrH - 8;
-        mw.scrollTo({top:top,behavior:'smooth'});
-      } else {
-        window.scrollTo({top:sec.getBoundingClientRect().top+window.pageYOffset-hdrH-8,behavior:'smooth'});
-      }
+      var top=sec.getBoundingClientRect().top+_mw.scrollTop-_mw.getBoundingClientRect().top-8;
+      _mw.scrollTo({top:top,behavior:'smooth'});
     }
-    // Re-enable scroll tracking after smooth scroll completes (~600ms)
-    setTimeout(function(){_suppressObserver=false;},650);
   },50);
 }
 
@@ -1353,11 +1291,10 @@ function expandAll(btn){
 }
 function collapseAll(btn){
   var panel=btn.closest('.module-panel');
-  panel.querySelectorAll('.card-hdr').forEach(function(hdr){
+  panel.querySelectorAll('.card-hdr.open').forEach(function(hdr){
     hdr.classList.remove('open');
-  });
-  panel.querySelectorAll('.card-body').forEach(function(body){
-    body.style.display='none';
+    var body=hdr.nextElementSibling;
+    if(body) body.style.display='none';
   });
 }
 
@@ -1532,7 +1469,8 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
       var left=Math.max(0,Math.min(wr.width-PW,(e.clientX-wr.left)-PW/2));
       preview.style.left=left+'px';
       preview.classList.add('show');
-      if(video.src&&!prevVid.src)prevVid.src=video.src;
+      var vsrc=video.src||video.dataset.src;
+      if(vsrc&&!prevVid.src)prevVid.src=vsrc;
       // Debounce preview seek — only seek every 80ms to avoid thrashing
       var now=Date.now();
       if(prevVid.readyState>=1&&now-_prevDebounce>80){
@@ -1552,13 +1490,8 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
       fsBtn.innerHTML=document.fullscreenElement===el?FS_OUT:FS_IN;
     });
 
-    // Preload immediately on desktop; on mobile lazy-load to avoid bandwidth starvation
-    if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-      video.preload='auto';
-      video.src=video.dataset.src;
-    } else {
-      video.preload='none';
-    }
+    // Defer loading — src is set lazily by activateNearest when near viewport
+    video.preload='none';
   }
 
   var allVideos=document.querySelectorAll('video[data-src]');
@@ -1567,18 +1500,21 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
   // Build all players and start preloading during the page load phase
   allVideos.forEach(buildPlayer);
 
-  window.activateNearest=activateNearest;
   function activateNearest(){
     var best=null;var bestDist=Infinity;
     var center=window.innerHeight/2;
     allVideos.forEach(function(video){
       var rect=video.getBoundingClientRect();
       if(rect.top<window.innerHeight&&rect.bottom>0){
+        // Lazy-load: set src when video is near the viewport
+        if(!video.src&&video.dataset.src){
+          video.preload='auto';
+          video.src=video.dataset.src;
+        }
         var dist=Math.abs((rect.top+rect.bottom)/2-center);
         if(dist<bestDist){bestDist=dist;best=video;}
       }
     });
-    console.log('[VID] activateNearest best=',best?best.dataset.src:'none','activeVideo=',activeVideo?activeVideo.dataset.src:'none');
     if(best!==activeVideo){
       allVideos.forEach(function(video){
         if(video!==best) video.pause();
@@ -1586,32 +1522,26 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
       if(best){
         var ldr=best.parentElement.querySelector('.vid-loader');
         var seen=best._seen;
-        console.log('[VID] activating',best.dataset.src,'seen=',seen,'readyState=',best.readyState,'src=',best.src||'(none)');
         if(!seen){
           best._seen=true;
           if(ldr){ldr.style.transition='none';ldr.style.opacity='1';ldr.classList.add('loading');}
-          (function(video,loader){
-            var done=false,timer;
-            function hide(){if(done)return;done=true;clearTimeout(timer);console.log('[VID] hide loader for',video.dataset.src);if(loader){loader.style.transition='opacity .3s';loader.style.opacity='0';loader.classList.remove('loading');}}
-            video.addEventListener('playing',function(){console.log('[VID] playing event',video.dataset.src);hide();},{once:true});
-            video.addEventListener('canplay',function(){console.log('[VID] canplay event',video.dataset.src);hide();},{once:true});
-            video.addEventListener('error',function(){console.error('[VID] error event',video.dataset.src,'error=',video.error&&video.error.message);hide();},{once:true});
-            video.addEventListener('stalled',function(){console.warn('[VID] stalled',video.dataset.src);});
-            video.addEventListener('waiting',function(){console.warn('[VID] waiting',video.dataset.src);});
-            // Assign src lazily if not yet loaded (mobile path — desktop sets it in buildPlayer)
-            if(!video.src&&video.dataset.src){
-              console.log('[VID] lazy-loading src for',video.dataset.src);
-              video.preload='auto';video.src=video.dataset.src;
+          var b=best;
+          function tryPlay(){
+            if(b.readyState>=2){
+              if(ldr){ldr.style.transition='opacity .3s';ldr.style.opacity='0';ldr.classList.remove('loading');}
+              b.play().catch(function(){});
+            } else {
+              b.addEventListener('canplay',function onCanPlay(){
+                b.removeEventListener('canplay',onCanPlay);
+                if(ldr){ldr.style.transition='opacity .3s';ldr.style.opacity='0';ldr.classList.remove('loading');}
+                b.play().catch(function(){});
+              });
             }
-            timer=setTimeout(function(){console.warn('[VID] 8s timeout fired for',video.dataset.src,'readyState=',video.readyState,'paused=',video.paused,'networkState=',video.networkState);hide();},8000);
-            console.log('[VID] calling play() on',video.dataset.src,'readyState=',video.readyState,'networkState=',video.networkState);
-            var p=video.play();
-            console.log('[VID] play() returned',p);
-            if(p!==undefined){p.then(function(){console.log('[VID] play() resolved',video.dataset.src);setTimeout(hide,200);}).catch(function(e){console.error('[VID] play() rejected',video.dataset.src,'reason=',e.name,e.message);hide();});}
-          })(best,ldr);
+          }
+          setTimeout(tryPlay,100);
         } else {
           if(ldr){ldr.style.transition='none';ldr.style.opacity='0';ldr.classList.remove('loading');}
-          best.play().catch(function(e){console.error('[VID] re-play rejected',best.dataset.src,e.name,e.message);});
+          best.play().catch(function(){});
         }
       }
       activeVideo=best;
@@ -1619,8 +1549,7 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
   }
 
   var timer;
-  var mw=document.getElementById('main-wrapper');
-  (mw||window).addEventListener('scroll',function(){clearTimeout(timer);timer=setTimeout(activateNearest,150);});
+  _mw.addEventListener('scroll',function(){clearTimeout(timer);timer=setTimeout(activateNearest,150);});
   setTimeout(activateNearest,500);
 })();
 
@@ -1635,32 +1564,23 @@ function stab(btn,pid){
 
 var _suppressObserver=false;
 (function(){
-  var mw=document.getElementById('main-wrapper');
-  if(!mw)return;
-  function updateActiveSubitem(){
-    if(_suppressObserver)return;
-    var cards=document.querySelectorAll('.module-panel.active .card[id]');
-    if(!cards.length)return;
-    var mwTop=mw.getBoundingClientRect().top;
-    var trigger=mwTop+mw.clientHeight*0.35; // 35% down the visible area
-    var best=null;
-    cards.forEach(function(card){
-      var top=card.getBoundingClientRect().top;
-      if(top<=trigger) best=card;
+  var cards=document.querySelectorAll('.card[id]');
+  var observer=new IntersectionObserver(function(entries){
+    if(_suppressObserver) return;
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id=entry.target.id;
+        document.querySelectorAll('.sb-subitem').forEach(function(item){
+          var onclick=item.getAttribute('onclick')||'';
+          if(onclick.indexOf("'"+id+"'")!==-1){
+            document.querySelectorAll('.sb-subitem').forEach(function(i){i.classList.remove('active')});
+            item.classList.add('active');
+          }
+        });
+      }
     });
-    if(!best) best=cards[0];
-    if(!best)return;
-    var id=best.id;
-    document.querySelectorAll('.sb-subitem').forEach(function(item){
-      var onclick=item.getAttribute('onclick')||'';
-      item.classList.toggle('active', onclick.indexOf("'"+id+"'")!==-1);
-    });
-  }
-  var t;
-  mw.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(updateActiveSubitem,80);});
-  // also run after module switches (called from showModule)
-  window._updateActiveSubitem=updateActiveSubitem;
-  setTimeout(updateActiveSubitem,200);
+  },{threshold:0.2,rootMargin:'-20% 0px -60% 0px'});
+  cards.forEach(function(card){observer.observe(card)});
 })();
 
 
@@ -1695,7 +1615,7 @@ var _suppressObserver=false;
           }
         }
       }
-      window.scrollTo(0,data.scroll||0);
+      _mw.scrollTo(0,data.scroll||0);
     }
   }
   var minTime=1500;
@@ -1721,11 +1641,11 @@ var _suppressObserver=false;
       var activeModule=null;
       var visiblePanel=document.querySelector('.module-panel.active');
       if(visiblePanel) activeModule=visiblePanel.id.replace('module-','');
-      sessionStorage.setItem(NAV_KEY,JSON.stringify({module:activeModule,card:activeCard,scroll:window.pageYOffset}));
+      sessionStorage.setItem(NAV_KEY,JSON.stringify({module:activeModule,card:activeCard,scroll:_mw.scrollTop}));
     },200);
   }
-  window.addEventListener('scroll',saveNav);
-  window.addEventListener('click',saveNav);
+  _mw.addEventListener('scroll',saveNav);
+  _mw.addEventListener('click',saveNav);
 })();
 
 // ── Shared search index ──
@@ -1820,7 +1740,6 @@ function activateSidebarItem(modId,secId){
   }
 }
 function searchScrollTo(el){
-  var hdrH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr-h'))||52;
   var scrollTarget=el;
   if(el.tagName==='H3'&&!el.previousElementSibling){
     var prose=el.parentElement;
@@ -1831,8 +1750,8 @@ function searchScrollTo(el){
       scrollTarget=prosePrev;
     }
   }
-  var top=scrollTarget.getBoundingClientRect().top+window.scrollY-hdrH-16;
-  window.scrollTo({top:top,behavior:'smooth'});
+  var top=scrollTarget.getBoundingClientRect().top+_mw.scrollTop-_mw.getBoundingClientRect().top-16;
+  _mw.scrollTo({top:top,behavior:'smooth'});
 }
 function searchNavigate(item){
   if(!item.mod) return;
@@ -1920,7 +1839,7 @@ function buildSearchUI(inputId,resultsId){
     var items=results.querySelectorAll('.qs-item');
     if(e.key==='ArrowDown'){e.preventDefault();active=Math.min(active+1,filtered.length-1);items.forEach(function(el,i){el.classList.toggle('qs-active',i===active);});}
     else if(e.key==='ArrowUp'){e.preventDefault();active=Math.max(active-1,0);items.forEach(function(el,i){el.classList.toggle('qs-active',i===active);});}
-    else if(e.key==='Enter'){if(active>=0&&filtered[active]){searchNavigate(filtered[active]);input.value='';close();}else if(filtered.length===1){searchNavigate(filtered[0]);input.value='';close();}}
+    else if(e.key==='Enter'){var sel=active>=0?items[active]:null;if(sel){searchNavigate(filtered[+sel.dataset.i]);input.value='';close();}else if(filtered.length===1){searchNavigate(filtered[0]);input.value='';close();}}
     else if(e.key==='Escape'){close();input.blur();}
   });
 }
@@ -1928,6 +1847,476 @@ function buildSearchUI(inputId,resultsId){
 // Init both search bars
 buildSearchUI('ds-input','ds-results');   // dashboard hero
 buildSearchUI('qs-input','qs-results');   // topbar
+
+// ============================================================
+// LANGUAGE SYSTEM — English / Spanish toggle
+// ============================================================
+(function(){
+var currentLang=localStorage.getItem('pt-lang')||'en';
+var moduleNamesEn={dashboard:'Dashboard',timecards:'Timecards',production:'Production Records',scheduler:'Crew Scheduler',reports:'Reports',payroll:'Payroll',employees:'Employees',employers:'Employers',crews:'Crews',devices:'Devices',crops:'Crops & Varieties',workbundles:'Work Bundles',jobs:'Jobs',sites:'Sites',packstyles:'Pack Styles',users:'Users',roles:'Roles','pulse-live':'Live','pulse-costing':'Costing','pulse-production':'Production','pulse-performance':'Performance','pulse-compliance':'Compliance'};
+var moduleNamesEs={dashboard:'Panel',timecards:'Tarjetas de Tiempo',production:'Registros de Producción',scheduler:'Programador de Cuadrillas',reports:'Reportes',payroll:'Nómina',employees:'Empleados',employers:'Empleadores',crews:'Cuadrillas',devices:'Dispositivos',crops:'Cultivos y Variedades',workbundles:'Paquetes de Trabajo',jobs:'Trabajos',sites:'Sitios',packstyles:'Estilos de Empaque',users:'Usuarios',roles:'Roles','pulse-live':'En Vivo','pulse-costing':'Costos','pulse-production':'Producción','pulse-performance':'Rendimiento','pulse-compliance':'Cumplimiento'};
+var searchIndexEs=[
+{title:'Panel',path:''},
+{title:'Resumen de Tarjetas de Tiempo',path:'Tarjetas de Tiempo'},
+{title:'Menú Contextual (Clic Derecho)',path:'Tarjetas de Tiempo > Vistas y Configuración'},
+{title:'Vistas y Configuración',path:'Tarjetas de Tiempo'},
+{title:'Vista de Línea de Tiempo',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Vista de Lista',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Vista de Resumen',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Navegación por Fecha',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Acciones de la Barra',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Control de Zoom',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Configuración (Engranaje)',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Barra de Estado Inferior',path:'Tarjetas de Tiempo > Vistas'},
+{title:'Búsqueda Avanzada y Filtros',path:'Tarjetas de Tiempo'},
+{title:'Crear y Duplicar',path:'Tarjetas de Tiempo'},
+{title:'Cómo Crear una Tarjeta de Tiempo',path:'Tarjetas de Tiempo > Crear'},
+{title:'Duplicar una Tarjeta de Tiempo',path:'Tarjetas de Tiempo > Crear'},
+{title:'Editar Tarjetas de Tiempo',path:'Tarjetas de Tiempo'},
+{title:'Editar una Tarjeta de Tiempo',path:'Tarjetas de Tiempo > Editar'},
+{title:'Editar Múltiples Tarjetas',path:'Tarjetas de Tiempo > Editar'},
+{title:'Regla de Tarifa de Pago',path:'Tarjetas de Tiempo > Editar'},
+{title:'Cambiar Cuadrilla',path:'Tarjetas de Tiempo > Editar'},
+{title:'Descansos y Almuerzos',path:'Tarjetas de Tiempo'},
+{title:'Agregar Descansos en Masa',path:'Tarjetas de Tiempo > Descansos'},
+{title:'Corregir Descanso Duplicado',path:'Tarjetas de Tiempo > Descansos'},
+{title:'Auditoría Diaria',path:'Tarjetas de Tiempo'},
+{title:'Pasos de Auditoría Diaria',path:'Tarjetas de Tiempo > Auditoría'},
+{title:'Errores y Correcciones',path:'Tarjetas de Tiempo'},
+{title:'Archivar y Revisar',path:'Tarjetas de Tiempo'},
+{title:'Archivar Tarjetas de Tiempo',path:'Tarjetas de Tiempo > Archivar'},
+{title:'Desarchivar Tarjetas de Tiempo',path:'Tarjetas de Tiempo > Archivar'},
+{title:'Revisar y Aprobar',path:'Tarjetas de Tiempo > Archivar'},
+{title:'Resumen de Registros de Producción',path:'Registros de Producción'},
+{title:'Agregar Registros',path:'Registros de Producción'},
+{title:'Editar Registros',path:'Registros de Producción'},
+{title:'Errores de Producción',path:'Registros de Producción'},
+{title:'Resumen del Programador',path:'Programador de Cuadrillas'},
+{title:'Crear un Horario',path:'Programador de Cuadrillas'},
+{title:'Ubicaciones y Tarifas por Pieza',path:'Programador de Cuadrillas'},
+{title:'Avisos de Descanso y Almuerzo',path:'Programador de Cuadrillas'},
+{title:'Resumen de Reportes',path:'Reportes'},
+{title:'Seleccionar y Personalizar Columnas',path:'Reportes'},
+{title:'Filtrar sus Datos',path:'Reportes'},
+{title:'Guardar, Programar y Exportar',path:'Reportes'},
+{title:'Guardar Plantilla de Reporte',path:'Reportes > Guardar'},
+{title:'Programar Entrega Automática',path:'Reportes > Guardar'},
+{title:'Exportar Reportes',path:'Reportes > Guardar'},
+{title:'Resumen de Nómina',path:'Nómina'},
+{title:'Mapeo de Códigos de Nómina',path:'Nómina'},
+{title:'Exportar Nómina',path:'Nómina'},
+{title:'Cálculos de Pago',path:'Nómina'},
+{title:'Empleados',path:'Centro de Personal'},
+{title:'Empleadores',path:'Centro de Personal'},
+{title:'Cuadrillas',path:'Centro de Personal'},
+{title:'Dispositivos',path:'Centro de Personal'},
+{title:'Cultivos y Variedades',path:'Centro de Administración'},
+{title:'Paquetes de Trabajo',path:'Centro de Administración'},
+{title:'Trabajos',path:'Centro de Administración'},
+{title:'Sitios',path:'Centro de Administración'},
+{title:'Estilos de Empaque',path:'Centro de Administración'},
+{title:'Usuarios',path:'Centro de Administración'},
+{title:'Roles',path:'Centro de Administración'},
+{title:'En Vivo',path:'Pulse'},
+{title:'Costos',path:'Pulse'},
+{title:'Panel de Producción',path:'Pulse'},
+{title:'Rendimiento',path:'Pulse'},
+{title:'Cumplimiento',path:'Pulse'}
+];
+var T=[
+{s:'.tb-badge',es:'Guía de Capacitación'},
+{s:'.sb-item[data-module="dashboard"] span',es:'Panel'},
+{s:'.sb-item[data-module="timecards"] span',es:'Tarjetas de Tiempo'},
+{s:'.sb-item[data-module="production"] span',es:'Registros de Producción'},
+{s:'.sb-item[data-module="scheduler"] span',es:'Programador de Cuadrillas'},
+{s:'.sb-item[data-module="reports"] span',es:'Reportes'},
+{s:'.sb-item[data-module="payroll"] span',es:'Nómina'},
+{s:'.sb-item[data-module="employees"] span',es:'Empleados'},
+{s:'.sb-item[data-module="employers"] span',es:'Empleadores'},
+{s:'.sb-item[data-module="crews"] span',es:'Cuadrillas'},
+{s:'.sb-item[data-module="devices"] span',es:'Dispositivos'},
+{s:'.sb-item[data-module="crops"] span',es:'Cultivos y Variedades'},
+{s:'.sb-item[data-module="workbundles"] span',es:'Paquetes de Trabajo'},
+{s:'.sb-item[data-module="jobs"] span',es:'Trabajos'},
+{s:'.sb-item[data-module="sites"] span',es:'Sitios'},
+{s:'.sb-item[data-module="packstyles"] span',es:'Estilos de Empaque'},
+{s:'.sb-item[data-module="users"] span',es:'Usuarios'},
+{s:'.sb-item[data-module="roles"] span',es:'Roles'},
+{s:'.sb-item[data-module="pulse-live"] span',es:'En Vivo'},
+{s:'.sb-item[data-module="pulse-costing"] span',es:'Costos'},
+{s:'.sb-item[data-module="pulse-production"] span',es:'Producción'},
+{s:'.sb-item[data-module="pulse-performance"] span',es:'Rendimiento'},
+{s:'.sb-item[data-module="pulse-compliance"] span',es:'Cumplimiento'},
+{s:'.sb-section-label',i:0,es:'Centro de Personal'},
+{s:'.sb-section-label',i:1,es:'Centro de Administración'},
+{s:'.sb-section-label',i:2,es:'Pulse'},
+{s:'#sub-tc .sb-subitem',i:0,es:'Resumen'},
+{s:'#sub-tc .sb-subitem',i:1,es:'Vistas y Configuración'},
+{s:'#sub-tc .sb-subitem',i:2,es:'Búsqueda Avanzada y Filtros'},
+{s:'#sub-tc .sb-subitem',i:3,es:'Crear y Duplicar'},
+{s:'#sub-tc .sb-subitem',i:4,es:'Editar'},
+{s:'#sub-tc .sb-subitem',i:5,es:'Descansos y Almuerzos'},
+{s:'#sub-tc .sb-subitem',i:6,es:'Auditoría Diaria'},
+{s:'#sub-tc .sb-subitem',i:7,es:'Errores y Correcciones'},
+{s:'#sub-tc .sb-subitem',i:8,es:'Archivar y Revisar'},
+{s:'#sub-pr .sb-subitem',i:0,es:'Resumen'},
+{s:'#sub-pr .sb-subitem',i:1,es:'Agregar Registros'},
+{s:'#sub-pr .sb-subitem',i:2,es:'Editar Registros'},
+{s:'#sub-pr .sb-subitem',i:3,es:'Errores y Correcciones'},
+{s:'#sub-cs .sb-subitem',i:0,es:'Resumen'},
+{s:'#sub-cs .sb-subitem',i:1,es:'Crear un Horario'},
+{s:'#sub-cs .sb-subitem',i:2,es:'Ubicaciones y Tarifas por Pieza'},
+{s:'#sub-cs .sb-subitem',i:3,es:'Avisos de Descanso y Almuerzo'},
+{s:'#sub-rpt .sb-subitem',i:0,es:'Elegir un Formato'},
+{s:'#sub-rpt .sb-subitem',i:1,es:'Seleccionar y Personalizar Columnas'},
+{s:'#sub-rpt .sb-subitem',i:2,es:'Filtrar sus Datos'},
+{s:'#sub-rpt .sb-subitem',i:3,es:'Guardar, Programar y Exportar'},
+{s:'#sub-pay .sb-subitem',i:0,es:'Resumen'},
+{s:'#sub-pay .sb-subitem',i:1,es:'Mapeo de Códigos de Nómina'},
+{s:'#sub-pay .sb-subitem',i:2,es:'Exportar Nómina'},
+{s:'#sub-pay .sb-subitem',i:3,es:'Cálculos de Pago'},
+{s:'.sb-coming-soon',es:'Los módulos en gris estarán disponibles pronto'},
+{s:'.dash-headline',es:'Guía de Capacitación para Oficina'},
+{s:'.dash-sub',es:'Busque cualquier tema o explore los módulos a continuación'},
+{s:'.dash-help-link',es:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Visite el Centro de Ayuda de PickTrace'},
+{s:'.dash-modules .dash-mod:nth-child(1) .dash-mod-title',es:'Tarjetas de Tiempo'},
+{s:'.dash-modules .dash-mod:nth-child(1) .dash-mod-desc',es:'Auditar, editar y aprobar cada registro de tiempo del campo'},
+{s:'.dash-modules .dash-mod:nth-child(2) .dash-mod-title',es:'Registros de Producción'},
+{s:'.dash-modules .dash-mod:nth-child(2) .dash-mod-desc',es:'Ver y corregir registros de pago por pieza — botes, bandejas, árboles'},
+{s:'.dash-modules .dash-mod:nth-child(3) .dash-mod-title',es:'Programador de Cuadrillas'},
+{s:'.dash-modules .dash-mod:nth-child(3) .dash-mod-desc',es:'Programar cuadrillas a trabajos, sitios y establecer tarifas por pieza'},
+{s:'.dash-modules .dash-mod:nth-child(4) .dash-mod-title',es:'Reportes'},
+{s:'.dash-modules .dash-mod:nth-child(4) .dash-mod-desc',es:'Crear, guardar, programar y exportar reportes de datos personalizados'},
+{s:'.dash-modules .dash-mod:nth-child(5) .dash-mod-title',es:'Nómina'},
+{s:'.dash-modules .dash-mod:nth-child(5) .dash-mod-desc',es:'Mapear códigos de pago y exportar archivos de nómina a su sistema'},
+{s:'.dash-modules .dash-mod:nth-child(6) .dash-mod-title',es:'Personal'},
+{s:'.dash-modules .dash-mod:nth-child(6) .dash-mod-desc',es:'Empleados, empleadores, cuadrillas y dispositivos de campo'},
+{s:'.dash-modules .dash-mod:nth-child(7) .dash-mod-title',es:'Centro de Administración'},
+{s:'.dash-modules .dash-mod:nth-child(7) .dash-mod-desc',es:'Cultivos, paquetes de trabajo, trabajos, sitios, estilos de empaque, usuarios'},
+{s:'.dash-modules .dash-mod:nth-child(8) .dash-mod-title',es:'Pulse'},
+{s:'.dash-modules .dash-mod:nth-child(8) .dash-mod-desc',es:'Análisis en vivo — costos, producción, rendimiento, cumplimiento'},
+{s:'#module-dashboard > p',es:'Los módulos en gris están actualmente en desarrollo y estarán disponibles pronto.'},
+{s:'#module-timecards .hero-label',es:'Módulo'},
+{s:'#module-timecards .hero h1',es:'Tarjetas de Tiempo'},
+{s:'#module-timecards .hero p',es:'Ver, crear, editar, auditar y gestionar cada registro de tiempo generado por sus dispositivos de campo. Aquí es donde se realizan las auditorías diarias y la preparación de nómina.'},
+{s:'#tc-overview .card-title',es:'Resumen — ¿Qué son las Tarjetas de Tiempo?'},
+{s:'#tc-overview .card-desc',es:'Cómo se crean las tarjetas de tiempo, dónde encontrarlas y las dos vistas'},
+{s:'#tc-overview .prose',i:0,es:'<p style="font-size:15px;line-height:1.8;margin-bottom:16px">Las tarjetas de tiempo capturan cada actividad que realiza un empleado — hora de inicio, hora de fin, duración, Trabajo, Sitio, Ubicación, estilo de pago, tarifa, Registros de Producción, Cuadrilla y Empleador. Cada vez que un trabajador es registrado en una actividad en un dispositivo, se crea una Tarjeta de Tiempo automáticamente.</p><p style="font-size:15px;line-height:1.8;margin-bottom:20px">Navegue a <strong>Tarjetas de Tiempo</strong> desde la barra lateral izquierda.</p>'},
+{s:'#tc-views .card-title',es:'Vistas, Barra de Herramientas y Configuración'},
+{s:'#tc-views .card-desc',es:'Vistas de Línea de Tiempo, Lista y Resumen — navegación, zoom, visibilidad de columnas y configuración'},
+{s:'#tc-views .prose',i:0,es:'<h3 id="h3-timeline">Vista de Línea de Tiempo</h3><p>Bloques codificados por color por empleado. <span class="tag tag-blue">Azul = Trabajo</span> <span class="tag tag-yellow">Amarillo = Descanso / Almuerzo</span> <span class="tag tag-purple">Morado = En Progreso (En Vivo)</span></p>'},
+{s:'#tc-views .prose',i:1,es:'<h3 id="h3-listview">Vista de Lista</h3><p>Vista tabular con columnas ordenables. Ideal para edición masiva y exportación CSV.</p>'},
+{s:'#tc-views .prose',i:2,es:'<h3 id="h3-summary">Vista de Resumen</h3><p>Totales agregados por empleado.</p>'},
+{s:'#tc-views .prose',i:3,es:'<h3 id="h3-datenav">Navegación por Fecha</h3><p>Las flechas avanzan un día. El menú desplegable selecciona fechas específicas o preajustes.</p>'},
+{s:'#tc-views .prose',i:4,es:'<h3 id="h3-toolbar">Acciones de la Barra de Herramientas</h3><p>+ Agregar tarjetas / descansos masivos · Salida masiva · Copiar tarjetas · Seleccionar todo</p>'},
+{s:'#tc-views .prose',i:5,es:'<h3 id="h3-zoom">Control de Zoom</h3><p>Solo línea de tiempo — esquina superior derecha. Acercar para detalle, alejar para día completo.</p><div class="tip"><strong>Nota:</strong> Al alejar completamente, los íconos de producción y salida se ocultan. Si falta información, intente acercar más.</div>'},
+{s:'#tc-views .prose',i:6,es:'<h3 id="h3-gear">Configuración (Ícono de Engranaje)</h3><p>Visibilidad de columnas, registros por página, estado de registros, alternar turnos nocturnos.</p>'},
+{s:'#tc-views .prose',i:7,es:'<h3 id="h3-overnights">Funcionalidad de Turno Nocturno</h3><p>Algunas organizaciones tratan el trabajo nocturno como un turno colectivo en lugar de tarjetas separadas por día. Cuando las tarjetas pasan de la medianoche, PickTrace las agrega como un turno continuo.</p><h4>Cómo Funciona</h4><ul><li>Las tarjetas continuas que pasan de la medianoche se consideran colectivamente — horas y piezas se combinan.</li><li>Los registros se asignan al <strong>día calendario en que comenzó el trabajo</strong>.</li><li>El impacto principal es en horas extra: las horas agregadas del turno completo determinan si se cumplen los umbrales.</li></ul><h4>Cómo Aparecen los Datos Nocturnos</h4><table class="tbl"><tr><th>Área</th><th>Comportamiento</th></tr><tr><td><strong>Tarjetas y Registros de Producción</strong></td><td>Una columna "Inicio de Turno" muestra el primer registro. Un ícono nocturno aparece si el registro cae en el 2do día. Las columnas se ocultan via "Visibilidad de Columnas" en configuración.</td></tr><tr><td><strong>Línea de Tiempo</strong></td><td>Una flecha e ícono indican tarjetas nocturnas, con fechas clicables para navegar. Se ocultan con el alternar "Nocturnos".</td></tr><tr><td><strong>Panel e Informes</strong></td><td>Al filtrar fechas con turnos nocturnos, resultados aparecen con fechas respectivas. Filtrar solo Día 1 incluye trabajo del Día 2.</td></tr><tr><td><strong>Nómina</strong></td><td>Datos se agregan por fecha de turno, mostrados solo para la fecha de inicio. Horas del Día 2 aparecen en líneas del Día 1.</td></tr></table><div class="tip"><strong>Ejemplo:</strong> Un empleado trabaja 5:00 PM a 2:00 AM (9 horas, 8.5 pagadas). Sin turno nocturno, ningún día activa horas extra individualmente. Con la función habilitada, las horas se agregan correctamente.</div>'},
+{s:'#tc-views .prose',i:8,es:'<h3 id="h3-statusbar">Barra de Estado Inferior</h3><p>Muestra empleados, tarjetas de tiempo, total de horas y minutos para la vista actual.</p>'},
+{s:'#tc-views .prose',i:9,es:'<h3 id="h3-rightclick">Menú Contextual (Clic Derecho)</h3><p>Clic derecho en un bloque de tiempo para abrir el menú contextual. Las opciones dependen de cuántas tarjetas haya seleccionado.</p>'},
+{s:'#tc-views div[style*="background:#f8f9fa"]',es:'<span><strong>9</strong> empleados</span><span><strong>63</strong> tarjetas de tiempo</span><span><strong>76</strong> horas</span><span><strong>30</strong> minutos</span>'},
+{s:'#tc-views h4[style*="font-size:12px"]',i:0,es:'Una Seleccionada'},
+{s:'#tc-views h4[style*="font-size:12px"]',i:1,es:'Múltiples Seleccionadas'},
+{s:'#tc-search .card-title',es:'Búsqueda Avanzada y Filtros'},
+{s:'#tc-search .card-desc',es:'Domine cada filtro para encontrar exactamente las tarjetas que necesita'},
+{s:'#tc-search .search-intro p',es:'Haga clic en <strong>Buscar ▾</strong> en el encabezado para abrir <strong>Búsqueda Avanzada</strong>.'},
+{s:'#tc-search .stab',i:0,es:'Personas y Ubicación'},
+{s:'#tc-search .stab',i:1,es:'Detalles del Trabajo'},
+{s:'#tc-search .stab',i:2,es:'Estado y Cumplimiento'},
+{s:'#tc-search .stab',i:3,es:'Indicadores de Registro'},
+{s:'#sf-people > p',es:'Filtrar por quién trabajó y dónde.'},
+{s:'#sf-people .tip',es:'<strong>Siempre filtre por Cuadrilla primero</strong> antes de hacer ediciones — evita tocar tarjetas de otra cuadrilla.'},
+{s:'#sf-work > p',es:'Filtrar por qué hizo el empleado, cuánto tiempo y en qué dispositivo.'},
+{s:'#sf-work .tip',es:'<strong>Use Excluir en Trabajo</strong> y seleccione Descanso + Almuerzo antes de edición masiva de trabajo — evita sobrescribir registros de descanso.'},
+{s:'#sf-status > p',es:'Mostrar errores, violaciones de descanso y estado de prima por penalización.'},
+{s:'#sf-status .tip',es:'<strong>Alertas de descanso → Aplicar Penalización</strong> usando el ícono de estrella a la derecha de la búsqueda. Filtre por <em>Prima por Penalización Aplicada</em> para encontrar y eliminar penalizaciones previas.'},
+{s:'#sf-flags > p',es:'Filtros de casilla que muestran u ocultan tipos específicos de registros.'},
+{s:'#sf-flags .tip',es:'<strong>Use "Datos no revisados" como verificación final antes de nómina</strong> para detectar lo no aprobado. Use "Registro editado" para ver cada tarjeta modificada después de su creación.'},
+{s:'#sf-flags .filter-chk',i:0,es:'Sin registros de producción'},
+{s:'#sf-flags .filter-chk',i:1,es:'Registro editado'},
+{s:'#sf-flags .filter-chk',i:2,es:'Empleado H-2A'},
+{s:'#sf-flags .filter-chk',i:3,es:'Datos revisados'},
+{s:'#sf-flags .filter-chk',i:4,es:'Datos no revisados'},
+{s:'#sf-flags .filter-chk',i:5,es:'Notas'},
+{s:'#sf-flags .filter-chk',i:6,es:'Tarjetas Abiertas'},
+{s:'#sf-flags .filter-chk',i:7,es:'Desde Dispositivo Kiosco'},
+{s:'#sf-flags .filter-chk',i:8,es:'Tarjetas de Inicio de Turno'},
+{s:'#sf-flags .filter-chk',i:9,es:'Prima por Penalización Aplicada'},
+{s:'#sf-people .fn',i:0,es:'Empleado'},{s:'#sf-people .fn',i:1,es:'Cuadrilla'},
+{s:'#sf-people .fn',i:2,es:'Empleador'},{s:'#sf-people .fn',i:3,es:'Título del empleado'},
+{s:'#sf-people .fn',i:4,es:'Equipo'},{s:'#sf-people .fn',i:5,es:'Sitio'},
+{s:'#sf-people .fn',i:6,es:'Ubicación'},{s:'#sf-people .fn',i:7,es:'Usuario del dispositivo'},
+{s:'#sf-work .fn',i:0,es:'Trabajo'},{s:'#sf-work .fn',i:1,es:'Paquete de Trabajo'},
+{s:'#sf-work .fn',i:2,es:'Cultivo'},{s:'#sf-work .fn',i:3,es:'Variedad'},
+{s:'#sf-work .fn',i:4,es:'Dispositivo'},{s:'#sf-work .fn',i:5,es:'Tarifa por hora'},
+{s:'#sf-work .fn',i:6,es:'Horas'},
+{s:'#sf-status .fn',i:0,es:'Error/advertencia'},{s:'#sf-status .fn',i:1,es:'Alertas de descanso'},
+{s:'#sf-status .fn',i:2,es:'Estado de Atestiguación'},
+{s:'#tc-create .card-title',es:'Crear y Duplicar Tarjetas de Tiempo'},
+{s:'#tc-create .card-desc',es:'Agregar registros faltantes manualmente o copiar de un empleado existente'},
+{s:'#tc-create .prose',i:0,es:'<h3 id="h3-create">Cómo Crear una Tarjeta de Tiempo</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Haga clic en <strong>+</strong> a la derecha de la búsqueda → <strong>Agregar tarjetas de tiempo</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Agregue empleados por nombre, o cambie a <strong>Cuadrilla</strong> para agregar una cuadrilla completa</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic en <strong>+ Agregar Tarjeta</strong>. Establezca hora, cuadrilla, sitio, ubicación, paquete y trabajo</div></div><div class="step"><div class="step-num">4</div><div class="step-text">¿Múltiples entradas? Clic en <strong>+ Agregar otra tarjeta</strong> para cada una</div></div><div class="step"><div class="step-num">5</div><div class="step-text">Clic en <strong>Salida</strong> para hora de fin → <strong>Guardar</strong></div></div></div><div class="tip tip-media"><img src="screenshots/v2/crew-employee.png" alt="Selector Cuadrilla vs Empleado"/><span><strong>Agregar por cuadrilla es más rápido</strong> cuando todos faltan — escriba el nombre y todos los miembros se agregan.</span></div><h3 id="h3-duplicate">Duplicar una Tarjeta de Tiempo</h3>'},
+{s:'#tc-create .prose p',i:0,es:'Copia todos los atributos de una tarjeta existente y la asigna a otro empleado. Clic derecho → <strong>Duplicar Tarjeta</strong>. Cambie el nombre y detalles → Guardar.'},
+{s:'#tc-create .tip.tip-media',i:1,es:'<img src="screenshots/v2/duplicate-multiple.png" alt="Duplicar a múltiples empleados"/><span><strong>Puede asignar el duplicado a múltiples empleados</strong> — agregue varios nombres antes de guardar.</span>'},
+{s:'#tc-edit .card-title',es:'Editar Tarjetas de Tiempo'},
+{s:'#tc-edit .card-desc',es:'Edición individual y masiva — tiempos, trabajos, sitios, estilos de pago, cuadrilla'},
+{s:'#tc-edit .prose',i:0,es:'<h3 id="h3-editone">Editar una Tarjeta de Tiempo</h3><p>Seleccione una tarjeta → clic derecho → <strong>Editar Tarjeta</strong>, o clic en <strong>Editar</strong> en la barra superior. El panel muestra todas las tarjetas del empleado ese día. Edite: hora inicio, hora fin, cuadrilla, sitio, ubicación, paquete, trabajo, estilo de pago, tarifa.</p><h3 id="h3-editmulti">Editar Múltiples Tarjetas</h3>'},
+{s:'#tc-edit .prose p',i:0,es:'Seleccione múltiples tarjetas (Shift+Clic o Ctrl+Clic) → clic derecho → <strong>Editar Tarjetas</strong>. Use casillas para cambios masivos: Hora Inicio, Hora Salida, Sitio y Ubicación, Trabajo, Estilo de Pago y Tarifa, Duración.'},
+{s:'#tc-edit .warn',es:'<strong>Los cambios se aplican a todas las tarjetas seleccionadas.</strong> Si se cambiaron tiempos, aparece confirmación con antes/después en línea de tiempo. Revise antes de guardar.'},
+{s:'#tc-edit .tip',es:'<strong>La tarifa más alta siempre gana.</strong> PickTrace compara tarifas de todas las fuentes — Perfil del Empleado, Programador de Cuadrillas y Trabajo — y paga la más alta. El salario mínimo estatal es el piso.'},
+{s:'#tc-edit .prose p',i:1,es:'Seleccione tarjetas → clic derecho → <strong>Cambiar Cuadrilla</strong> → elija la cuadrilla → Guardar. O clic derecho → <strong>Editar Tarjeta</strong> → cambie el campo <strong>Cuadrilla</strong> → Guardar.'},
+{s:'#tc-breaks .card-title',es:'Descansos y Almuerzos'},
+{s:'#tc-breaks .card-desc',es:'Agregar descansos masivos, corregir duplicados, usar filtro Excluir'},
+{s:'#tc-breaks .prose',i:0,es:'<h3 id="h3-addbreaks">Agregar Descansos en Masa</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Filtre por cuadrilla. Seleccione empleados sin descansos.</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic en <strong>+</strong> → <strong>Agregar trabajos de duración estática</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Marque <strong>"Hora de inicio dinámica después del primer registro"</strong></div></div><div class="step"><div class="step-num">4</div><div class="step-text">Establezca tiempo según regulaciones de su estado (ej., almuerzo 5 hrs después del registro)</div></div><div class="step"><div class="step-num">5</div><div class="step-text">Seleccione Descanso o Almuerzo. Si ambos faltan, clic en <strong>"+ agregar otro trabajo"</strong></div></div><div class="step"><div class="step-num">6</div><div class="step-text">Guardar</div></div></div><div class="tip"><strong>"Hora de inicio dinámica"</strong> = tiempo relativo — descanso X horas después del inicio individual. Sin cálculo manual.</div><h3 id="h3-fixbreaks">Corregir Descanso / Almuerzo Duplicado</h3>'},
+{s:'#tc-breaks .prose .steps',i:1,es:'<div class="step"><div class="step-num">1</div><div class="step-text">Seleccione el descanso duplicado → clic derecho → <strong>Archivar registro</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione la tarjeta antes del descanso → <strong>Duplicar registro</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Edite hora de inicio para que comience después del descanso → Guardar</div></div>'},
+{s:'#tc-audit .card-title',es:'Flujo de Auditoría Diaria'},
+{s:'#tc-audit .card-desc',es:'La auditoría diaria de 8 pasos y el ciclo semanal de nómina'},
+{s:'#tc-audit .prose',i:0,es:'<h3 id="h3-auditsteps">Pasos de Auditoría Diaria</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text"><strong>Establezca fecha y filtre por cuadrilla.</strong> Seleccione ayer. Búsqueda → Cuadrilla → seleccione → Aplicar. Nunca audite sin filtrar por cuadrilla.</div></div><div class="step"><div class="step-num">2</div><div class="step-text"><strong>Ordene por Nombre, luego Hora de Inicio.</strong> Agrupa tarjetas cronológicamente.</div></div><div class="step"><div class="step-num">3</div><div class="step-text"><strong>Corrija errores marcados.</strong> Íconos rojos aparecen automáticamente. Busque: registros faltantes, múltiples salidas, piezas faltantes, tarjetas superpuestas, tarjetas de 24+ hrs, producción sin tarjeta, producción antes del registro.</div></div><div class="step"><div class="step-num">4</div><div class="step-text"><strong>Verifique horas de inicio, fin y totales.</strong> Observe inicios a 12:00 AM y salidas después de medianoche.</div></div><div class="step"><div class="step-num">5</div><div class="step-text"><strong>Verifique descansos y almuerzos.</strong> Vista de Línea de Tiempo — busque bloques amarillos. Sin amarillo = descansos faltantes.</div></div><div class="step"><div class="step-num">6</div><div class="step-text"><strong>Verifique trabajos, sitios y ubicaciones</strong> contra hojas de la cuadrilla.</div></div><div class="step"><div class="step-num">7</div><div class="step-text"><strong>Verificación visual con Línea de Tiempo.</strong> Sin brechas, sin bloques de 24 hrs, descansos amarillos visibles.</div></div><div class="step"><div class="step-num">8</div><div class="step-text"><strong>Revisar y aprobar.</strong> Seleccione tarjetas → clic derecho → <strong>Revisar Tarjetas</strong>, o use íconos de barra superior. Ejecute filtro No Revisados como verificación final.</div></div></div><div class="tip"><strong>Atajo de selección masiva:</strong> <strong>Ctrl</strong> (Windows) o <strong>⌘ Cmd</strong> (Mac) + clic izquierdo para seleccionar múltiples bloques.</div><div class="tip"><strong>Al auditar diariamente, la nómina semanal se convierte en revisión rápida</strong> en lugar de carrera contra el reloj.</div>'},
+{s:'#tc-errors .card-title',es:'Errores y Correcciones'},
+{s:'#tc-errors .card-desc',es:'Cada error común — síntomas, corrección y prevención'},
+{s:'#tc-errors > .card-body > .prose',es:'<p>PickTrace marca errores con un ícono rojo junto al nombre. Clic en cualquier error para expandir.</p>'},
+{s:'#tc-errors .err-name',i:0,es:'Salida Faltante / Tarjeta en Curso'},
+{s:'#tc-errors .err-name',i:1,es:'Trabajo Incorrecto'},
+{s:'#tc-errors .err-name',i:2,es:'Ubicación Incorrecta'},
+{s:'#tc-errors .err-name',i:3,es:'Empleado sin Tarjeta de Tiempo'},
+{s:'#tc-errors .err-badge',i:0,es:'Más Común'},
+{s:'#tc-errors .err-badge',i:1,es:'Común'},
+{s:'#tc-errors .err-badge',i:2,es:'Común'},
+{s:'#tc-errors .err-badge',i:3,es:'Común'},
+{s:'#tc-errors .err-item:nth-child(1) .err-body .prose',es:'<h4>Síntomas</h4><ul><li>Hora inicio 12:00 AM del día siguiente</li><li>~24 horas mostradas</li><li>Línea de tiempo cubre todo el día hasta 11:59 PM</li><li>Salida masiva omite a este empleado</li></ul><h4>Corrección</h4><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Verifique salida real con equipo de campo</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione tarjeta afectada, o <strong>Ctrl</strong>/<strong>⌘ Cmd</strong>+clic para selección múltiple</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic derecho → Editar</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Actualice Hora de Fin → Guardar</div></div></div><div class="tip"><strong>Atajo masivo:</strong> Clic derecho → "Seleccionar todos los inicios 12am" → Archivar. Luego corrija hora de inicio en masa.</div>'},
+{s:'#tc-errors .err-item:nth-child(2) .err-body .prose',i:0,es:'<h4 style="margin-top:0">Tarjeta Individual</h4>'},
+{s:'#tc-errors .err-item:nth-child(2) .err-body .prose',i:1,es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione tarjeta → clic derecho → <strong>Editar</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Marque <strong>"Establecer Trabajo"</strong> → seleccione Paquete y Trabajo correcto → Guardar</div></div></div><h4>Edición Masiva</h4>'},
+{s:'#tc-errors .err-item:nth-child(2) .err-body .prose',i:2,es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Use filtro Excluir: Búsqueda → Trabajo: Descanso/Almuerzo → <strong>Excluir</strong> → Aplicar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione tarjetas afectadas (<strong>Ctrl</strong>/<strong>⌘ Cmd</strong> no adyacentes, <strong>Shift</strong> rango)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic derecho → <strong>Editar Tarjetas</strong> → marque <strong>"Establecer Trabajo"</strong></div></div><div class="step"><div class="step-num">4</div><div class="step-text">Seleccione Paquete y Trabajo correcto → Guardar</div></div></div><div class="tip"><strong>Los trabajos dependen del Paquete de Trabajo.</strong> Si no aparece, cambie el Paquete primero.</div><div class="danger"><strong>Siempre excluya descansos/almuerzos primero.</strong> La edición masiva sobrescribiría datos de descanso.</div>'},
+{s:'#tc-errors .err-item:nth-child(3) .err-body .prose',i:0,es:'<h4 style="margin-top:0">Tarjeta Individual</h4>'},
+{s:'#tc-errors .err-item:nth-child(3) .err-body .prose',i:1,es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione tarjeta → clic derecho → <strong>Editar</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Marque <strong>"Establecer Sitio y Ubicación"</strong> → elija correctos → Guardar</div></div></div><h4>Edición Masiva</h4>'},
+{s:'#tc-errors .err-item:nth-child(3) .err-body .prose',i:2,es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione tarjetas afectadas incluyendo descansos (<strong>Ctrl</strong>/<strong>⌘ Cmd</strong>, <strong>Shift</strong>)</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic derecho → <strong>Editar Tarjetas</strong> → marque <strong>"Establecer Sitio y Ubicación"</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Elija sitio y ubicación correctos → Guardar</div></div></div><div class="tip"><strong>No excluya descansos</strong> — están vinculados al sitio/ubicación y necesitan actualización.</div>'},
+{s:'#tc-errors .err-item:nth-child(4) .err-body .prose',es:'<p>Encuentre compañero con mismo trabajo → clic derecho → <strong>Duplicar</strong> → asigne al faltante → ajuste detalles → Guardar.</p><div class="tip"><strong>Duplicar es más rápido que crear desde cero</strong> cuando un compañero hizo el mismo trabajo.</div>'},
+{s:'#tc-archive .card-title',es:'Archivar y Revisar'},
+{s:'#tc-archive .card-desc',es:'Eliminar registros de reportes y marcar tarjetas como aprobadas'},
+{s:'#tc-archive .prose',i:0,es:'<h3 id="h3-archive">Archivar</h3><p>Elimina tarjeta de reportes pero no la borra — se puede restaurar.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione una o múltiples tarjetas</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic derecho → <strong>Archivar Tarjeta(s)</strong></div></div></div><h3 id="h3-unarchive">Desarchivar</h3>'},
+{s:'#tc-archive .prose .steps',i:1,es:'<div class="step"><div class="step-num">1</div><div class="step-text">Clic en <strong>engranaje</strong> (arriba derecha) → active <strong>"Mostrar archivados"</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione tarjeta(s) archivada(s)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic derecho → <strong>Desarchivar Tarjeta(s)</strong></div></div>'},
+{s:'#tc-archive .prose',i:1,es:'<p>Revisar marca tarjetas como auditadas y aprobadas. Seleccione tarjetas → clic derecho → <strong>Revisar Tarjetas</strong> o use íconos de barra superior para <strong>Revisar / Des-revisar</strong>.</p><div class="tip"><strong>Use filtro No Revisados como verificación final</strong> antes de exportar nómina. Búsqueda → marque "No revisados" para encontrar pendientes.</div>'},
+{s:'#module-production .hero-label',es:'Módulo'},
+{s:'#module-production .hero h1',es:'Registros de Producción'},
+{s:'#module-production .hero p',es:'Ver y corregir registros de pago por pieza — botes, bandejas, árboles y cualquier unidad que sus cuadrillas produzcan.'},
+{s:'#pr-overview .card-title',es:'¿Qué son los Registros de Producción?'},
+{s:'#pr-overview .card-desc',es:'De dónde vienen y cómo leer la página de Registros de Producción'},
+{s:'#pr-overview .prose',es:'<p>Los Registros de Producción se crean en el dispositivo cuando un líder acredita a un empleado con una unidad (ej., bote, bandeja, árbol). Cada registro se vincula a empleado, sitio, ubicación, cultivo, trabajo, conteo y tarifa por pieza.</p><h3>Columnas Clave</h3><table class="tbl"><tr><th>Columna</th><th>Qué muestra</th></tr><tr><td>PT ID</td><td>ID de PickTrace del empleado</td></tr><tr><td>Conteo</td><td>Unidades acreditadas</td></tr><tr><td>Unidad</td><td>Tipo (botes, árboles, bandejas, etc.)</td></tr><tr><td>Tarifa por Pieza</td><td>Dólares por unidad</td></tr><tr><td>Sitio / Ubicación</td><td>Rancho y bloque del trabajo</td></tr><tr><td>Cultivo</td><td>Variedad asociada</td></tr></table><div class="tip"><strong>Verifique el conteo total de piezas</strong> abajo a la derecha de la tabla. Compare con boletos físicos para detectar discrepancias.</div>'},
+{s:'#pr-add .card-title',es:'Agregar un Registro de Producción'},
+{s:'#pr-add .card-desc',es:'Agregar manualmente un registro faltante en Oficina'},
+{s:'#pr-add .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">En Registros de Producción, clic en <strong>[+]</strong> a la derecha de la búsqueda</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Complete detalles y clic en <strong>Agregar Empleados</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic en <strong>Guardar</strong></div></div></div><div class="warn"><strong>Cuadrilla, Sitio, Ubicación y Paquete deben coincidir</strong> con la tarjeta del empleado para que el registro se vincule.</div><div class="tip">Después de agregar un registro que coincida, la advertencia "Registro de Pieza Faltante" se eliminará automáticamente.</div>'},
+{s:'#pr-edit .card-title',es:'Editar Tarifas por Pieza'},
+{s:'#pr-edit .card-desc',es:'Actualizar tarifas incorrectas en uno o varios registros'},
+{s:'#pr-edit .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione registros a actualizar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic derecho → <strong>Editar Registro de Producción</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Marque <strong>"Establecer Tarifa por Pieza"</strong> → ingrese tarifa correcta</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Clic en <strong>Guardar</strong></div></div></div><div class="tip"><strong>¿Dónde se establecen?</strong> En el Programador de Cuadrillas bajo "Ubicación y Tarifas por Pieza." Actualice ahí para prevenir recurrencia.</div><div class="warn"><strong>Restricciones masivas:</strong> Registros deben ser de la <strong>misma Cuadrilla</strong>. Deben ser del <strong>mismo Flujo de Trabajo</strong> (Paquete) para editar tarifa.</div><h3>Duplicar Registros de Producción</h3><p>Seleccione registro → clic derecho → <strong>Duplicar</strong>. Agregue nombres de empleados.</p><div class="warn"><strong>La duplicación divide — no copia.</strong> A diferencia de tarjetas, duplicar producción divide unidades entre empleados. Ej: 2 unidades duplicadas a 2 empleados = 1 unidad cada uno.</div>'},
+{s:'#pr-errors .card-title',es:'Errores de Registros de Producción'},
+{s:'#pr-errors .card-desc',es:'Sin Coincidencia, Diferente Ubicación, Pieza Faltante'},
+{s:'#pr-errors .prose',es:'<h3>Error de Sin Coincidencia</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Corrección: Sin Coincidencia</p><code>/videos/production/errors/no-match.mp4</code></div><p>Existe registro pero no se encontró tarjeta correspondiente.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirme con campo si el trabajador estaba en trabajo con piezas</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Si sí — agregue tarjeta con rancho, bloque y trabajo correspondientes</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Si no trabajaba — seleccione → <strong>Archivar Registro</strong></div></div></div><h3>Registro en Ubicación Diferente</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Corrección: Ubicación Incorrecta</p><code>/videos/production/errors/wrong-location.mp4</code></div><p>Registro acreditado en ubicación diferente a la tarjeta. Corrija actualizando Sitio y Ubicación de la tarjeta para que coincida.</p>'},
+{s:'#module-scheduler .hero-label',es:'Módulo'},
+{s:'#module-scheduler .hero h1',es:'Programador de Cuadrillas'},
+{s:'#module-scheduler .hero p',es:'Programe cuadrillas a trabajos, sitios y ubicaciones antes del día. Aquí se configuran tarifas, asignaciones y avisos de descanso.'},
+{s:'#cs-overview .card-title',es:'¿Qué es el Programador de Cuadrillas?'},
+{s:'#cs-overview .card-desc',es:'Por qué la programación importa y qué controla en el campo'},
+{s:'#cs-overview .prose',es:'<p>El Programador le dice a PickTrace dónde trabajará cada cuadrilla, qué trabajos harán y qué tarifas aplican — antes del día de campo. Los dispositivos solo muestran trabajos y ubicaciones programados, reduciendo errores.</p><div class="tip"><strong>El Programador es el paso más importante para nómina precisa.</strong> Si un trabajo no está programado, no aparecerá en el dispositivo.</div>'},
+{s:'#cs-create .card-title',es:'Crear un Horario'},
+{s:'#cs-create .card-desc',es:'Paso a paso: asignar cuadrilla a un día, trabajo y ubicación'},
+{s:'#cs-create .prose',es:'<p>El Programador usa un <strong>asistente de 3 secciones</strong>. Clic en <strong>Siguiente</strong> para avanzar.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Navegue al <strong>Programador de Cuadrillas</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic en <strong>+ Agregar</strong> en la fecha → seleccione Cuadrilla</div></div><div class="step"><div class="step-num">3</div><div class="step-text"><strong>Sección 1 — Paquete y Fecha:</strong> Seleccione Paquete, fechas inicio/fin. Opción "Sin Fecha de Fin". Clic <strong>Siguiente</strong>.</div></div><div class="step"><div class="step-num">4</div><div class="step-text"><strong>Sección 2 — Trabajo y Pago:</strong> Verifique estilos de pago y tarifas. Personalice si necesario. <strong>Siguiente</strong>.</div></div><div class="step"><div class="step-num">5</div><div class="step-text"><strong>Sección 3 — Ubicación y Tarifas:</strong> Agregue ubicaciones expandiendo sitios. Establezca tarifas por pieza por ubicación.</div></div><div class="step"><div class="step-num">6</div><div class="step-text"><strong>Guardar</strong></div></div></div>'},
+{s:'#cs-rates .card-title',es:'Ubicaciones y Tarifas por Pieza'},
+{s:'#cs-rates .card-desc',es:'Establecer tarifas por bloque dentro del programador'},
+{s:'#cs-rates .prose',es:'<p>Las tarifas se establecen por bloque en el Programador. Al agregar ubicación, verá campo de <strong>Tarifa por Pieza</strong>. Ingrese monto por unidad (ej., $2.00/bote). Fluye a Producción y nómina.</p><div class="tip"><strong>La tarifa más alta siempre gana.</strong> PickTrace compara todas las fuentes y paga la más alta. Salario mínimo es el piso.</div>'},
+{s:'#cs-breaks .card-title',es:'Avisos de Descanso y Almuerzo'},
+{s:'#cs-breaks .card-desc',es:'Configurar cuándo el dispositivo avisa sobre descansos'},
+{s:'#cs-breaks .prose',es:'<p>Los avisos se configuran por cuadrilla. Vaya a <strong>Cuadrillas</strong> → seleccione → <strong>Editar</strong> → "Aviso de Descanso y Almuerzo" active/desactive, establezca tiempo, agregue avisos → Guardar.</p><div class="warn"><strong>Si los avisos se activan mal</strong>, el tiempo está mal configurado a nivel de cuadrilla. Actualice cada cuadrilla afectada.</div>'},
+{s:'#module-reports .hero-label',es:'Módulo'},
+{s:'#module-reports .hero h1',es:'Reportes'},
+{s:'#module-reports .hero p',es:'Cree reportes personalizados, guarde plantillas y exporte datos a hojas de cálculo o su sistema de nómina.'},
+{s:'#rpt-format .card-title',es:'Paso 1 — Elija su Formato de Reporte'},
+{s:'#rpt-format .card-desc',es:'Diario vs. semanal, una cuadrilla vs. toda la empresa, qué plantilla usar'},
+{s:'#rpt-format .prose',es:'<p>Antes de crear un reporte, responda: <strong>¿Qué rango de tiempo?</strong> (un día vs. semana) y <strong>¿A quién?</strong> (una cuadrilla vs. empresa). Sus respuestas determinan plantilla y filtros.</p><h3>Tipos de Reportes Precargados</h3><table class="tbl"><tr><th>Reporte</th><th>Mejor Para</th></tr><tr><td><strong>Horas de Empleado</strong></td><td>Punto de partida general — una fila por empleado/fecha/sitio. Ideal para auditoría y revisión de nómina.</td></tr><tr><td><strong>Salario Promedio Pieza/hr</strong></td><td>Analizar rendimiento a destajo — tarifa efectiva basada en ganancias por pieza.</td></tr><tr><td><strong>Resumen de Cuadrilla</strong></td><td>Rendimiento a nivel cuadrilla — horas y producción agregadas.</td></tr><tr><td><strong>Lista de Empleados</strong></td><td>Revisión de asistencia — quién trabajó y su producción.</td></tr><tr><td><strong>Nómina General</strong></td><td>Auditar tarjetas y cálculos — desglose detallado por empleado.</td></tr></table><h3>Plantilla Recomendada: Horas de Empleado</h3><p>El reporte <strong>Horas de Empleado</strong> es el mejor punto de partida — detalle suficiente sin abrumar. Una fila por empleado/fecha/sitio, con subtotales.</p><div class="tip"><strong>Use ID de Empleado (PT ID), no nombre,</strong> como identificador. Si dos empleados comparten nombre, el reporte combinará registros. PT ID es único.</div><h3>Filas y Secciones</h3><p>En <strong>Filas y Secciones</strong> controle cómo se agrupan datos. El predeterminado da fila única por fecha/sitio/empleado. Para reporte de una cuadrilla, puede eliminar subtotal de cuadrilla.</p>'},
+{s:'#rpt-columns .card-title',es:'Paso 2 — Seleccionar y Personalizar Columnas'},
+{s:'#rpt-columns .card-desc',es:'Qué columnas importan, Horas Totales vs. Pagadas, renombrar columnas'},
+{s:'#rpt-columns .prose',es:'<h3>Columnas Recomendadas para Auditoría</h3><table class="tbl"><tr><th>Columna</th><th>¿Incluir?</th><th>Por qué</th></tr><tr><td>Fecha</td><td><span class="tag tag-green">Sí</span></td><td>Qué día cubre cada fila</td></tr><tr><td>Nombre</td><td><span class="tag tag-green">Sí</span></td><td>Identificación legible</td></tr><tr><td>ID Empleado (PT ID)</td><td><span class="tag tag-green">Sí</span></td><td>Identificador único para nómina</td></tr><tr><td>ID Alternativo</td><td>Opcional</td><td>Número de nómina si aplica</td></tr><tr><td>Empleador</td><td>Opcional</td><td>Omita si hay un solo empleador</td></tr><tr><td>Cuadrilla</td><td><span class="tag tag-green">Sí</span></td><td>Requerido para múltiples cuadrillas</td></tr><tr><td>Sitio</td><td><span class="tag tag-green">Sí</span></td><td>Nivel rancho/finca</td></tr><tr><td>Ubicación</td><td>Opcional</td><td>Nivel bloque si su auditoría lo requiere</td></tr><tr><td>Trabajo</td><td><span class="tag tag-green">Sí</span></td><td>Tipo de trabajo realizado</td></tr><tr><td>Horas Totales</td><td>Opcional</td><td>Incluye almuerzo</td></tr><tr><td>Horas Pagadas</td><td><span class="tag tag-green">Sí</span></td><td>Excluye almuerzo — lo que se paga</td></tr><tr><td>Horas Almuerzo</td><td><span class="tag tag-green">Sí</span></td><td>Columna separada para ver explícitamente</td></tr><tr><td>Horas Descanso</td><td><span class="tag tag-green">Sí</span></td><td>Confirma que se dieron descansos</td></tr><tr><td>Horas Regulares</td><td><span class="tag tag-green">Sí</span></td><td>Antes de umbrales HE/TD</td></tr><tr><td>Horas Extra</td><td><span class="tag tag-green">Sí</span></td><td>Horas que activaron HE</td></tr><tr><td>Horas Dobles</td><td><span class="tag tag-green">Sí</span></td><td>Horas que activaron TD</td></tr><tr><td>Piezas</td><td>Opcional</td><td>Conteo de unidades a destajo</td></tr><tr><td>Tarifa por Pieza</td><td>Opcional</td><td>Tarifa por unidad del día</td></tr><tr><td>Pago Bruto</td><td><span class="tag tag-green">Sí</span></td><td>Total ganado — clave para costos</td></tr></table><div class="tip"><strong>Horas Totales vs. Pagadas:</strong> Totales incluye almuerzo. Pagadas no. Para nómina use Pagadas. Mantenga columna Almuerzo para desglose auditable.</div><h3>Renombrar Columnas</h3><p>Renombre encabezados para coincidir con su sistema. Ej: "ID Empleado" a "ID DataTech". Clic en nombre de columna para editar.</p>'},
+{s:'#rpt-filters .card-title',es:'Paso 3 — Filtrar sus Datos'},
+{s:'#rpt-filters .card-desc',es:'Limitar reporte a cuadrilla, fechas, trabajos y sitios correctos'},
+{s:'#rpt-filters .prose',es:'<table class="tbl"><tr><th>Filtro</th><th>Uso Común</th></tr><tr><td>Rango de Fechas</td><td>Ayer (auditoría) o semana de pago (nómina)</td></tr><tr><td>Cuadrilla</td><td>Una para auditoría; todas para exportación</td></tr><tr><td>Trabajo</td><td>Solo productivos, o incluir descansos</td></tr><tr><td>Sitio / Ubicación</td><td>Un rancho o bloque para costos por ubicación</td></tr><tr><td>Horas Pagadas &lt; 40</td><td>Empleados bajo 40 horas semanales</td></tr></table><h3>Encontrar Empleados con Menos de 40 Horas</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Rango de fechas = semana laboral completa</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Filtros de columna → <strong>Horas Pagadas</strong> → <strong>"menor que 40"</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Ejecute — solo aparecen empleados bajo 40 horas</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Guarde como plantilla para uso semanal</div></div></div><div class="tip"><strong>Guarde filtros como parte de su plantilla</strong> para no reaplicarlos.</div>'},
+{s:'#rpt-save .card-title',es:'Paso 4 — Guardar, Programar y Exportar'},
+{s:'#rpt-save .card-desc',es:'Guardar como Mis Reportes u organización, programar correos, exportar CSV'},
+{s:'#rpt-save .prose',es:'<h3 id="h3-rpt-save">Guardar Plantilla de Reporte</h3><p><strong>Mis Reportes</strong> — visibles solo para usted. Para auditoría personal.</p><p><strong>Reportes de Organización</strong> — visibles para todos. Para flujos compartidos.</p><h3 id="h3-rpt-schedule">Programar Entrega Automática</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Abra reporte guardado → <strong>Programar</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Hora de entrega (ej., 7:00 AM diario)</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Datos de ayer o del mismo día</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Agregar destinatarios (líderes, admin, gerentes)</div></div><div class="step"><div class="step-num">5</div><div class="step-text">Guardar programación</div></div></div><div class="tip"><strong>Reportes diarios de resumen para líderes</strong> llegan cada mañana con el día anterior revisado — menos llamadas a oficina.</div><h3 id="h3-rpt-export">Exportar</h3><p><strong>CSV / Excel</strong> — para importar a nómina. <strong>Imprimible</strong> — para firmas y hojas de revisión.</p><div class="warn"><strong>Previsualice antes de exportar.</strong> Verifique columnas, agrupaciones y totales antes de descargar.</div>'},
+{s:'#module-payroll .hero-label',es:'Módulo'},
+{s:'#module-payroll .hero h1',es:'Nómina'},
+{s:'#module-payroll .hero p',es:'Mapee trabajos, sitios y ubicaciones de PickTrace a códigos de nómina, luego exporte a su software (DataTech, ADP, Famous y más).'},
+{s:'#pay-overview .card-title',es:'Cómo Funciona la Nómina en PickTrace'},
+{s:'#pay-overview .card-desc',es:'Flujo de 3 pasos: Tarjetas de Tiempo → Reportes → Exportar'},
+{s:'#pay-overview .prose',es:'<p>PickTrace registra lo del campo — horas, destajo, descansos, ubicaciones. Al final del período, exporte datos e importe a su software de nómina. PickTrace es registro de tiempo y cálculo; su software genera cheques y retenciones.</p><h3>Flujo de 3 Pasos por Período</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text"><strong>Tarjetas</strong> — Revise datos de tiempo. Use Línea de Tiempo para detectar problemas, Lista para edición masiva, Resumen para totales.</div></div><div class="step"><div class="step-num">2</div><div class="step-text"><strong>Reportes</strong> — Ejecute LCSR para auditar horas, piezas y pago bruto. Corrija y re-ejecute hasta que esté limpio.</div></div><div class="step"><div class="step-num">3</div><div class="step-text"><strong>Exportar</strong> — Descargue archivo de nómina e importe a su software (DataTech, Famous, Computech, ADP, QuickBooks).</div></div></div><div class="tip"><strong>PickTrace calcula:</strong> Pago por hora, destajo, horas extra, tiempo doble, primas por descanso, ajustes de salario mínimo y pago por enfermedad. Su software maneja retenciones, cheques y recibos.</div>'},
+{s:'#pay-codes .card-title',es:'Mapeo de Códigos de Nómina'},
+{s:'#pay-codes .card-desc',es:'Configuración única: conecte trabajos y sitios de PickTrace a sus códigos'},
+{s:'#pay-codes .prose',es:'<p>El mapeo le dice a PickTrace cómo estructurar su exportación. Configuración única — una vez mapeados, los códigos se incluyen automáticamente. Su especialista lo configurará.</p><div class="warn"><strong>Importante:</strong> Si sus trabajos y ranchos ya tienen códigos, no los cambie. Su especialista configurará PickTrace para coincidir con lo existente.</div><h3>Qué se Mapea</h3><table class="tbl"><tr><th>Campo PickTrace</th><th>Se Mapea a</th><th>Ejemplo</th></tr><tr><td>Trabajo</td><td>Código de fase/actividad</td><td>Cosecha → Fase 501</td></tr><tr><td>Sitio / Ubicación</td><td>Rancho, bloque o centro de costo</td><td>Valley Rose 6 → CC 13</td></tr><tr><td>Empleado</td><td>ID en su sistema de nómina</td><td>ID Alternativo o credencial</td></tr><tr><td>Empleador</td><td>Código de entidad</td><td>Para múltiples contratistas</td></tr></table><h3>ID por Sistema de Nómina</h3><table class="tbl"><tr><th>Sistema</th><th>Fuente de ID</th></tr><tr><td>DataTech</td><td>ID Alternativo</td></tr><tr><td>Computech</td><td>ID Alternativo (numérico)</td></tr><tr><td>Famous</td><td>Código interno del cliente</td></tr><tr><td>ADP</td><td>ID Alternativo o PTR ID</td></tr><tr><td>QuickBooks</td><td>Coincidencia exacta de nombre</td></tr></table><div class="tip"><strong>QuickBooks es la excepción.</strong> Los demás emparejan por ID numérico. QuickBooks por nombre — debe coincidir exactamente incluyendo espacios y mayúsculas.</div>'},
+{s:'#pay-export .card-title',es:'Exportar Nómina'},
+{s:'#pay-export .card-desc',es:'Descargar archivo semanal e importar a su software'},
+{s:'#pay-export .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Navegue a <strong>Nómina</strong> y seleccione período de pago</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione <strong>Empleador</strong> y encuentre ciclo</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Revise totales — verifique horas, destajo, HE y pago bruto</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Opción de descarga: <strong>Solo H2A</strong>, <strong>No-H2A</strong>, o <strong>Todo</strong></div></div><div class="step"><div class="step-num">5</div><div class="step-text">Importe a su software usando pasos abajo</div></div></div><div class="tip"><strong>Consejo:</strong> Exporte todos los empleadores a la vez, suba archivo a la nube. Use <strong>Solo H2A</strong> o <strong>No-H2A</strong> para separar archivos H-2A.</div><h3>Importar por Sistema</h3><table class="tbl"><tr><th>Sistema</th><th>Pasos</th></tr><tr><td><strong>DataTech</strong></td><td>Nómina → fecha → Sitio → Centro de Costo y Código → descargue → suba a nube</td></tr><tr><td><strong>Famous</strong></td><td>Exporte → pegue en carpeta Import de Famous → agregue <code>.TXT</code> al nombre → importe. Si hay error, Famous genera archivo con código.</td></tr><tr><td><strong>Computech</strong></td><td>Descargue → importe normalmente. Computech marca errores por columna.</td></tr><tr><td><strong>QuickBooks / ADP</strong></td><td>Descargue CSV → importe por pantalla estándar</td></tr></table><div class="warn"><strong>Nota Famous:</strong> Si hay error de importación, Famous genera archivo de error. Contacte soporte de Famous.</div>'},
+{s:'#pay-calc .card-title',es:'Cálculos de Pago'},
+{s:'#pay-calc .card-desc',es:'Cómo PickTrace calcula pago por hora, destajo, HE y primas'},
+{s:'#pay-calc .prose',es:'<p>PickTrace puede hacer todos los cálculos — o su software. Su especialista confirmará quién durante la configuración.</p><h3>Tipos de Pago</h3><table class="tbl"><tr><th>Tipo</th><th>Cómo lo Maneja PickTrace</th></tr><tr><td>Por Hora</td><td>Inicio a fin × tarifa por hora</td></tr><tr><td>A Destajo</td><td>Unidades × tarifa por pieza</td></tr><tr><td>Hora o Pieza</td><td>Ambos calculados — se paga el mayor</td></tr><tr><td>Hora Más Pieza</td><td>Base por hora MÁS ganancias por pieza (aditivo)</td></tr><tr><td>Horas Extra</td><td>Premium más allá de horas regulares</td></tr><tr><td>Tiempo Doble</td><td>Premium a 2× tarifa regular</td></tr><tr><td>Prima Descanso</td><td>1 hora × Tarifa Regular cuando se pierde descanso</td></tr><tr><td>Ajuste Salario Mínimo</td><td>Automático si destajo cae bajo el mínimo</td></tr></table><div class="tip"><strong>La tarifa más alta siempre gana.</strong> PickTrace compara todas las fuentes y paga la más alta.</div><h3>¿Quién Calcula?</h3><p>Operaciones grandes prefieren su software existente (Famous, Computech, ADP). Operaciones pequeñas o con QuickBooks usan PickTrace.</p><p>Su especialista confirmará durante la configuración de nómina.</p><h3>Reglas de HE por Estado</h3><table class="tbl"><tr><th>Jurisdicción</th><th>Umbral HE</th><th>Tiempo Doble</th><th>Notas</th></tr><tr><td><strong>California</strong></td><td>Diario: después de 8 hrs (hasta 12). Semanal: después de 40 hrs. 7mo día: primeras 8 hrs.</td><td>Después de 12 hrs diarias, o 8 hrs en 7mo día.</td><td>Tarifa descanso destajo = pago directo ÷ horas (excluyendo descansos).</td></tr><tr><td><strong>Washington</strong></td><td>Agrícolas: 55 hrs semanales. No-agrícolas: 40 hrs.</td><td>Sin ley estatal.</td><td>Tiempo muerto destajo rastreado aparte. Tarifa descanso = promedio hora de destajo y tiempo muerto.</td></tr><tr><td><strong>Federal</strong></td><td>Solo 40 hrs semanales.</td><td>Sin ley federal.</td><td>Sin requisito federal de comida. Tarifa regular = pago directo ÷ horas pagadas.</td></tr></table><div class="tip"><strong>Fórmula premium HE:</strong> HE = Tarifa Regular × 0.5 × Hrs HE. TD = Tarifa Regular × 1.0 × Hrs TD.</div><h3>Códigos ED (DataTech)</h3><table class="tbl"><tr><th>Tipo</th><th>Código</th></tr><tr><td>Por Hora</td><td><code>HR</code></td></tr><tr><td>Horas Extra</td><td><code>OT</code></td></tr><tr><td>A Destajo</td><td><code>PW</code></td></tr><tr><td>Tiempo Doble</td><td><code>DT</code></td></tr></table>'},
+{s:'#module-employees .hero-label',es:'Centro de Personal'},
+{s:'#module-employees .hero h1',es:'Empleados'},
+{s:'#module-employees .hero p',es:'Gestionar perfiles, compensación y credenciales de empleados.'},
+{s:'#module-employees .card-title',es:'Perfiles de Empleados'},
+{s:'#module-employees .card-desc',es:'Agregar empleados, compensación y credenciales'},
+{s:'#module-employees .prose',es:'<p>Cada empleado tiene perfil con nombre, PT ID, ID Alternativo, fecha contratación, empleador, cuadrilla y compensación. Necesita perfil activo y credencial para escanear en campo.</p><div class="tip"><strong>Archivar perfil = terminación.</strong> La credencial no escaneará.</div><h3>Configuración de Compensación</h3><p>Perfil del empleado → pestaña <strong>Compensación</strong>. Establezca tarifa única que anule el trabajo predeterminado. Nivel más alto de jerarquía de tarifas.</p>'},
+{s:'#module-employers .hero-label',es:'Centro de Personal'},
+{s:'#module-employers .hero h1',es:'Empleadores'},
+{s:'#module-employers .hero p',es:'Gestionar entidades empleadoras (productores, contratistas, FLCs) para mapeo de nómina.'},
+{s:'#module-employers .card-title',es:'Gestionar Empleadores'},
+{s:'#module-employers .card-desc',es:'Entidades empleadoras y mapeo a códigos de nómina'},
+{s:'#module-employers .prose',es:'<p>Los empleadores son entidades legales — su operación, contratista (FLC) o subcontratista. Cada empleado se vincula a un empleador que se mapea a código de nómina.</p><div class="tip"><strong>Con múltiples contratistas</strong>, use nombres únicos y actualice nombres de cuadrilla con identificadores para prevenir conflictos.</div>'},
+{s:'#module-crews .hero-label',es:'Centro de Personal'},
+{s:'#module-crews .hero h1',es:'Cuadrillas'},
+{s:'#module-crews .hero p',es:'Organizar empleados en cuadrillas, asignar líderes y configurar avisos de descanso/almuerzo.'},
+{s:'#module-crews .card-title',es:'Gestionar Cuadrillas'},
+{s:'#module-crews .card-desc',es:'Crear cuadrillas, agregar miembros y configurar avisos'},
+{s:'#module-crews .prose',es:'<p>Cada cuadrilla agrupa empleados bajo un líder. Son el filtro principal para auditoría y programación. Avisos de descanso se configuran por cuadrilla.</p><h3>Actualizar Avisos</h3><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text"><strong>Cuadrillas</strong> → seleccione → <strong>Editar</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">"Aviso de Descanso y Almuerzo" — active/desactive y establezca tiempo</div></div><div class="step"><div class="step-num">3</div><div class="step-text"><strong>"agregar descanso/almuerzo"</strong> para más avisos</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Guardar</div></div></div>'},
+{s:'#module-devices .hero-label',es:'Centro de Personal'},
+{s:'#module-devices .hero h1',es:'Dispositivos'},
+{s:'#module-devices .hero p',es:'Monitorear dispositivos, verificar sincronización y gestionar asignaciones.'},
+{s:'#module-devices .card-title',es:'Gestión de Dispositivos'},
+{s:'#module-devices .card-desc',es:'Sincronización, asignaciones y solución de problemas'},
+{s:'#module-devices .prose',es:'<p>Muestra todos los dispositivos — última sincronización, cuadrilla y estado. Los datos aparecen en Office al sincronizar.</p><div class="tip"><strong>Si no aparecen tarjetas</strong>, verifique que el dispositivo de esa cuadrilla se sincronizó. Requiere Wi-Fi o datos.</div>'},
+{s:'#module-crops .hero-label',es:'Centro de Administración'},
+{s:'#module-crops .hero h1',es:'Cultivos y Variedades'},
+{s:'#module-crops .hero p',es:'Configurar tipos de cultivo y variedades de sus operaciones.'},
+{s:'#module-crops .card-title',es:'Gestionar Cultivos y Variedades'},
+{s:'#module-crops .card-desc',es:'Agregar y organizar tipos de cultivo para reportes y programador'},
+{s:'#module-crops .prose',es:'<p>Cultivos y variedades se asignan a Paquetes de Trabajo. Al acreditar producción, el cultivo se llena en el registro y es visible en reportes. Mantenga nombres consistentes para reportes limpios.</p>'},
+{s:'#module-workbundles .hero-label',es:'Centro de Administración'},
+{s:'#module-workbundles .hero h1',es:'Paquetes de Trabajo'},
+{s:'#module-workbundles .hero p',es:'Los Paquetes agrupan Trabajos relacionados. Se seleccionan primero al programar o editar.'},
+{s:'#module-workbundles .card-title',es:'Gestionar Paquetes de Trabajo'},
+{s:'#module-workbundles .card-desc',es:'Cómo organizan trabajos y por qué importa la jerarquía'},
+{s:'#module-workbundles .prose',es:'<p>Un Paquete es contenedor para trabajos. Ej: "Cosecha" contiene: Cosecha a Destajo, Cosecha por Hora, Acarreo. Al editar tarjeta, seleccione Paquete primero, luego Trabajo.</p><h3>Campos Requeridos</h3><table class="tbl"><tr><th>Campo</th><th>Descripción</th></tr><tr><td><strong>Categoría</strong></td><td>Agrupación organizacional</td></tr><tr><td><strong>Nombre</strong></td><td>Nombre único del paquete</td></tr><tr><td><strong>Trabajos</strong></td><td>Todos los trabajos incluyendo Descanso y Almuerzo</td></tr><tr><td><strong>Horario Mensual</strong></td><td>Disponibilidad en programador</td></tr><tr><td><strong>Registro</strong></td><td>Configuración de registro de entrada</td></tr></table><div class="tip"><strong>Los trabajos dependen del Paquete.</strong> Si falta un trabajo, el Paquete es incorrecto o no se ha agregado.</div>'},
+{s:'#module-jobs .hero-label',es:'Centro de Administración'},
+{s:'#module-jobs .hero h1',es:'Trabajos'},
+{s:'#module-jobs .hero p',es:'Los Trabajos definen actividades — Cosecha a Destajo, Poda por Hora, Descanso, Almuerzo, etc.'},
+{s:'#module-jobs .card-title',es:'Gestionar Trabajos'},
+{s:'#module-jobs .card-desc',es:'Estilos de pago, tarifas predeterminadas, productivo vs. no productivo'},
+{s:'#module-jobs .prose',es:'<p>Cada trabajo tiene estilo de pago (Por Hora, Destajo, Hora o Pieza, Hora Más Pieza) y tarifa predeterminada. No productivos (Descanso, Almuerzo) aparecen amarillos en Línea de Tiempo. Deben estar en un Paquete para aparecer en dispositivos.</p><h3>Trabajos Premium</h3><p>Para trabajo peligroso o nocturno, agregue <strong>tarifa premium</strong> — monto adicional por hora. Solo para trabajos por hora.</p><p>Configurar: edite trabajo → Por Hora → marque <strong>Trabajo Premium</strong> → ingrese tarifa. Ej: $15/hr + $2 premium = $17/hr. Luego agregue al Paquete y actualice Programador.</p>'},
+{s:'#module-sites .hero-label',es:'Centro de Administración'},
+{s:'#module-sites .hero h1',es:'Sitios'},
+{s:'#module-sites .hero p',es:'Ranchos, fincas o ubicaciones donde se trabaja. Cada sitio tiene bloques (ubicaciones).'},
+{s:'#module-sites .card-title',es:'Gestionar Sitios y Ubicaciones'},
+{s:'#module-sites .card-desc',es:'Ranchos, fincas y bloques — jerarquía de ubicaciones'},
+{s:'#module-sites .prose',es:'<p>Sitios son nivel superior (rancho/finca). Cada sitio tiene ubicaciones (bloques/filas). Al corregir ubicación, seleccione Sitio primero, luego Ubicación.</p>'},
+{s:'#module-packstyles .hero-label',es:'Centro de Administración'},
+{s:'#module-packstyles .hero h1',es:'Estilos de Empaque'},
+{s:'#module-packstyles .hero p',es:'Configurar unidades de producción — botes, bandejas, cajas, árboles.'},
+{s:'#module-packstyles .card-title',es:'Gestionar Estilos de Empaque'},
+{s:'#module-packstyles .card-desc',es:'Unidades usadas en registros de producción'},
+{s:'#module-packstyles .prose',es:'<p>Definen la unidad acreditada (botes, cajas de 25 lb, bandejas, árboles). Aparecen como columna "Unidad" en producción y calculan ganancias por pieza.</p>'},
+{s:'#module-users .hero-label',es:'Centro de Administración'},
+{s:'#module-users .hero h1',es:'Usuarios'},
+{s:'#module-users .hero p',es:'Gestionar quién tiene acceso a PickTrace Office y qué pueden hacer.'},
+{s:'#module-users .card-title',es:'Gestionar Usuarios de Oficina'},
+{s:'#module-users .card-desc',es:'Agregar usuarios y asignar roles y permisos'},
+{s:'#module-users .prose',es:'<p>Usuarios de Oficina inician sesión en PickTrace Office (admins, gerentes, supervisores). Cada uno tiene un Rol que determina acceso. Usuarios son separados de Empleados — empleado trabaja en campo, usuario en oficina.</p>'},
+{s:'#module-roles .hero-label',es:'Centro de Administración'},
+{s:'#module-roles .hero h1',es:'Roles'},
+{s:'#module-roles .hero p',es:'Definir permisos que controlan lo que cada tipo de usuario puede ver y hacer.'},
+{s:'#module-roles .card-title',es:'Gestionar Roles y Permisos'},
+{s:'#module-roles .card-desc',es:'Controlar lo que usuarios pueden ver, editar y exportar'},
+{s:'#module-roles .prose',es:'<p>Roles controlan acceso. Comunes: Admin (acceso completo), Nómina (tarjetas + exportación), Visor (solo lectura). Asigne roles para que cada persona acceda solo lo necesario.</p>'},
+{s:'#module-pulse-live .hero-label',es:'Pulse'},
+{s:'#module-pulse-live .hero h1',es:'En Vivo'},
+{s:'#module-pulse-live .hero p',es:'Vista en tiempo real de cuadrillas activas — quién está registrado, dónde y en qué trabajo.'},
+{s:'#module-pulse-live .card-title',es:'Panel en Vivo'},
+{s:'#module-pulse-live .card-desc',es:'Actividad de cuadrillas en tiempo real y monitoreo de campo'},
+{s:'#module-pulse-live .prose',es:'<p>Muestra cada cuadrilla activa: primer registro, último registro, trabajo, personal, horas, costos, producción, rendimiento y cumplimiento. Clic en cuadrilla para ver Línea de Tiempo en tiempo real.</p>'},
+{s:'#module-pulse-costing .hero-label',es:'Pulse'},
+{s:'#module-pulse-costing .hero h1',es:'Costos'},
+{s:'#module-pulse-costing .hero p',es:'Rastrear costos laborales en tiempo real por cuadrillas, sitios y paquetes.'},
+{s:'#module-pulse-costing .card-title',es:'Análisis de Costos Laborales'},
+{s:'#module-pulse-costing .card-desc',es:'Costo total, costo por unidad y por cuadrilla o variedad'},
+{s:'#module-pulse-costing .prose',es:'<p>Muestra costo laboral total y desgloses por unidad. Vea por Total, Promedio por Planta, Acre o Unidad. Compare eficiencia entre ranchos, variedades y cuadrillas.</p>'},
+{s:'#module-pulse-production .hero-label',es:'Pulse'},
+{s:'#module-pulse-production .hero h1',es:'Producción'},
+{s:'#module-pulse-production .hero p',es:'Analizar volúmenes — unidades cosechadas, unidades por hora y tendencias.'},
+{s:'#module-pulse-production .card-title',es:'Análisis de Producción'},
+{s:'#module-pulse-production .card-desc',es:'Tendencias de volumen, unidades/hora y comparaciones'},
+{s:'#module-pulse-production .prose',es:'<p>Muestra unidades producidas por cultivo, variedad, sitio y cuadrilla. Rastree tendencias diarias y compare rendimiento entre ranchos o bloques.</p>'},
+{s:'#module-pulse-performance .hero-label',es:'Pulse'},
+{s:'#module-pulse-performance .hero h1',es:'Rendimiento'},
+{s:'#module-pulse-performance .hero p',es:'Medir eficiencia de trabajadores y cuadrillas — unidades/hora, tendencias y mejores rendimientos.'},
+{s:'#module-pulse-performance .card-title',es:'Análisis de Rendimiento'},
+{s:'#module-pulse-performance .card-desc',es:'Métricas de eficiencia y comparaciones de productividad'},
+{s:'#module-pulse-performance .prose',es:'<p>Unidades/hora y métricas de eficiencia por empleado, cuadrilla y sitio. Identifique mejores trabajadores, oportunidades de capacitación y compare rendimiento.</p>'},
+{s:'#module-pulse-compliance .hero-label',es:'Pulse'},
+{s:'#module-pulse-compliance .hero h1',es:'Cumplimiento'},
+{s:'#module-pulse-compliance .hero p',es:'Marcar automáticamente violaciones, descansos perdidos y problemas de HE antes de que sean problemas de nómina.'},
+{s:'#module-pulse-compliance .card-title',es:'Panel de Cumplimiento'},
+{s:'#module-pulse-compliance .card-desc',es:'Descansos perdidos, horas extra, penalidades, ajustes salariales'},
+{s:'#module-pulse-compliance .prose',es:'<p>Muestra violaciones automáticamente — comidas perdidas que activan primas, empleados cerca de umbrales de HE, y ajustes de salario mínimo. Revise diariamente con su auditoría.</p><div class="tip"><strong>Penalidad Prima Comida:</strong> Cuando se pierde descanso, PickTrace agrega 1.0 hora a la Tarifa Regular (total semanal ÷ horas totales). Use Reportes → agregue "Penalidad Aplicada" y "Horas Penalidad" para auditar.</div>'},
+{s:'.ftr-links a',i:0,es:'Centro de Ayuda de PickTrace'},
+{s:'.ftr-links a',i:1,es:'Artículo de Tarjetas de Tiempo'},
+{s:'.ftr-links a',i:2,es:'Guía de Auditoría'},
+{s:'.ftr-date',es:'Guía de PickTrace Office Suite · Última actualización: Abril 2026'}
+];
+var TP=[
+{s:'#qs-input',es:'Buscar secciones…'},
+{s:'#ds-input',es:'Buscar PickTrace Office…'}
+];
+function applyLang(lang){
+  currentLang=lang;
+  localStorage.setItem('pt-lang',lang);
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-opt').forEach(function(el){el.classList.toggle('active',el.dataset.lang===lang);});
+  moduleNames=lang==='es'?moduleNamesEs:moduleNamesEn;
+  var titleEl=document.getElementById('tb-page-title');
+  var activePanel=document.querySelector('.module-panel.active');
+  if(titleEl&&activePanel){var modId=activePanel.id.replace('module-','');titleEl.textContent=moduleNames[modId]||modId;}
+  T.forEach(function(t){
+    var els=document.querySelectorAll(t.s);
+    var el=t.i!==undefined?els[t.i]:els[0];
+    if(!el)return;
+    if(!el._origHTML)el._origHTML=el.innerHTML;
+    el.innerHTML=lang==='es'?t.es:el._origHTML;
+  });
+  TP.forEach(function(t){
+    var el=document.querySelector(t.s);
+    if(!el)return;
+    if(!el._origPh)el._origPh=el.placeholder;
+    el.placeholder=lang==='es'?t.es:el._origPh;
+  });
+  document.querySelectorAll('.card-controls button').forEach(function(btn){
+    if(!btn._origHTML)btn._origHTML=btn.innerHTML;
+    if(lang==='es'){btn.innerHTML=btn._origHTML.replace('Expand All','Expandir Todo').replace('Collapse All','Contraer Todo');}
+    else{btn.innerHTML=btn._origHTML;}
+  });
+  document.querySelectorAll('.ft-inc').forEach(function(el){
+    if(!el._orig)el._orig=el.textContent;
+    el.textContent=lang==='es'?'Incluir':el._orig;
+  });
+  document.querySelectorAll('.ft-exc').forEach(function(el){
+    if(!el._orig)el._orig=el.textContent;
+    el.textContent=lang==='es'?'Excluir':el._orig;
+  });
+  document.querySelectorAll('.filter-tag').forEach(function(el){
+    if(!el._orig)el._orig=el.textContent;
+    if(lang==='es'){el.textContent=el._orig.replace('text field','campo de texto').replace('Equal to','Igual a').replace('Less than','Menor que').replace('Greater than','Mayor que').replace(/\bWork\b/,'Trabajo').replace(/\bShift\b/,'Turno');}
+    else{el.textContent=el._orig;}
+  });
+  document.querySelectorAll('.video-placeholder p').forEach(function(el){
+    if(!el._orig)el._orig=el.textContent;
+    if(lang==='es'){var h=el._orig;h=h.replace('Production Records Overview','Resumen de Registros de Producción').replace('Adding a Missing Production Record','Agregar Registro Faltante').replace('Updating Piece Rates','Actualizar Tarifas por Pieza').replace('Fix: No Match Error','Corrección: Sin Coincidencia').replace('Fix: Wrong Location Error','Corrección: Ubicación Incorrecta').replace('Crew Scheduler Overview','Resumen del Programador').replace('Creating a Crew Schedule','Crear Horario de Cuadrilla').replace('Setting Piece Rates in the Crew Scheduler','Tarifas por Pieza en el Programador').replace('Updating Break & Lunch Prompts','Actualizar Avisos de Descanso').replace('Introduction to Reports — Choosing a Format','Intro a Reportes — Elegir Formato').replace('Selecting and Customizing Report Columns','Seleccionar Columnas de Reporte').replace('Filtering a Report','Filtrar Reporte').replace('Saving, Scheduling & Exporting Reports','Guardar, Programar y Exportar').replace('Payroll Overview','Resumen de Nómina').replace('Mapping Payroll Codes','Mapeo de Códigos').replace('Exporting and Importing Payroll','Exportar e Importar Nómina').replace('Understanding Pay Calculations','Cálculos de Pago').replace('Employee Profiles Overview','Perfiles de Empleados').replace('Employers Overview','Resumen de Empleadores').replace('Crews Overview','Resumen de Cuadrillas').replace('Devices Overview','Resumen de Dispositivos').replace('Crops & Varieties Setup','Cultivos y Variedades').replace('Work Bundles Overview','Paquetes de Trabajo').replace('Jobs Setup','Configuración de Trabajos').replace('Sites & Locations Setup','Sitios y Ubicaciones').replace('Pack Styles Setup','Estilos de Empaque').replace('Adding Users & Roles','Usuarios y Roles').replace('Roles & Permissions','Roles y Permisos').replace('Pulse Live Overview','Pulse En Vivo').replace('Pulse Costing Overview','Pulse Costos').replace('Pulse Production Overview','Pulse Producción').replace('Pulse Performance Overview','Pulse Rendimiento').replace('Pulse Compliance Overview','Pulse Cumplimiento');el.textContent=h;}
+    else{el.textContent=el._orig;}
+  });
+  SEARCH_INDEX.forEach(function(item,idx){
+    if(!item._origTitle)item._origTitle=item.title;
+    if(!item._origPath)item._origPath=item.path;
+    if(lang==='es'&&searchIndexEs[idx]){item.title=searchIndexEs[idx].title;item.path=searchIndexEs[idx].path;}
+    else{item.title=item._origTitle;item.path=item._origPath;}
+  });
+}
+window.toggleLanguage=function(){applyLang(currentLang==='en'?'es':'en');};
+var _origShowModule=window.showModule;
+window.showModule=function(id,el,noScroll){_origShowModule(id,el,noScroll);var t=document.getElementById('tb-page-title');if(t)t.textContent=moduleNames[id]||id;};
+if(currentLang==='es'){setTimeout(function(){applyLang('es');},50);}
+})();
 
 </script>
 </body>
