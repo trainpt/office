@@ -180,7 +180,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
 .card-icon svg{width:16px;height:16px;color:#fff}
 .card-title{font-size:15px;font-weight:700;color:#1a1a2e;flex:1}
 .card-desc{font-size:12px;color:var(--text-light);margin-top:2px}
-.card-chevron{transition:transform .2s;color:var(--text-light)}
+.card-chevron{transition:transform .2s;color:var(--text-light);margin-left:auto;flex-shrink:0}
 .card-hdr.open .card-chevron{transform:rotate(180deg)}
 .card-body{display:none;padding:24px 22px 22px;overflow:visible}
 .card-hdr.open+.card-body{display:block}
@@ -434,13 +434,47 @@ body.on-dashboard #main-wrapper{overflow:hidden}
   .tbl th,.tbl td{padding:8px 10px;word-wrap:break-word;overflow-wrap:break-word;white-space:normal;vertical-align:top}
 
   /* Search-intro demo: stack the decorative trigger under the copy */
-  .search-intro{flex-direction:column;align-items:flex-start;gap:14px;padding:14px 16px}
+  .search-intro{flex-direction:column !important;align-items:stretch !important;gap:10px !important;padding:12px 14px !important}
+  .search-intro p{font-size:12.5px}
+  .search-intro .sb-trigger-wrap{width:100%;display:block;margin:0}
+  .search-intro .sb-trigger{
+    width:100% !important;height:auto !important;max-width:100% !important;
+    display:block;border-radius:14px;
+  }
+  .search-intro .sb-pulse{
+    top:50% !important;right:14% !important;
+    width:26px !important;height:26px !important;
+    transform:translate(50%,-50%) !important;
+  }
   .search-intro .sb-popup{position:static;transform:none;width:100%;margin-top:6px}
 
-  /* Sub-tabs: horizontally scroll instead of overflowing the card */
-  .stabs{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;margin:0 -14px 14px;padding:0 14px;scrollbar-width:none}
-  .stabs::-webkit-scrollbar{display:none}
-  .stab{padding:9px 12px;font-size:11px;flex-shrink:0}
+  /* Sub-tabs: 2×2 grid so full labels fit without any overlap */
+  .stabs{
+    display:grid !important;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    margin:0 0 14px;
+    border-bottom:0 !important;
+    padding:0;
+  }
+  .stab{
+    padding:8px 6px !important;
+    font-size:11px !important;
+    line-height:1.25;
+    text-align:center;
+    white-space:normal;
+    margin:0 !important;
+    border:1px solid var(--border) !important;
+    border-radius:6px !important;
+    background:#fff;
+    min-width:0;
+    width:auto;
+  }
+  .stab.active{
+    background:rgba(26,111,186,.08) !important;
+    border-color:var(--blue) !important;
+    color:var(--blue) !important;
+  }
 
   /* Filter grid: one filter per row (name | value) on narrow screens */
   .card-body .filter-grid{grid-template-columns:auto 1fr !important;gap:2px 10px !important;margin:8px 0 12px !important}
