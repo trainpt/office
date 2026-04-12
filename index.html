@@ -502,6 +502,22 @@ body.on-dashboard #main-wrapper{overflow:hidden}
   /* Steps + callouts: tighter padding */
   .tip,.warn,.danger{padding:11px 14px;font-size:12.5px}
   .step-text{font-size:12.5px}
+
+  /* Video: bigger embeds on mobile */
+  .video-embed{margin-left:-14px;margin-right:-14px;border-radius:0}
+
+  /* Video: compact controls on mobile */
+  .vid-controls{opacity:1;padding:16px 0 0}
+  .vid-btn{padding:4px 6px}
+  .vid-btn svg{width:16px;height:16px}
+  .vid-btns{padding:1px 6px 4px;gap:2px}
+  .vid-time-disp{font-size:10px}
+  .vid-bar{height:6px}
+  .vid-scrub-dot{transform:scale(1);width:14px;height:14px}
+  .vid-progress-wrap{padding:8px 10px 2px;touch-action:none}
+  .vid-preview video{width:100px;height:56px}
+  .vid-preview-time{font-size:9px;padding:2px 0 3px}
+  .vid-preview{bottom:22px}
 }
 /* ── Sub-tabs (Advanced Search filter categories) ── */
 .search-intro{display:flex;align-items:center;gap:60px;background:linear-gradient(135deg,#f0f6fc,#e8f0fe);border-radius:12px;padding:16px 20px;margin-bottom:18px;overflow:visible;position:relative}
@@ -1613,9 +1629,10 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
       scheduleSeek(p);
     }
 
-    wrap.addEventListener('mousedown',function(e){
+    // Shared scrub start/move/end used by both mouse and touch
+    function scrubStart(clientX,e){
       scrubbing=true;scrubPrecise=false;
-      scrubAnchorP=pFromBar(e.clientX);scrubAnchorX=e.clientX;
+      scrubAnchorP=pFromBar(clientX);scrubAnchorX=clientX;
       applyP(scrubAnchorP);
       e.preventDefault();
       scrubHoldTimer=setTimeout(function(){
@@ -1624,54 +1641,85 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
         scrubAnchorX=null;
         wrap.classList.add('scrub-precise');
       },450);
-    });
-    document.addEventListener('mousemove',function(e){
+    }
+    function scrubMove(clientX){
       if(!scrubbing)return;
       var p;
       if(scrubPrecise){
-        if(scrubAnchorX===null)scrubAnchorX=e.clientX;
+        if(scrubAnchorX===null)scrubAnchorX=clientX;
         var br=bar.getBoundingClientRect();
-        p=Math.max(0,Math.min(1,scrubAnchorP+(e.clientX-scrubAnchorX)/br.width*0.12));
+        p=Math.max(0,Math.min(1,scrubAnchorP+(clientX-scrubAnchorX)/br.width*0.12));
       } else {
         if(scrubHoldTimer){clearTimeout(scrubHoldTimer);scrubHoldTimer=null;}
-        p=pFromBar(e.clientX);
-        scrubAnchorP=p;scrubAnchorX=e.clientX;
+        p=pFromBar(clientX);
+        scrubAnchorP=p;scrubAnchorX=clientX;
       }
       applyP(p);
-    });
-    document.addEventListener('mouseup',function(){
+      showPreview(clientX);
+    }
+    function scrubEnd(){
       scrubbing=false;scrubPrecise=false;
       if(scrubHoldTimer){clearTimeout(scrubHoldTimer);scrubHoldTimer=null;}
       wrap.classList.remove('scrub-precise');
-    });
+      preview.classList.remove('show');
+    }
 
-    // Thumbnail preview — centered on mouse, preview seek debounced
+    // Mouse events
+    wrap.addEventListener('mousedown',function(e){scrubStart(e.clientX,e);});
+    document.addEventListener('mousemove',function(e){scrubMove(e.clientX);});
+    document.addEventListener('mouseup',scrubEnd);
+
+    // Touch events
+    wrap.addEventListener('touchstart',function(e){
+      var t=e.touches[0];
+      scrubStart(t.clientX,e);
+      showPreview(t.clientX);
+    },{passive:false});
+    document.addEventListener('touchmove',function(e){
+      if(!scrubbing)return;
+      var t=e.touches[0];
+      scrubMove(t.clientX);
+      e.preventDefault();
+    },{passive:false});
+    document.addEventListener('touchend',scrubEnd);
+    document.addEventListener('touchcancel',scrubEnd);
+
+    // Thumbnail preview — shared by mouse hover and touch scrub
     var PW=178,_prevDebounce=0;
-    wrap.addEventListener('mousemove',function(e){
+    function showPreview(clientX){
       var br=bar.getBoundingClientRect();
       var wr=wrap.getBoundingClientRect();
-      var p=Math.max(0,Math.min(1,(e.clientX-br.left)/br.width));
+      var p=Math.max(0,Math.min(1,(clientX-br.left)/br.width));
       var t=video.duration?p*video.duration:0;
       prevTime.textContent=fmt(t);
-      var left=Math.max(0,Math.min(wr.width-PW,(e.clientX-wr.left)-PW/2));
+      var pw=preview.offsetWidth||PW;
+      var left=Math.max(0,Math.min(wr.width-pw,(clientX-wr.left)-pw/2));
       preview.style.left=left+'px';
       preview.classList.add('show');
       var vsrc=video.src||video.dataset.src;
       if(vsrc&&!prevVid.src)prevVid.src=vsrc;
-      // Debounce preview seek — only seek every 80ms to avoid thrashing
       var now=Date.now();
       if(prevVid.readyState>=1&&now-_prevDebounce>80){
         _prevDebounce=now;
         prevVid.currentTime=t;
       }
-    });
+    }
+    wrap.addEventListener('mousemove',function(e){showPreview(e.clientX);});
     wrap.addEventListener('mouseleave',function(){preview.classList.remove('show');});
 
-    // Fullscreen
+    // Fullscreen — use Fullscreen API where supported, fall back to native video fullscreen on iOS
     fsBtn.addEventListener('click',function(e){
       e.stopPropagation();
-      if(!document.fullscreenElement){el.requestFullscreen().catch(function(){});}
-      else{document.exitFullscreen();}
+      if(document.fullscreenElement){
+        document.exitFullscreen();
+      } else if(el.requestFullscreen){
+        el.requestFullscreen().catch(function(){
+          // Fallback: native video fullscreen (iOS)
+          if(video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+        });
+      } else if(video.webkitEnterFullscreen){
+        video.webkitEnterFullscreen();
+      }
     });
     document.addEventListener('fullscreenchange',function(){
       fsBtn.innerHTML=document.fullscreenElement===el?FS_OUT:FS_IN;
