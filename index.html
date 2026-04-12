@@ -132,7 +132,7 @@ body.on-dashboard .tb-search{display:none}
 .dash-sub{font-size:15px;color:rgba(255,255,255,.6);margin:0 0 32px}
 .dash-search-wrap{position:relative;max-width:520px;margin:0 auto 20px}
 .dash-search-ico{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#9aafcc;pointer-events:none;z-index:1}
-#ds-input{width:100%;padding:15px 18px 15px 48px;font-size:15px;border:none;border-radius:12px;background:#fff;color:#1a1a2e;outline:none;box-shadow:0 4px 28px rgba(0,0,0,.3),0 0 0 0px rgba(26,111,186,0);transition:box-shadow .2s;font-family:inherit;box-sizing:border-box}
+#ds-input{width:100%;padding:15px 18px 15px 48px;font-size:16px;border:none;border-radius:12px;background:#fff;color:#1a1a2e;outline:none;box-shadow:0 4px 28px rgba(0,0,0,.3),0 0 0 0px rgba(26,111,186,0);transition:box-shadow .2s;font-family:inherit;box-sizing:border-box}
 #ds-input:focus{box-shadow:0 4px 28px rgba(0,0,0,.3),0 0 0 3px rgba(26,111,186,.4)}
 #ds-input::placeholder{color:#aab}
 #ds-results{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.25);max-height:400px;overflow-y:auto;z-index:500;display:none;text-align:left;border:1px solid rgba(0,0,0,.06)}
@@ -365,7 +365,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
     margin:0 !important;
     padding:13px 18px !important;
     border:0 !important;border-top:1px solid var(--border) !important;border-bottom:1px solid var(--border) !important;
-    border-radius:0 !important;background:#fff !important;font-size:14px !important;
+    border-radius:0 !important;background:#fff !important;font-size:16px !important;
     opacity:0;pointer-events:none;transform:translateY(-6px);
     transition:opacity .18s ease,transform .18s ease;
     z-index:205;box-shadow:0 6px 14px rgba(0,0,0,.06);
@@ -389,7 +389,8 @@ body.on-dashboard #main-wrapper{overflow:hidden}
 }
 @media(max-width:767px){
   body.on-dashboard #main-wrapper{overflow-y:auto}
-  .dash-hero{padding:48px 16px 40px;margin:12px 12px 0;border-radius:14px}
+  .dash-hero{padding:48px 16px 40px;margin:12px 12px 0;border-radius:14px;overflow:visible}
+  .dash-hero::before{border-radius:14px}
   .dash-headline{font-size:24px}
   .dash-sub{font-size:13px;margin-bottom:24px}
   .dash-modules{grid-template-columns:1fr;gap:12px;padding:20px 12px 12px}
@@ -502,6 +503,9 @@ body.on-dashboard #main-wrapper{overflow:hidden}
   /* Steps + callouts: tighter padding */
   .tip,.warn,.danger{padding:11px 14px;font-size:12.5px}
   .step-text{font-size:12.5px}
+
+  /* Prevent iOS zoom on input focus */
+  input,select,textarea{font-size:16px !important}
 
   /* Video: bigger embeds on mobile */
   .video-embed{margin-left:-14px;margin-right:-14px;border-radius:0}
@@ -1442,6 +1446,23 @@ document.getElementById('sb-overlay').addEventListener('click',function(){toggle
     if(!e.target.closest('.tb-search')&&!e.target.closest('#qs-input')&&!e.target.closest('#qs-results'))
       inp.classList.remove('qs-open');
   });
+
+  // Keep fixed search bar visible when iOS keyboard pushes viewport
+  if(window.visualViewport){
+    var results=document.getElementById('qs-results');
+    window.visualViewport.addEventListener('resize',function(){
+      if(window.innerWidth>767) return;
+      var offset=window.visualViewport.offsetTop;
+      inp.style.top=offset+'px';
+      if(results) results.style.top=(offset+48)+'px';
+    });
+    window.visualViewport.addEventListener('scroll',function(){
+      if(window.innerWidth>767) return;
+      var offset=window.visualViewport.offsetTop;
+      inp.style.top=offset+'px';
+      if(results) results.style.top=(offset+48)+'px';
+    });
+  }
 })();
 
 function showModule(id,el,skipScroll){
