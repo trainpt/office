@@ -183,6 +183,8 @@ body.on-dashboard #main-wrapper{overflow:hidden}
 .card-chevron{transition:transform .2s;color:var(--text-light);margin-left:auto;flex-shrink:0}
 .card-hdr.open .card-chevron{transform:rotate(180deg)}
 .card-body{display:none;padding:24px 22px 22px;overflow:visible}
+.card-body>*:first-child{margin-top:0}
+.card-body>*:last-child{margin-bottom:0}
 .card-hdr.open+.card-body{display:block}
 
 /* Video placeholder */
@@ -191,7 +193,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
 .video-placeholder p{color:rgba(255,255,255,.35);font-size:12px}
 .video-placeholder code{background:rgba(255,255,255,.08);padding:2px 8px;border-radius:4px;font-size:11px;color:rgba(255,255,255,.5)}
 .video-embed{position:relative;border-radius:8px;overflow:hidden;margin-bottom:20px;background:#0b1a2e;cursor:pointer;aspect-ratio:16/9}
-.video-embed video{width:100%;height:100%;display:block;pointer-events:none;object-fit:contain}
+.video-embed video{width:100%;height:100%;display:block;pointer-events:none}
 .video-embed{-webkit-user-select:none;user-select:none}
 /* Loader */
 .vid-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:3;pointer-events:none;transition:opacity .3s;background:#0b1a2e}
@@ -267,6 +269,8 @@ body.on-dashboard #main-wrapper{overflow:hidden}
 .prose ul{margin:0 0 12px 18px}
 .prose li{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:4px}
 .prose strong{color:#1a1a2e}
+.prose>*:last-child{margin-bottom:0}
+.prose>*:first-child{margin-top:0}
 
 /* Error accordion */
 .err-item{border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}
@@ -602,7 +606,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-errors',this)">Errors & Fixes</div>
       <div class="sb-subitem" onclick="showModuleSub('timecards','tc-archive',this)">Archiving & Reviewing</div>
     </div>
-    <div class="sb-item sb-disabled" data-module="production" onclick="toggleSub('sub-pr',this)">
+    <div class="sb-item" data-module="production" onclick="toggleSub('sub-pr',this)">
       <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6h-3.14c-.47 0-.84.33-.97.78C14.53 11.04 13.35 12 12 12s-2.53-.96-2.89-2.22c-.13-.45-.5-.78-.97-.78H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v3zm-3.13 7H20c.55 0 1 .45 1 1v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-2c0-.55.45-1 1-1h4.13c.47 0 .85.34.98.8.35 1.27 1.51 2.2 2.89 2.2s2.54-.93 2.89-2.2c.13-.46.51-.8.98-.8z"/></svg>
       <span>Production Records</span>
     </div>
@@ -610,6 +614,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
       <div class="sb-subitem" onclick="showModuleSub('production','pr-overview',this)">Overview</div>
       <div class="sb-subitem" onclick="showModuleSub('production','pr-add',this)">Adding Records</div>
       <div class="sb-subitem" onclick="showModuleSub('production','pr-edit',this)">Editing Records</div>
+      <div class="sb-subitem" onclick="showModuleSub('production','pr-archive',this)">Archiving</div>
       <div class="sb-subitem" onclick="showModuleSub('production','pr-errors',this)">Errors & Fixes</div>
     </div>
     <div class="sb-item sb-disabled" data-module="scheduler" onclick="toggleSub('sub-cs',this)">
@@ -756,7 +761,7 @@ body.on-dashboard #main-wrapper{overflow:hidden}
       <div class="dash-mod-title">Timecards</div>
       <div class="dash-mod-desc">Audit, edit, and approve every time record from the field</div>
     </div>
-    <div class="dash-mod dash-disabled" onclick="var e=document.querySelector('.sb-item[data-module=production]');toggleSub('sub-pr',e)">
+    <div class="dash-mod" onclick="var e=document.querySelector('.sb-item[data-module=production]');toggleSub('sub-pr',e)">
       <div class="dash-mod-icon" style="background:#16a085"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 6h-3.14c-.47 0-.84.33-.97.78C14.53 11.04 13.35 12 12 12s-2.53-.96-2.89-2.22c-.13-.45-.5-.78-.97-.78H5V6c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v3zm-3.13 7H20c.55 0 1 .45 1 1v2c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-2c0-.55.45-1 1-1h4.13c.47 0 .85.34.98.8.35 1.27 1.51 2.2 2.89 2.2s2.54-.93 2.89-2.2c.13-.46.51-.8.98-.8z"/></svg></div>
       <div class="dash-mod-title">Production Records</div>
       <div class="dash-mod-desc">View and correct piece-pay records — bins, trays, trees</div>
@@ -1117,16 +1122,56 @@ body.on-dashboard #main-wrapper{overflow:hidden}
   <div class="hero" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)"><div class="hero-label">Module</div><h1>Production Records</h1><p>View and correct piece-pay records — bins, trays, trees, and any other unit your crews produce in the field.</p></div>
   <div class="card-controls"><button onclick="expandAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>Expand All</button><button onclick="collapseAll(this)"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg>Collapse All</button></div>
   <div id="pr-overview" class="card"><div class="card-hdr open" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div><div class="card-title">What Are Production Records?</div><div class="card-desc">Where they come from and how to read the Production Records page</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Production Records Overview</p><code>/videos/production/overview.mp4</code></div><div class="prose"><p>Production Records are created on the handheld device when a crew leader or device user credits an employee with a unit of production (e.g., one bin, one tray, one tree). Each record is linked to an employee, a site, a location, a crop, a job, a unit count, and a piece rate.</p><h3>Key Columns</h3><table class="tbl"><tr><th>Column</th><th>What it shows</th></tr><tr><td>PT ID</td><td>Employee's PickTrace ID</td></tr><tr><td>Unit Count</td><td>Number of units credited</td></tr><tr><td>Unit</td><td>Type of unit (bins, trees, trays, etc.)</td></tr><tr><td>Piece Rate</td><td>Dollar amount per unit</td></tr><tr><td>Site / Location</td><td>Ranch and block where the work happened</td></tr><tr><td>Crop</td><td>Crop variety associated with the work</td></tr></table><div class="tip"><strong>Check total piece count</strong> at the bottom-right of the table. Compare it to physical tickets to quickly spot discrepancies.</div></div></div>
+    <div class="card-body"><img src="screenshots/v2/prod-overview.png" alt="Production Records page" style="width:100%;border-radius:8px;margin-bottom:20px;border:1px solid rgba(0,0,0,.08)"/><div class="prose"><p>Production Records are created on the handheld device when a crew leader or device user credits an employee with a unit of production (e.g., one bin, one tray, one tree). Each record is linked to an employee, a site, a location, a crop, a job, a unit count, and a piece rate.</p><h3>Key Columns</h3><table class="tbl"><tr><th>Column</th><th>What it shows</th></tr><tr><td>PT ID</td><td>Employee's PickTrace ID</td></tr><tr><td>Unit Count</td><td>Number of units credited</td></tr><tr><td>Unit</td><td>Type of unit (bins, trees, trays, etc.)</td></tr><tr><td>Piece Rate</td><td>Dollar amount per unit</td></tr><tr><td>Site / Location</td><td>Ranch and block where the work happened</td></tr><tr><td>Crop</td><td>Crop variety associated with the work</td></tr></table><div class="tip"><strong>Check total piece count</strong> at the bottom-right of the table. Compare it to physical tickets to quickly spot discrepancies.</div>
+      <h3>Hiding & Showing Columns</h3>
+      <div class="video-embed"><video data-src="Videos/Prod. Column Visibility.mp4" muted loop playsinline></video></div>
+      <p>Click the <strong>gear icon</strong> (top-right) → select <strong>Column Visibility</strong>. Toggle columns on or off to show only the data you need. Changes apply immediately.</p>
+      <h3>Rearranging Columns</h3>
+      <div class="video-embed"><video data-src="Videos/Rearranging Columns.mp4" muted loop playsinline></video></div>
+      <p>Drag any column header left or right to reposition it. The new order is saved automatically.</p>
+</div></div>
   </div>
   <div id="pr-add" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="card-title">Adding a Production Record</div><div class="card-desc">Manually adding a missing piece record in Office</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Adding a Missing Production Record</p><code>/videos/production/add-record.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">On the Production Records page, click the <strong>[+]</strong> icon to the right of the search bar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Fill in the record details and click <strong>Add Employees</strong> to select one or multiple employees</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>Save</strong> in the top-right corner</div></div></div><div class="warn"><strong>Crew, Site, Location, and Work Bundle must match</strong> the employee's existing timecard information for the production record to link properly.</div><div class="tip">After adding a production record that matches the employee's timecard, the "Missing Piece Record" warning on the timecards page will clear automatically.</div></div></div>
+    <div class="card-body"><div class="video-embed"><video data-src="Videos/Single Prod. Creation.mp4" muted loop playsinline></video></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Click the <strong>[+]</strong> icon to the right of the search bar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Fill in the record details, then assign to <strong>individual employees</strong> or the <strong>entire crew</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Click <strong>Save</strong></div></div></div><div class="tip"><strong>Crew, Site, Location, and Work Bundle must match</strong> the employee's timecard for the record to link. Once linked, the "Missing Piece Record" warning clears automatically.</div><h3>Adding Multiple Employees</h3><div class="video-embed"><video data-src="Videos/Split Prod Creation.mp4" muted loop playsinline></video></div><div class="warn"><strong>Units are split evenly — not copied.</strong> 10 units assigned to 5 employees gives each employee 2 units. To credit different amounts, create separate records.</div></div></div>
   </div>
-  <div id="pr-edit" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><div class="card-title">Editing Piece Rates</div><div class="card-desc">Update incorrect piece rates on one or many records</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="card-body"><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Updating Piece Rates</p><code>/videos/production/edit-piece-rate.mp4</code></div><div class="prose"><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Select the production records to update</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Right-click → <strong>Edit Production Record</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Check <strong>"Set Piece Rate"</strong> → enter the correct rate</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Click <strong>Save</strong></div></div></div><div class="tip"><strong>Where are piece rates set?</strong> Piece rates are configured per block inside the Crew Scheduler under "Location and Piece Rates." Update them there to prevent the issue recurring.</div><div class="warn"><strong>Bulk edit constraints:</strong> Records must belong to workers in the <strong>same Crew</strong> to be bulk edited. Records must belong to the <strong>same Workflow</strong> (Work Bundle) to edit the piece rate.</div><h3>Duplicating Production Records</h3><p>Select a production record → right-click → <strong>Duplicate</strong>. Add the employee names to assign the duplicate to.</p><div class="warn"><strong>Duplication divides — it does not copy.</strong> Unlike timecard duplication, duplicating a production record splits the unit count among all assigned employees. For example, a record with 2 units duplicated to 2 employees results in each getting a record with 1 unit.</div></div></div>
+  <div id="pr-edit" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><div><div class="card-title">Editing Production Records</div><div class="card-desc">Edit attributes, site/location, timestamps, piece rates, and duplicate records</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="prose">
+      <h3>Edit a Single Record</h3>
+      <div class="video-embed"><video data-src="Videos/Single Prod. Edit.mp4" muted loop playsinline></video></div>
+      <p>Select a record → right-click → <strong>Edit</strong>. The flyout on the right lets you change any field: Crew, Timestamp, Site, Location, Ticket Number, Piece Count, or Piece Rate. Click <strong>Save</strong> when done.</p>
+
+      <h3>Edit Multiple Records</h3>
+      <div class="video-embed"><video data-src="Videos/Multiple Prod. Edit.mp4" muted loop playsinline></video></div>
+      <p>Select multiple records → click <strong>Edit</strong>. The flyout shows all selected employees — any changes you make apply to every selected record. From here you can edit Site/Location, Timestamps, Piece Rates, and more. Click <strong>Save</strong>.</p>
+      <div class="warn"><strong>Same Crew required</strong> for bulk edits. To edit piece rates in bulk, records must also share the <strong>same Workflow</strong> (Work Bundle).</div>
+      <div class="tip"><strong>Quick select:</strong> <strong>Shift</strong>+click to select a range. <strong>Ctrl</strong>+click (Windows) or <strong>Cmd</strong>+click (Mac) to pick individual records.</div>
+      <div class="tip"><strong>Piece rates are set in the Crew Scheduler</strong> under "Location and Piece Rates." Update them there to prevent the same issue next time.</div>
+
+      <h3>Editing a Shared Production Record</h3>
+      <div class="video-embed"><video data-src="Videos/Shared Prod. Record Edit.mp4" muted loop playsinline></video></div>
+      <p>When a production record was created for multiple employees, editing any one of those records will apply the changes to <strong>all employees</strong> on that shared record. The flyout displays all employee names linked to the record.</p>
+      <div class="warn"><strong>Changes affect everyone on the record.</strong> If you only need to update one employee, remove them from the shared record first, then create a separate record for that individual.</div>
+
+      <h3>Duplicating Production Records</h3>
+      <div class="video-embed"><video data-src="Videos/Duplicate Prod. .mp4" muted loop playsinline></video></div>
+      <p>Select a record → right-click → <strong>Duplicate</strong>. Add the employee(s) you want to assign the duplicate to, then click <strong>Save</strong>.</p>
+      <div class="warn"><strong>Remove the original employee's name</strong> if you are duplicating to a different person. Leaving them in will split the units with the original employee and double-credit them.</div>
+    </div></div>
   </div>
-  <div id="pr-errors" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#c0392b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg></div><div><div class="card-title">Production Record Errors</div><div class="card-desc">No Match, Record at Different Location, Missing Piece Record</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="card-body"><div class="prose"><h3>No Match Error</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: No Match Error</p><code>/videos/production/errors/no-match.mp4</code></div><p>A production record exists but no matching timecard was found for that employee at that time.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirm with your field team if the worker was indeed working a piece-tracked job</div></div><div class="step"><div class="step-num">2</div><div class="step-text">If yes — add a timecard with matching ranch, block, and job. This resolves the error.</div></div><div class="step"><div class="step-num">3</div><div class="step-text">If the worker was not working — select the record → <strong>Archive Production Record</strong></div></div></div><h3>Record Created at a Different Location</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Fix: Wrong Location Error</p><code>/videos/production/errors/wrong-location.mp4</code></div><p>The production record was credited at a different location than the employee's timecard at that time. Fix by updating the timecard's Site and Location to match the production record.</p></div></div>
+  <div id="pr-archive" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#27ae60"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></div><div><div class="card-title">Archiving & Unarchiving</div><div class="card-desc">Remove invalid records from view or restore previously archived records</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="prose">
+      <h3>Archive a Record</h3>
+      <div class="video-embed"><video data-src="Videos/Archive Prod..mp4" muted loop playsinline></video></div>
+      <p>Select one or more records → right-click → <strong>Archive Production Records</strong>. You can also hover over a single record and click the archive icon on the right side.</p>
+
+      <h3>Unarchive a Record</h3>
+      <div class="video-embed"><video data-src="Videos/Unarchive Prod..mp4" muted loop playsinline></video></div>
+      <div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Click the <strong>gear icon</strong> (top-right) → check <strong>Show Archived</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Select the archived record(s) → right-click → <strong>Unarchive Production Records</strong></div></div></div>
+      <div class="tip"><strong>Archived records are hidden by default.</strong> You must turn on "Show Archived" in the gear menu before you can see or restore them.</div>
+    </div></div>
+  </div>
+  <div id="pr-errors" class="card"><div class="card-hdr" onclick="toggleCard(this)"><div class="card-icon" style="background:#c0392b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg></div><div><div class="card-title">Production Record Errors</div><div class="card-desc">Missing Timecard, Different Location</div></div><svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="card-body"><div class="prose"><h3>Missing Timecard</h3><div class="video-embed"><video data-src="Videos/Missing Timecard Prod. Fix.mp4" muted loop playsinline></video></div><p>A production record exists but the employee has no matching timecard — they were credited with production in the field but were never checked in.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirm with your field team that the employee actually worked</div></div><div class="step"><div class="step-num">2</div><div class="step-text">If yes — create a timecard with matching Crew, Site, Location, and Work Bundle so the production record can link</div></div><div class="step"><div class="step-num">3</div><div class="step-text">If the employee did not work — select the record → <strong>Archive Production Record</strong></div></div></div><div class="tip"><strong>Fastest fix:</strong> Find a coworker who did the same work → duplicate their timecard → assign it to the missing employee → adjust details → Save.</div><h3>Record Created at a Different Location</h3><div class="video-embed"><video data-src="Videos/Record at different location.mp4" muted loop playsinline></video></div><p>The production record and the timecard show different locations. One of them is wrong — determine which is correct with your field team.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">If the <strong>timecard is correct</strong> — edit the production record's Site and Location to match the timecard</div></div><div class="step"><div class="step-num">2</div><div class="step-text">If the <strong>production record is correct</strong> — edit the timecard's Site and Location to match the production record</div></div></div></div></div>
   </div>
 </div>
 
@@ -1634,6 +1679,13 @@ document.querySelectorAll('.card-hdr.open').forEach(function(hdr){
 
     // Defer loading — src is set lazily by activateNearest when near viewport
     video.preload='none';
+
+    // Match container aspect-ratio to actual video dimensions (removes black bars)
+    video.addEventListener('loadedmetadata',function(){
+      if(video.videoWidth&&video.videoHeight){
+        el.style.aspectRatio=video.videoWidth+'/'+video.videoHeight;
+      }
+    });
   }
 
   var allVideos=document.querySelectorAll('video[data-src]');
@@ -1824,9 +1876,10 @@ var SEARCH_INDEX=[
     {title:'Unarchive Timecards',path:'Timecards › Archiving',mod:'timecards',sec:'tc-archive',h3:'h3-unarchive',keywords:'unarchive restore show archived timecard'},
     {title:'Review & Approve',path:'Timecards › Archiving',mod:'timecards',sec:'tc-archive',h3:'h3-review',keywords:'review approve audit mark unreviewed payroll'},
     {title:'Production Records Overview',path:'Production Records',mod:'production',sec:'pr-overview',keywords:'production bins trays trees harvest intro overview'},
-    {title:'Adding Records',path:'Production Records',mod:'production',sec:'pr-add',keywords:'add create new production record bin tray piece pay'},
-    {title:'Editing Records',path:'Production Records',mod:'production',sec:'pr-edit',keywords:'edit update fix production record bin tray'},
-    {title:'Production Errors & Fixes',path:'Production Records',mod:'production',sec:'pr-errors',keywords:'error flag warning production fix resolve issue'},
+    {title:'Adding Records',path:'Production Records',mod:'production',sec:'pr-add',keywords:'add create new production record bin tray piece pay crew individual'},
+    {title:'Editing Records',path:'Production Records',mod:'production',sec:'pr-edit',keywords:'edit update fix production record site location timestamp piece rate crew duplicate bulk'},
+    {title:'Archiving & Unarchiving',path:'Production Records',mod:'production',sec:'pr-archive',keywords:'archive unarchive remove restore production record gear show archived'},
+    {title:'Production Errors & Fixes',path:'Production Records',mod:'production',sec:'pr-errors',keywords:'error flag warning production fix resolve issue missing timecard no match different location'},
     {title:'Crew Scheduler Overview',path:'Crew Scheduler',mod:'scheduler',sec:'cs-overview',keywords:'schedule crew assign job site intro overview'},
     {title:'Creating a Schedule',path:'Crew Scheduler',mod:'scheduler',sec:'cs-create',keywords:'create new schedule assign crew job site'},
     {title:'Locations & Piece Rates',path:'Crew Scheduler',mod:'scheduler',sec:'cs-rates',keywords:'location site piece rate pay rate assign'},
@@ -2032,6 +2085,7 @@ var searchIndexEs=[
 {title:'Resumen de Registros de Producción',path:'Registros de Producción'},
 {title:'Agregar Registros',path:'Registros de Producción'},
 {title:'Editar Registros',path:'Registros de Producción'},
+{title:'Archivar y Desarchivar',path:'Registros de Producción'},
 {title:'Errores de Producción',path:'Registros de Producción'},
 {title:'Resumen del Programador',path:'Programador de Cuadrillas'},
 {title:'Crear un Horario',path:'Programador de Cuadrillas'},
@@ -2104,7 +2158,8 @@ var T=[
 {s:'#sub-pr .sb-subitem',i:0,es:'Resumen'},
 {s:'#sub-pr .sb-subitem',i:1,es:'Agregar Registros'},
 {s:'#sub-pr .sb-subitem',i:2,es:'Editar Registros'},
-{s:'#sub-pr .sb-subitem',i:3,es:'Errores y Correcciones'},
+{s:'#sub-pr .sb-subitem',i:3,es:'Archivar'},
+{s:'#sub-pr .sb-subitem',i:4,es:'Errores y Correcciones'},
 {s:'#sub-cs .sb-subitem',i:0,es:'Resumen'},
 {s:'#sub-cs .sb-subitem',i:1,es:'Crear un Horario'},
 {s:'#sub-cs .sb-subitem',i:2,es:'Ubicaciones y Tarifas por Pieza'},
@@ -2242,16 +2297,19 @@ var T=[
 {s:'#module-production .hero p',es:'Ver y corregir registros de pago por pieza — botes, bandejas, árboles y cualquier unidad que sus cuadrillas produzcan.'},
 {s:'#pr-overview .card-title',es:'¿Qué son los Registros de Producción?'},
 {s:'#pr-overview .card-desc',es:'De dónde vienen y cómo leer la página de Registros de Producción'},
-{s:'#pr-overview .prose',es:'<p>Los Registros de Producción se crean en el dispositivo cuando un líder acredita a un empleado con una unidad (ej., bote, bandeja, árbol). Cada registro se vincula a empleado, sitio, ubicación, cultivo, trabajo, conteo y tarifa por pieza.</p><h3>Columnas Clave</h3><table class="tbl"><tr><th>Columna</th><th>Qué muestra</th></tr><tr><td>PT ID</td><td>ID de PickTrace del empleado</td></tr><tr><td>Conteo</td><td>Unidades acreditadas</td></tr><tr><td>Unidad</td><td>Tipo (botes, árboles, bandejas, etc.)</td></tr><tr><td>Tarifa por Pieza</td><td>Dólares por unidad</td></tr><tr><td>Sitio / Ubicación</td><td>Rancho y bloque del trabajo</td></tr><tr><td>Cultivo</td><td>Variedad asociada</td></tr></table><div class="tip"><strong>Verifique el conteo total de piezas</strong> abajo a la derecha de la tabla. Compare con boletos físicos para detectar discrepancias.</div>'},
+{s:'#pr-overview .prose',es:'<p>Los Registros de Producción se crean en el dispositivo cuando un líder acredita a un empleado con una unidad (ej., bote, bandeja, árbol). Cada registro se vincula a empleado, sitio, ubicación, cultivo, trabajo, conteo y tarifa por pieza.</p><h3>Columnas Clave</h3><table class="tbl"><tr><th>Columna</th><th>Qué muestra</th></tr><tr><td>PT ID</td><td>ID de PickTrace del empleado</td></tr><tr><td>Conteo</td><td>Unidades acreditadas</td></tr><tr><td>Unidad</td><td>Tipo (botes, árboles, bandejas, etc.)</td></tr><tr><td>Tarifa por Pieza</td><td>Dólares por unidad</td></tr><tr><td>Sitio / Ubicación</td><td>Rancho y bloque del trabajo</td></tr><tr><td>Cultivo</td><td>Variedad asociada</td></tr></table><div class="tip"><strong>Verifique el conteo total de piezas</strong> abajo a la derecha de la tabla. Compare con boletos físicos para detectar discrepancias.</div><h3>Ocultar y Mostrar Columnas</h3><div class="vid-slot" data-vi="0"></div><p>Clic en el <strong>ícono de engranaje</strong> (arriba-derecha) → seleccione <strong>Visibilidad de Columnas</strong>. Active o desactive columnas para mostrar solo los datos que necesite. Los cambios se aplican inmediatamente.</p><h3>Reordenar Columnas</h3><div class="vid-slot" data-vi="1"></div><p>Arrastre cualquier encabezado de columna a la izquierda o derecha para reposicionarlo. El nuevo orden se guarda automáticamente.</p>'},
 {s:'#pr-add .card-title',es:'Agregar un Registro de Producción'},
 {s:'#pr-add .card-desc',es:'Agregar manualmente un registro faltante en Oficina'},
-{s:'#pr-add .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">En Registros de Producción, clic en <strong>[+]</strong> a la derecha de la búsqueda</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Complete detalles y clic en <strong>Agregar Empleados</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic en <strong>Guardar</strong></div></div></div><div class="warn"><strong>Cuadrilla, Sitio, Ubicación y Paquete deben coincidir</strong> con la tarjeta del empleado para que el registro se vincule.</div><div class="tip">Después de agregar un registro que coincida, la advertencia "Registro de Pieza Faltante" se eliminará automáticamente.</div>'},
-{s:'#pr-edit .card-title',es:'Editar Tarifas por Pieza'},
-{s:'#pr-edit .card-desc',es:'Actualizar tarifas incorrectas en uno o varios registros'},
-{s:'#pr-edit .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Seleccione registros a actualizar</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Clic derecho → <strong>Editar Registro de Producción</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Marque <strong>"Establecer Tarifa por Pieza"</strong> → ingrese tarifa correcta</div></div><div class="step"><div class="step-num">4</div><div class="step-text">Clic en <strong>Guardar</strong></div></div></div><div class="tip"><strong>¿Dónde se establecen?</strong> En el Programador de Cuadrillas bajo "Ubicación y Tarifas por Pieza." Actualice ahí para prevenir recurrencia.</div><div class="warn"><strong>Restricciones masivas:</strong> Registros deben ser de la <strong>misma Cuadrilla</strong>. Deben ser del <strong>mismo Flujo de Trabajo</strong> (Paquete) para editar tarifa.</div><h3>Duplicar Registros de Producción</h3><p>Seleccione registro → clic derecho → <strong>Duplicar</strong>. Agregue nombres de empleados.</p><div class="warn"><strong>La duplicación divide — no copia.</strong> A diferencia de tarjetas, duplicar producción divide unidades entre empleados. Ej: 2 unidades duplicadas a 2 empleados = 1 unidad cada uno.</div>'},
+{s:'#pr-add .prose',es:'<div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Clic en <strong>[+]</strong> a la derecha de la búsqueda</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Complete los detalles y asigne a <strong>empleados individuales</strong> o a <strong>toda la cuadrilla</strong></div></div><div class="step"><div class="step-num">3</div><div class="step-text">Clic en <strong>Guardar</strong></div></div></div><div class="tip"><strong>Cuadrilla, Sitio, Ubicación y Paquete deben coincidir</strong> con la tarjeta del empleado para que se vincule. Una vez vinculado, la advertencia "Registro de Pieza Faltante" se elimina automáticamente.</div><h3>Agregar Múltiples Empleados</h3><div class="vid-slot" data-vi="0"></div><div class="warn"><strong>Las unidades se dividen equitativamente — no se copian.</strong> 10 unidades asignadas a 5 empleados da 2 unidades a cada uno. Para acreditar cantidades diferentes, cree registros separados.</div>'},
+{s:'#pr-edit .card-title',es:'Editar Registros de Producción'},
+{s:'#pr-edit .card-desc',es:'Editar atributos, sitio/ubicación, marcas de tiempo, tarifas y duplicar registros'},
+{s:'#pr-edit .prose',es:'<h3>Editar un Solo Registro</h3><div class="vid-slot" data-vi="0"></div><p>Seleccione un registro → clic derecho → <strong>Editar</strong>. El panel a la derecha permite cambiar cualquier campo: Cuadrilla, Marca de Tiempo, Sitio, Ubicación, Número de Ticket, Cantidad de Piezas o Tarifa por Pieza. Clic en <strong>Guardar</strong>.</p><h3>Editar Múltiples Registros</h3><div class="vid-slot" data-vi="1"></div><p>Seleccione varios registros → clic en <strong>Editar</strong>. El panel muestra todos los empleados seleccionados — los cambios se aplican a todos. Desde aquí puede editar Sitio/Ubicación, Marcas de Tiempo, Tarifas por Pieza y más. Clic en <strong>Guardar</strong>.</p><div class="warn"><strong>Misma Cuadrilla requerida</strong> para edición masiva. Para editar tarifas, los registros también deben compartir el <strong>mismo Flujo de Trabajo</strong> (Paquete).</div><div class="tip"><strong>Selección rápida:</strong> <strong>Shift</strong>+clic para rango. <strong>Ctrl</strong>+clic (Windows) o <strong>Cmd</strong>+clic (Mac) para registros individuales.</div><div class="tip"><strong>Las tarifas se configuran en el Programador de Cuadrillas</strong> bajo "Ubicación y Tarifas por Pieza." Actualice ahí para evitar el mismo problema.</div><h3>Editar un Registro Compartido</h3><div class="vid-slot" data-vi="2"></div><p>Cuando un registro fue creado para múltiples empleados, editar cualquiera de esos registros aplicará los cambios a <strong>todos los empleados</strong> en ese registro compartido. El panel muestra todos los nombres vinculados al registro.</p><div class="warn"><strong>Los cambios afectan a todos en el registro.</strong> Si solo necesita actualizar un empleado, retírelo del registro compartido primero, luego cree un registro separado para esa persona.</div><h3>Duplicar Registros</h3><div class="vid-slot" data-vi="3"></div><p>Seleccione un registro → clic derecho → <strong>Duplicar</strong>. Agregue los empleados a quienes asignar el duplicado, luego clic en <strong>Guardar</strong>.</p><div class="warn"><strong>Elimine el nombre del empleado original</strong> si está duplicando para otra persona. Dejarlo incluido dividirá las unidades con el empleado original y lo acreditará dos veces.</div>'},
+{s:'#pr-archive .card-title',es:'Archivar y Desarchivar'},
+{s:'#pr-archive .card-desc',es:'Eliminar registros inválidos de la vista o restaurar registros archivados'},
+{s:'#pr-archive .prose',es:'<h3>Archivar un Registro</h3><div class="vid-slot" data-vi="0"></div><p>Seleccione uno o más registros → clic derecho → <strong>Archivar Registros de Producción</strong>. También puede pasar el cursor sobre un registro y hacer clic en el ícono de archivo a la derecha.</p><h3>Desarchivar un Registro</h3><div class="vid-slot" data-vi="1"></div><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Clic en el <strong>ícono de engranaje</strong> (arriba-derecha) → marque <strong>Mostrar Archivados</strong></div></div><div class="step"><div class="step-num">2</div><div class="step-text">Seleccione los registros → clic derecho → <strong>Desarchivar Registros de Producción</strong></div></div></div><div class="tip"><strong>Los registros archivados están ocultos por defecto.</strong> Debe activar "Mostrar Archivados" en el menú de engranaje para verlos o restaurarlos.</div>'},
 {s:'#pr-errors .card-title',es:'Errores de Registros de Producción'},
-{s:'#pr-errors .card-desc',es:'Sin Coincidencia, Diferente Ubicación, Pieza Faltante'},
-{s:'#pr-errors .prose',es:'<h3>Error de Sin Coincidencia</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Corrección: Sin Coincidencia</p><code>/videos/production/errors/no-match.mp4</code></div><p>Existe registro pero no se encontró tarjeta correspondiente.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirme con campo si el trabajador estaba en trabajo con piezas</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Si sí — agregue tarjeta con rancho, bloque y trabajo correspondientes</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Si no trabajaba — seleccione → <strong>Archivar Registro</strong></div></div></div><h3>Registro en Ubicación Diferente</h3><div class="video-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><p>Corrección: Ubicación Incorrecta</p><code>/videos/production/errors/wrong-location.mp4</code></div><p>Registro acreditado en ubicación diferente a la tarjeta. Corrija actualizando Sitio y Ubicación de la tarjeta para que coincida.</p>'},
+{s:'#pr-errors .card-desc',es:'Tarjeta Faltante, Diferente Ubicación'},
+{s:'#pr-errors .prose',es:'<h3>Tarjeta Faltante</h3><div class="vid-slot" data-vi="0"></div><p>Existe un registro de producción pero el empleado no tiene tarjeta correspondiente — fue acreditado en el campo pero nunca fue registrado.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Confirme con su equipo de campo que el empleado trabajó</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Si sí — cree una tarjeta con Cuadrilla, Sitio, Ubicación y Paquete correspondientes</div></div><div class="step"><div class="step-num">3</div><div class="step-text">Si no trabajó — seleccione el registro → <strong>Archivar Registro de Producción</strong></div></div></div><div class="tip"><strong>Corrección rápida:</strong> Encuentre un compañero que hizo el mismo trabajo → duplique su tarjeta → asigne al empleado faltante → ajuste detalles → Guardar.</div><h3>Registro en Ubicación Diferente</h3><div class="vid-slot" data-vi="1"></div><p>El registro de producción y la tarjeta muestran ubicaciones diferentes. Uno de los dos es incorrecto — confirme con su equipo de campo cuál es el correcto.</p><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-text">Si la <strong>tarjeta es correcta</strong> — edite el Sitio y Ubicación del registro de producción para que coincida</div></div><div class="step"><div class="step-num">2</div><div class="step-text">Si el <strong>registro de producción es correcto</strong> — edite el Sitio y Ubicación de la tarjeta para que coincida</div></div></div>'},
 {s:'#module-scheduler .hero-label',es:'Módulo'},
 {s:'#module-scheduler .hero h1',es:'Programador de Cuadrillas'},
 {s:'#module-scheduler .hero p',es:'Programe cuadrillas a trabajos, sitios y ubicaciones antes del día. Aquí se configuran tarifas, asignaciones y avisos de descanso.'},
@@ -2415,8 +2473,24 @@ function applyLang(lang){
     var els=document.querySelectorAll(t.s);
     var el=t.i!==undefined?els[t.i]:els[0];
     if(!el)return;
-    if(!el._origHTML)el._origHTML=el.innerHTML;
+    if(!el._savedVideos){
+      el._savedVideos=[];
+      el.querySelectorAll('.video-embed').forEach(function(v,i){
+        var m=document.createElement('div');m.className='vid-slot';m.dataset.vi=i;
+        v.parentNode.replaceChild(m,v);
+        el._savedVideos.push(v);
+      });
+      el._origHTML=el.innerHTML;
+    } else {
+      el._savedVideos.forEach(function(v){if(v.parentNode)v.parentNode.removeChild(v);});
+    }
     el.innerHTML=lang==='es'?t.es:el._origHTML;
+    if(el._savedVideos.length){
+      el.querySelectorAll('.vid-slot').forEach(function(m){
+        var v=el._savedVideos[parseInt(m.dataset.vi)];
+        if(v)m.parentNode.replaceChild(v,m);
+      });
+    }
   });
   TP.forEach(function(t){
     var el=document.querySelector(t.s);
